@@ -1,0 +1,209 @@
+{
+  "_version": "1.80.0",
+  "sap.app": {
+    "id": "nlab.ai.comparequotation",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:fpm",
+      "version": "1.26.0",
+      "toolsId": "e0156950-3057-4e9c-9d01-4bf7a71e8099"
+    },
+    "dataSources": {
+      "annotation": {
+        "type": "ODataAnnotation",
+        "uri": "annotations/annotation.xml",
+        "settings": {
+          "localUri": "annotations/annotation.xml"
+        }
+      },
+      "mainService": {
+        "uri": "/sap/opu/odata4/sap/zsb_quot_comp/srvd/sap/zsd_quot_comp_hdr/0001/",
+        "type": "OData",
+        "settings": {
+          "annotations": [
+            "annotation"
+          ],
+          "localUri": "localService/mainService/metadata.xml",
+          "odataVersion": "4.0"
+        }
+      },
+      "rfqService": {
+        "uri": "sap/opu/odata/sap/API_RFQ_PROCESS_SRV/",
+        "type": "OData",
+        "settings": {
+          "odataVersion": "2.0"
+        }
+      }
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "comparequoationui-manage": {
+          "semanticObject": "comparequoationui",
+          "action": "manage",
+          "title": "{{comparequoationui-manage.flpTitle}}",
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          }
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.142.12",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.fe.core": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "nlab.ai.comparequotation.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      },
+      "RFQModel": {
+        "dataSource": "rfqService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      },
+      "LocalModel": {
+        "type": "sap.ui.model.json.JSONModel",
+        "uri": "model/localModel.json",
+        "preload": true
+      },
+      "@i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "uri": "i18n/i18n.properties"
+      }
+    },
+    "resources": {
+      "css": []
+    },
+    "extends": {
+      "extensions": {
+        "sap.ui.controllerExtensions": {
+          "sap.fe.templates.ListReport.ListReportController": {
+            "controllerName": "nlab.ai.comparequotation.ext.controller.ListReportExt"
+          }
+        }
+      }
+    },
+    "routing": {
+      "config": {},
+      "routes": [
+        {
+          "pattern": ":?query:",
+          "name": "QuotationComparisonList",
+          "target": "QuotationComparisonList"
+        },
+        {
+          "pattern": "QuotationComparison({key}):?query:",
+          "name": "QuotationComparisonObjectPage",
+          "target": "QuotationComparisonObjectPage"
+        }
+      ],
+      "targets": {
+        "QuotationComparisonList": {
+          "type": "Component",
+          "id": "QuotationComparisonList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/QuotationComparison",
+              "initialLoad": "Enabled",
+              "variantManagement": "None",
+              "navigation": {
+                "QuotationComparison": {
+                  "detail": {
+                    "route": "QuotationComparisonObjectPage"
+                  }
+                }
+              },
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable",
+                    "selectionMode": "Single",
+                    "enableCopy": false
+                  },
+                  "actions": {
+                    "CreateComparison": {
+                      "text": "Create",
+                      "press": "nlab.ai.comparequotation.ext.view.LRCompareQuotation.onCreateLRActionPress"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "QuotationComparisonObjectPage": {
+          "type": "Component",
+          "id": "CompareQuotationDetailObjectPage",
+          "name": "sap.fe.core.fpm",
+          "title": "Quotation Comparison Detail",
+          "options": {
+            "settings": {
+              "viewName": "nlab.ai.comparequotation.ext.view.ManageCompareQuotation",
+              "contextPath": "/QuotationComparison"
+            }
+          }
+        }
+      }
+    }
+  },
+  "sap.fe": {
+    "app": {
+      "enableLazyLoading": true
+    }
+  },
+  "sap.cloud": {
+    "public": true,
+    "service": "nlabaicomparequotation"
+  }
+}

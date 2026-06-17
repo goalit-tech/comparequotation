@@ -1,0 +1,128 @@
+<core:FragmentDefinition
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:macros="sap.fe.macros"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+    xmlns:core="sap.ui.core"
+>
+    <Dialog
+        id="_IDGenTCFragmentDialog"
+        title="Select Supplier Quotation Item for Comparison"
+        contentWidth='30%'
+    >
+        <VBox
+            id="_IDGenTCFragmentDialogVBox1"
+            class="sapUiSmallMargin"
+        >
+            <f:SimpleForm
+                id="SimpleFormChange354"
+                editable="true"
+                layout="ResponsiveGridLayout"
+                title="Address"
+                labelSpanXL="3"
+                labelSpanL="3"
+                labelSpanM="3"
+                labelSpanS="12"
+                adjustLabelSpan="false"
+                emptySpanXL="4"
+                emptySpanL="4"
+                emptySpanM="4"
+                emptySpanS="0"
+                columnsXL="1"
+                columnsL="1"
+                columnsM="1"
+                singleContainerFullSize="false"
+            >
+                <f:toolbar>
+                    <Toolbar id="_IDGenTCFragmentDialogSFToolbar">
+                        <Title
+                            id="_IDGenTCFragmentDialogSFTitle1"
+                            text="Address"
+                        />
+                        <ToolbarSpacer
+                            id="_IDGenTCFragmentDialogSFToolbarSpacer"
+                        />
+                        <Button
+                            id="_IDGenTCFragmentDialogSFButtonAddTC"
+                            press=".onTCDialogAddPress"
+                            text="Add New Terms And Condititon"
+                            visible="{= ${LocalModel>/TermsAndConditionDialog/IsAddNewTC} ? false:true}"
+                        />
+                        <Button
+                            id="_IDGenTCFragmentDialogSFButtonSaveTC"
+                            press=".onTCDialogSavePress"
+                            text="Save"
+                            visible="{= ${LocalModel>/TermsAndConditionDialog/IsAddNewTC} ? true:false}"
+                        />
+                        <Button
+                            id="_IDGenTCFragmentDialogSFButtonCancelTC"
+                            press=".onTCDialogCancelPress"
+                            text="Cancel"
+                            visible="{= ${LocalModel>/TermsAndConditionDialog/IsAddNewTC} ? true:false}"
+                        />
+                    </Toolbar>
+                </f:toolbar>
+                <f:content>
+                    <Label
+                        id="_IDGenTCFragmentDialogLabel3"
+                        text="Select Terms And Conditions"
+                        visible="{= ${LocalModel>/TermsAndConditionDialog/IsAddNewTC} ? false:true}"
+                    />
+                    <MultiComboBox
+                        selectedKeys="{LocalModel>/TermsAndConditionDialog/TermsAndConditionSelectedkey}"
+                        id="_IDGenTCFragmentDialogComboBox"
+                        items="{LocalModel>/TermsAndConditionDialog/PreDefinedTermsAndCondition}"
+                        visible="{= ${LocalModel>/TermsAndConditionDialog/IsAddNewTC} ? false:true}"
+                    >
+                        <items>
+                            <core:Item
+                                id="_IDGenTCFragmentDialogItem"
+                                enabled="{LocalModel>Selectable}"
+                                text="{LocalModel>KeyFieldDesc}"
+                                key="{LocalModel>KeyField}"
+                            />
+                        </items>
+                    </MultiComboBox>
+                    <Label
+                        id="_IDGenTCFragmentDialogLabel"
+                        text="Field Key"
+                        visible="{= ${LocalModel>/TermsAndConditionDialog/IsAddNewTC} ? true:false}"
+                    />
+                    <Input
+                        valueState="{LocalModel>/TermsAndConditionDialog/KeyFieldState}"
+                        id="name"
+                        value="{LocalModel>/TermsAndConditionDialog/KeyField}"
+                        visible="{= ${LocalModel>/TermsAndConditionDialog/IsAddNewTC} ? true:false}"
+                    />
+                    <Label
+                        id="_IDGenTCFragmentDialogLabel1"
+                        text="Field Name"
+                        visible="{= ${LocalModel>/TermsAndConditionDialog/IsAddNewTC} ? true:false}"
+                    />
+                    <Input
+                        valueState="{LocalModel>/TermsAndConditionDialog/KeyFieldValueState}"
+                        id="_IDGenTCFragmentDialogInput"
+                        value="{LocalModel>/TermsAndConditionDialog/KeyFieldValue}"
+                        visible="{= ${LocalModel>/TermsAndConditionDialog/IsAddNewTC} ? true:false}"
+                    />
+                </f:content>
+            </f:SimpleForm>
+        </VBox>
+        <buttons>
+            <Button
+                id="_IDGenTCFragmentAddButton"
+                text="Add"
+                visible="{= ${LocalModel>/TermsAndConditionDialog/IsAddNewTC} ? false:true}"
+                press=".onAddTCFragmentAddPress"
+            />
+            <Button
+                id="_IDGenTCFragmentCancelButton"
+                text="Cancel"
+                press=".onAddTCFragmentCancelPress"
+                visible="{= ${LocalModel>/TermsAndConditionDialog/IsAddNewTC} ? false:true}"
+            />
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

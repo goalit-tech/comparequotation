@@ -1,0 +1,44 @@
+<core:FragmentDefinition
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core"
+>
+    <VBox id="_IDGenManageCQRFQSessionVBox">
+        <f:SimpleForm
+            id="SimpleFormDisplayColumn_oneGroup234"
+            editable="false"
+            layout="ColumnLayout"
+            columnsM="2"
+            columnsL="3"
+            columnsXL="4"
+        >
+            <f:content>
+                <Label id="_IDGenRFQsDetailFormLabel1" text="RequestForQuotation" />
+                <Text id="_IDGenRFQsDetailFormText" text="{LocalModel>/RequestForQuotation/RequestForQuotation}"/>
+                <Label id="_IDGenRFQsDetailFormLabel2" text="CompanyCode" />
+                <Text id="_IDGenRFQsDetailFormText1" text="{LocalModel>/RequestForQuotation/CompanyCode}"/>
+                <Label id="_IDGenRFQsDetailFormLabel3" text="PurchasingOrganization" />
+                <Text id="_IDGenRFQsDetailFormText2" text="{LocalModel>/RequestForQuotation/PurchasingOrganization}"/>
+                <Label id="_IDGenRFQsDetailFormLabel4" text="PurchasingGroup" />
+                <Text id="_IDGenRFQsDetailFormText3" text="{LocalModel>/RequestForQuotation/PurchasingGroup}"/>
+                <Label id="_IDGenRFQsDetailFormLabel5" text="DocumentCurrency" />
+                <Text id="_IDGenRFQsDetailFormText4" text="{LocalModel>/RequestForQuotation/DocumentCurrency}"/>
+                <Label id="_IDGenRFQsDetailFormLabel6" text="NetPaymentDays" />
+                <Text id="_IDGenRFQsDetailFormText5" text="{LocalModel>/RequestForQuotation/NetPaymentDays}"/>
+                <Label id="_IDGenRFQsDetailFormLabel7" text="RFQPublishingDate" />
+                <Text id="_IDGenRFQsDetailFormText6" text="{LocalModel>/RequestForQuotation/RFQPublishingDate}"/>
+                <Label id="_IDGenRFQsDetailFormLabel8" text="QuotationLatestSubmissionDate" />
+                <Text id="_IDGenRFQsDetailFormText7" text="{LocalModel>/RequestForQuotation/QuotationLatestSubmissionDate}"/>
+                <Label id="_IDGenRFQsDetailFormLabel9" text="BindingPeriodValidityEndDate" />
+                <Text id="_IDGenRFQsDetailFormText8" text="{LocalModel>/RequestForQuotation/BindingPeriodValidityEndDate}"/>
+                <Label id="_IDGenRFQsDetailFormLabel10" text="TargetAmount" />
+                <Text id="_IDGenRFQsDetailFormText9" text="{LocalModel>/RequestForQuotation/TargetAmount}"/>
+                <Label id="_IDGenRFQsDetailFormLabel11" text="RequestForQuotationName" />
+                <Text id="_IDGenRFQsDetailFormText10" text="{LocalModel>/RequestForQuotation/RequestForQuotationName}"/>
+            </f:content>
+        </f:SimpleForm>
+
+        
+    </VBox>
+</core:FragmentDefinition>

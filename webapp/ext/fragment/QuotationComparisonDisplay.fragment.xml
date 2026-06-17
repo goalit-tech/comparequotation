@@ -1,0 +1,188 @@
+<core:FragmentDefinition
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:uiTable="sap.ui.table"
+    xmlns:macros="sap.fe.macros"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+    xmlns:core="sap.ui.core"
+>
+    <OverflowToolbar
+        id="_IDGenQCFormFragmentOverflowToolbar"
+        style="Clear"
+    >
+        <Title
+            id="_IDGenQCFormFragmentTitle2"
+            text="EENADU TELEVISION PRIVATE LIMITED"
+        />
+        <ToolbarSeparator id="_IDGenQCFormFragmentToolbarSeparator" />
+    </OverflowToolbar>
+    <f:SimpleForm
+        id="_IDGenQCHeaderFragmentSimpleForm1"
+        editable="true"
+        layout="ColumnLayout"
+        columnsM="2"
+        columnsL="3"
+        columnsXL="4"
+    >
+        <f:content>
+            <!-- <core:Title
+                id="_IDGenQCHeaderFragmentTitle"
+                text=""
+            /> -->
+            <Label
+                id="_IDGenQCHeaderFragmentLabel"
+                text="Request For Quotation"
+            />
+            <Input
+                id="_IDGenQCHeaderFragmentInput"
+                value="{LocalModel>/CompareQuotationHeader/RequestForQuotation}"
+                editable="false"
+            />
+            <Label
+                id="_IDGenQCHeaderFragmentLabelCompanyCode"
+                text="Company Code"
+            />
+            <Input
+                id="_IDGenQCHeaderFragmentInputCompanyCode"
+                value="{LocalModel>/CompareQuotationHeader/CompanyCode}"
+                editable="false"
+            />
+            <Label
+                id="_IDGenQCHeaderFragmentLabelCompanyName"
+                text="Company Name"
+            />
+            <Input
+                id="_IDGenQCHeaderFragmentInputCompanyName"
+                value="{LocalModel>/CompareQuotationHeader/CompanyName}"
+                editable="false"
+            />
+            <Label
+                id="_IDGenQCHeaderFragmentLabel5"
+                text="Requisition Number"
+            />
+            <Input
+                id="_IDGenQCHeaderFragmentInput5"
+                value="{LocalModel>/CompareQuotationHeader/RequisitionNumber}"
+                editable="false"
+            />
+            <Label
+                id="_IDGenQCHeaderFragmentLabel3"
+                text="Requestor Name"
+            />
+            <Input
+                id="_IDGenQCHeaderFragmentInput3"
+                value="{LocalModel>/CompareQuotationHeader/NameOfRequester}"
+                editable="false"
+            />
+            <Label
+                id="_IDGenQCHeaderFragmentLabel4"
+                text="Account Assignment"
+            />
+            <Input
+                id="_IDGenQCHeaderFragmentInput4"
+                value="{LocalModel>/CompareQuotationHeader/AccountAssignment}"
+                editable="false"
+            />
+
+            <Label
+                id="_IDGenQCHeaderFragmentLabel6"
+                text="Requisition Date"
+            />
+            <!-- value="{LocalModel>/CompareQuotationHeader/RequisitionDate}" -->
+            <DatePicker
+                id="_IDGenQCHeaderFragmentDatePicker"
+                value="{
+						'path':'LocalModel>/CompareQuotationHeader/RequisitionDate',
+						'type':'sap.ui.model.type.Date',
+						'formatOptions': {
+							'pattern': 'yyyy-MM-dd'
+						}
+					}"
+                editable="false"
+            />
+            <Label
+                id="_IDGenQCHeaderFragmentLabel2"
+                text="Comparative Statement Title"
+            />
+            <Input
+                id="_IDGenQCHeaderFragmentInput2"
+                value="{LocalModel>/CompareQuotationHeader/CompativeStatementTitle}"
+                editable="{LocalModel>/IsEditCompareQuotation}"
+            />
+            <Label
+                id="_IDGenQCHeaderFragmentLabel7"
+                text="Purpose"
+            />
+
+            <Input
+                id="_IDGenQCHeaderFragmentInput6"
+                value="{LocalModel>/CompareQuotationHeader/Purpose}"
+                editable="{LocalModel>/IsEditCompareQuotation}"
+            />
+            <Label
+                id="_IDGenQCHeaderFragmentLabel8"
+                text="Comparison Date"
+            />
+            <!-- value="{LocalModel>/CompareQuotationHeader/ComparisonDate}" -->
+            <DatePicker
+                id="_IDGenQCHeaderFragmentDatePicker1"
+                value="{
+						'path':'LocalModel>/CompareQuotationHeader/ComparisonDate',
+						'type':'sap.ui.model.type.Date',
+						'formatOptions': {
+							'pattern': 'yyyy-MM-dd'
+						}
+					}"
+                editable="{LocalModel>/IsEditCompareQuotation}"
+            />
+        </f:content>
+    </f:SimpleForm>
+
+    <VBox id="_IDGenQCFormFragmentVBox">
+        <!-- rows="{oLocalModel>/CompareQuotationRowsData}" -->
+        <uiTable:Table
+            id="_IDGenQCFormFragmentDynamicUITable"
+            enableCellFilter="true"
+            showNoData="true"
+            selectionMode="None"
+            rows="{
+                    path: 'LocalModel>/CompareQuotationRowsData',
+                    sorter: {
+                        path: 'Description',
+                        descending: false
+                    }
+                }"
+        >
+            <uiTable:extension>
+                <OverflowToolbar
+                    id="_IDGenQCFormFragmentUITableOverflowToolbar"
+                    style="Clear"
+                >
+                    <Title
+                        id="_IDGenQCFormFragmentUITableTitle2"
+                        text="Supplier Quotation and Items"
+                    />
+                    <ToolbarSpacer
+                        id="_IDGenQCFormFragmentUITableToolbarSpacer"
+                    />
+                    <Button
+                        id="_IDGenQCFormFragmentUITableButtonAddItem"
+                        visible="{LocalModel>/IsEditCompareQuotation}"
+                        text="Add Item"
+                        press=".onCQDynamicAddItemPress"
+                        type="Emphasized"
+                    />
+                    <Button
+                        id="_IDGenQCFormFragmentUITableButtonAddTC"
+                        enabled="{=${LocalModel>/CompareQuotationRowsData}.length > 0 ? true:false}"
+                        visible="{LocalModel>/IsEditCompareQuotation}"
+                        text="Add Terms &amp; Conditions Row"
+                        press=".onCQDynamicAddTermsAndConditionPress"
+                        type="Emphasized"
+                    />
+                </OverflowToolbar>
+            </uiTable:extension>
+        </uiTable:Table>
+    </VBox>
+</core:FragmentDefinition>

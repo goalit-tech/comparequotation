@@ -1,0 +1,45 @@
+<core:FragmentDefinition
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:macros="sap.fe.macros"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+    xmlns:core="sap.ui.core"
+>
+    <Dialog
+        id="_IDGenCQRFQDialogDialog1"
+        title="Select Request For Quotation"
+        contentWidth="80%"
+        contentHeight="60%"
+    >
+        <VBox id="_IDGenCQuotationLRVBox">
+            <!-- <macros:FilterBar
+                id="_IDGenCQuotationLRFilterBar"
+                metaPath="/RequestForQuatation/@com.sap.vocabularies.UI.v1.SelectionFields"
+                showMessages="true" -->
+            <!-- /> -->
+            <!-- filterBar="_IDGenCQuotationLRFilterBar" -->
+            <!-- isSearchable="false" -->
+            <!-- filterBar="_IDGenCQuotationLRFilterBar" -->
+            <macros:Table
+                id="_IDGenCQRFQDialogTable"
+                metaPath="/RequestForQuatation/@com.sap.vocabularies.UI.v1.LineItem"
+                selectionMode="ForceSingle"
+                initialLoad="true"
+                isSearchable="true"
+                selectionChange=".onRFQDialogTableRowSelectionChange"
+            />
+        </VBox>
+        <buttons>
+            <Button
+                id="_IDGenCQRFQDialogButton"
+                text="Confirm"
+                press=".onAddRFQConfirmPress"
+            />
+            <Button
+                id="_IDGenCQRFQDialogButton1"
+                text="Cancel"
+                press=".onAddRFQCancelPress"
+            />
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

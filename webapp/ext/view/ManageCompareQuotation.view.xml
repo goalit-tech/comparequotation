@@ -1,0 +1,146 @@
+<mvc:View
+    xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:common="sap.suite.ui.commons"
+    xmlns:macros="sap.fe.macros"
+    xmlns:table="sap.fe.macros.table"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    controllerName="nlab.ai.comparequotation.ext.controller.ManageCompareQuotation"
+>
+    <Page
+        id="_IDGenManageCQPage1"
+        title="{LocalModel>/CompareQuotationHeader/CompativeStatementTitle}"
+        floatingFooter="true"
+        class="sapUiResponsivePadding--header sapUiResponsivePadding--content sapUiResponsivePadding--footer sapUiResponsivePadding--floatingFooter"
+    >
+        <!-- <headerContent>
+            <VBox id="_IDGenManageCQVBox">
+                <Title
+                    id="_IDGenManageCQTitle"
+                    text="Request for Quotation"
+                />
+                <Text
+                    id="_IDGenManageCQRFQText"
+                    text="{LocalModel>/CompareQuotationHeader/RequestForQuotation}"
+                    class="sapMObjectNumberLarge"
+                />
+            </VBox>
+        </headerContent> -->
+
+        <!-- Main content -->
+        <!-- <macros:items> -->
+        <IconTabBar
+            id="_IDGenManageCQIconTabstickySubheaderBar"
+            class="sapUiResponsiveContentPadding"
+        >
+            <items>
+                <IconTabFilter
+                    id="_IDGenManageCQIconTabFilter"
+                    text="Quotation Comparison"
+                >
+                    <core:Fragment
+                        id="_IDGenManageCQCreateFragment"
+                        fragmentName="nlab.ai.comparequotation.ext.fragment.QuotationComparisonDisplay"
+                        type="XML"
+                    />
+                </IconTabFilter>
+                <IconTabFilter
+                    id="_IDGenManageCQIconTabFilter2"
+                    text="Request For Quotation"
+                    visible="true"
+                >
+                    <!-- <VBox id="_IDGenManageCQRFQSessionVBox"> -->
+                    <core:Fragment
+                        id="_IDGenManageCQRFQDetailFragment"
+                        fragmentName="nlab.ai.comparequotation.ext.fragment.RFQDetail"
+                        type="XML"
+                    />
+                    <!-- </VBox> -->
+                </IconTabFilter>
+                <IconTabFilter
+                    id="_IDGenManageCQIconTabFilterSQ"
+                    text="Supplier Quotation"
+                    visible="true"
+                >
+                    <!-- <VBox id="_IDGenManageCQRFQSessionVBox"> -->
+                    <core:Fragment
+                        id="_IDGenManageCQRFQDetailFragmentSQ"
+                        fragmentName="nlab.ai.comparequotation.ext.fragment.SupplierQuotationDetail"
+                        type="XML"
+                    />
+                    <!-- </VBox> -->
+                </IconTabFilter>
+                <IconTabFilter
+                    id="_IDGenManageCQIconTabFilter3"
+                    text="Workflow"
+                >
+                    <common:ProcessFlow
+                        id="processflow1"
+                        scrollable="false"
+                        foldedCorners="true"
+                        nodePress=".onNodePress"
+                        lanes="{LocalModel>/lanes}"
+                        nodes="{LocalModel>/nodes}"
+                    >
+                        <!-- nodes="{/nodes}" -->
+                        <common:nodes>
+                            <common:ProcessFlowNode
+                                id="_IDGenProcessFlowNode"
+                                laneId="{LocalModel>lane}"
+                                nodeId="{LocalModel>id}"
+                                title="{LocalModel>title}"
+                                state="{LocalModel>state}"
+                                stateText="{LocalModel>stateText}"
+                                texts="{LocalModel>texts}"
+                            />
+                        </common:nodes>
+                        <common:lanes>
+                            <common:ProcessFlowLaneHeader
+                                id="_IDGenProcessFlowLaneHeader"
+                                laneId="{LocalModel>id}"
+                                iconSrc="{LocalModel>icon}"
+                                text="{LocalModel>label}"
+                                position="{LocalModel>position}"
+                            />
+                        </common:lanes>
+                    </common:ProcessFlow>
+                </IconTabFilter>
+            </items>
+        </IconTabBar>
+        <!-- <VBox id="_IDGenManageCQVBox2" visible="{= ${LocalModel>/IsEditCompareQuotation} ? true:false}">
+				<core:Fragment id="_IDGenManageCQCompareFragment" fragmentName="nlab.ai.comparequotation.ext.fragment.QuotationComparisonDisplay" type="XML" />
+			</VBox> -->
+        <!-- </macros:items> -->
+
+        <!-- Footer aggregation -->
+        <footer>
+            <OverflowToolbar id="_IDGenManageCQOverflowToolbar">
+                <ToolbarSpacer id="_IDGenManageCQToolbarSpacer" />
+                <Button
+                    id="_IDGenManageCQButton2"
+                    visible="{LocalModel>/IsEditCompareQuotation}"
+                    text="Save"
+                    press=".onSaveMCQPress"
+                    type="Emphasized"
+                    icon=""
+                />
+                <Button
+                    id="_IDGenManageCQButton3"
+                    visible="{LocalModel>/IsEditCompareQuotation}"
+                    text="Cancel"
+                    press=".onCancelonMCQPress"
+                    type="Default"
+                    icon=""
+                />
+                <Button
+                    id="_IDGenManageCQButton"
+                    text="Edit"
+                    press=".onCompareQuotationEditPress"
+                    type="Emphasized"
+                    visible="{=${LocalModel>/IsEditCompareQuotation}? false:true}"
+                />
+            </OverflowToolbar>
+        </footer>
+    </Page>
+</mvc:View>

@@ -1,0 +1,1389 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMUNICATION',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.Communication.v1" Alias="Communication"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_PERSONALDATA',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.PersonalData.v1" Alias="PersonalData"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_ANALYTICS',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.Analytics.v1" Alias="Analytics"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_AGGREGATION',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="Org.OData.Aggregation.V1" Alias="SAP__aggregation"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CAPABILITIES',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="Org.OData.Capabilities.V1" Alias="SAP__capabilities"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CODELIST',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.CodeList.v1" Alias="SAP__CodeList"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_COMMON',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.Common.v1" Alias="SAP__common"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_CORE',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="Org.OData.Core.V1" Alias="SAP__core"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_HIERARCHY',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.Hierarchy.v1" Alias="SAP__hierarchy"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_HTML5',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.HTML5.v1" Alias="SAP__HTML5"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_MEASURES',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="Org.OData.Measures.V1" Alias="SAP__measures"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_ODM',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.ODM.v1" Alias="SAP__ODM"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_PDF',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.PDF.v1" Alias="SAP__PDF"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_SESSION',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.Session.v1" Alias="SAP__session"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_SUPPORT',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.Support.v1" Alias="SAP__support"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_UI',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="com.sap.vocabularies.UI.v1" Alias="SAP__UI"/>
+    </edmx:Reference>
+    <edmx:Reference Uri="/sap/opu/odata/IWFND/CATALOGSERVICE;v=2/Vocabularies(TechnicalName='%2FIWBEP%2FVOC_VALIDATION',Version='0001',SAP__Origin='LOCAL')/$value">
+        <edmx:Include Namespace="Org.OData.Validation.V1" Alias="SAP__validation"/>
+    </edmx:Reference>
+    <edmx:DataServices>
+        <Schema Namespace="com.sap.gateway.srvd.zsd_quot_comp_hdr.v0001" Alias="SAP__self">
+            <Annotation Term="SAP__core.SchemaVersion" String="1.0.0"/>
+            <EntityType Name="QuotationComparisonItemType">
+                <Key>
+                    <PropertyRef Name="QuotationComparison"/>
+                    <PropertyRef Name="SNo"/>
+                </Key>
+                <Property Name="QuotationComparison" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="SNo" Type="Edm.String" Nullable="false" MaxLength="5"/>
+                <Property Name="Description" Type="Edm.String" Nullable="false" MaxLength="200"/>
+                <Property Name="Material" Type="Edm.String" Nullable="false" MaxLength="40"/>
+                <Property Name="Supplierquotation" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="Supplierquotationitem" Type="Edm.String" Nullable="false" MaxLength="5"/>
+                <Property Name="Quantity" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="2"/>
+                <Property Name="Units" Type="Edm.String" Nullable="false" MaxLength="3"/>
+                <Property Name="SupplierCode" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="SupplierName" Type="Edm.String" Nullable="false" MaxLength="80"/>
+                <Property Name="UnitRate" Type="Edm.Decimal" Nullable="false" Precision="15" Scale="variable"/>
+                <Property Name="TotalAmount" Type="Edm.Decimal" Nullable="false" Precision="15" Scale="variable"/>
+                <Property Name="Currency" Type="Edm.String" Nullable="false" MaxLength="5"/>
+                <Property Name="MaterialMake" Type="Edm.String" Nullable="false" MaxLength="70"/>
+                <Property Name="Specifications" Type="Edm.String" Nullable="false" MaxLength="255"/>
+                <Property Name="ModelNumber" Type="Edm.String" Nullable="false" MaxLength="40"/>
+                <Property Name="ConvertedAmount" Type="Edm.String" Nullable="false" MaxLength="20"/>
+                <Property Name="Specifications1" Type="Edm.String" Nullable="false" MaxLength="255"/>
+                <Property Name="Specifications2" Type="Edm.String" Nullable="false" MaxLength="255"/>
+                <Property Name="Specifications3" Type="Edm.String" Nullable="false" MaxLength="255"/>
+                <Property Name="ContactPerson" Type="Edm.String" Nullable="false" MaxLength="40"/>
+                <Property Name="PhoneNumber" Type="Edm.String" Nullable="false" MaxLength="20"/>
+                <Property Name="__EntityControl" Type="com.sap.gateway.srvd.zsd_quot_comp_hdr.v0001.EntityControl"/>
+                <Property Name="SAP__Messages" Type="Collection(com.sap.gateway.srvd.zsd_quot_comp_hdr.v0001.SAP__Message)" Nullable="false"/>
+                <NavigationProperty Name="_Header" Type="com.sap.gateway.srvd.zsd_quot_comp_hdr.v0001.QuotationComparisonType" Nullable="false" Partner="_CompareQuotationItem">
+                    <ReferentialConstraint Property="QuotationComparison" ReferencedProperty="QuotationComparison"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="RequestForQuatationType">
+                <Key>
+                    <PropertyRef Name="RequestForQuotation"/>
+                </Key>
+                <Property Name="RequestForQuotation" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="CreationDate" Type="Edm.Date"/>
+                <Property Name="RequestForQuotationName" Type="Edm.String" Nullable="false" MaxLength="40"/>
+                <Property Name="PurchasingDocumentType" Type="Edm.String" Nullable="false" MaxLength="4"/>
+                <Property Name="PurchasingOrganization" Type="Edm.String" Nullable="false" MaxLength="4"/>
+                <Property Name="PurchasingGroup" Type="Edm.String" Nullable="false" MaxLength="3"/>
+                <Property Name="CompanyCode" Type="Edm.String" Nullable="false" MaxLength="4"/>
+                <Property Name="CorrespncInternalReference" Type="Edm.String" Nullable="false" MaxLength="12"/>
+                <Property Name="DocumentCurrency" Type="Edm.String" Nullable="false" MaxLength="5"/>
+                <Property Name="QuotationLatestSubmissionDate" Type="Edm.Date"/>
+                <Property Name="IncotermsClassification" Type="Edm.String" Nullable="false" MaxLength="3"/>
+                <Property Name="IncotermsLocation1" Type="Edm.String" Nullable="false" MaxLength="70"/>
+                <Property Name="IncotermsLocation2" Type="Edm.String" Nullable="false" MaxLength="70"/>
+                <Property Name="CreatedByUser" Type="Edm.String" Nullable="false" MaxLength="12"/>
+            </EntityType>
+            <EntityType Name="SupplierQuotationType">
+                <Key>
+                    <PropertyRef Name="SupplierQuotation"/>
+                </Key>
+                <Property Name="SupplierQuotation" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="RequestForQuotation" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="CompanyCode" Type="Edm.String" Nullable="false" MaxLength="4"/>
+                <Property Name="CompanyCodeName" Type="Edm.String" Nullable="false" MaxLength="25"/>
+                <Property Name="SupplierCode" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="SupplierName" Type="Edm.String" Nullable="false" MaxLength="80"/>
+                <Property Name="QuotationDate" Type="Edm.Date"/>
+                <Property Name="Currency" Type="Edm.String" Nullable="false" MaxLength="5"/>
+                <Property Name="ExchangeRate" Type="Edm.Decimal" Nullable="false" Precision="9" Scale="5"/>
+                <Property Name="ValidityDate" Type="Edm.Date"/>
+                <Property Name="ContactPerson" Type="Edm.String" Nullable="false" MaxLength="80"/>
+                <Property Name="SupplierRemarks" Type="Edm.String" Nullable="false" MaxLength="255"/>
+                <NavigationProperty Name="_SupplierQuotationItem" Type="Collection(com.sap.gateway.srvd.zsd_quot_comp_hdr.v0001.SupplierQuotationItemType)" Partner="_Header">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="TermsAndConditionsType">
+                <Key>
+                    <PropertyRef Name="QuotationComparison"/>
+                    <PropertyRef Name="QuotationComparisonItem"/>
+                    <PropertyRef Name="ItemNo"/>
+                </Key>
+                <Property Name="QuotationComparison" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="QuotationComparisonItem" Type="Edm.String" Nullable="false" MaxLength="5"/>
+                <Property Name="ItemNo" Type="Edm.String" Nullable="false" MaxLength="5"/>
+                <Property Name="KeyField" Type="Edm.String" Nullable="false" MaxLength="80"/>
+                <Property Name="KeyFieldDesc" Type="Edm.String" Nullable="false" MaxLength="120"/>
+                <Property Name="ValueField" Type="Edm.String" Nullable="false" MaxLength="255"/>
+                <Property Name="Field_Property" Type="Edm.String" Nullable="false" MaxLength="80"/>
+                <Property Name="__EntityControl" Type="com.sap.gateway.srvd.zsd_quot_comp_hdr.v0001.EntityControl"/>
+                <Property Name="SAP__Messages" Type="Collection(com.sap.gateway.srvd.zsd_quot_comp_hdr.v0001.SAP__Message)" Nullable="false"/>
+                <NavigationProperty Name="_Header" Type="com.sap.gateway.srvd.zsd_quot_comp_hdr.v0001.QuotationComparisonType" Nullable="false" Partner="_TermsAndConditions">
+                    <ReferentialConstraint Property="QuotationComparison" ReferencedProperty="QuotationComparison"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="SupplierQuotationItemType">
+                <Key>
+                    <PropertyRef Name="SupplierQuotation"/>
+                    <PropertyRef Name="ItemNumber"/>
+                </Key>
+                <Property Name="SupplierQuotation" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="ItemNumber" Type="Edm.String" Nullable="false" MaxLength="5"/>
+                <Property Name="PurchasingDocumentCategory" Type="Edm.String" Nullable="false" MaxLength="1"/>
+                <Property Name="PurchasingDocumentItemText" Type="Edm.String" Nullable="false" MaxLength="40"/>
+                <Property Name="Material" Type="Edm.String" Nullable="false" MaxLength="18"/>
+                <Property Name="ManufacturerMaterial" Type="Edm.String" Nullable="false" MaxLength="18"/>
+                <Property Name="SupplierMaterialNumber" Type="Edm.String" Nullable="false" MaxLength="35"/>
+                <Property Name="ManufacturerPartNmbr" Type="Edm.String" Nullable="false" MaxLength="40"/>
+                <Property Name="Manufacturer" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="MaterialGroup" Type="Edm.String" Nullable="false" MaxLength="9"/>
+                <Property Name="Plant" Type="Edm.String" Nullable="false" MaxLength="4"/>
+                <Property Name="IncotermsClassification" Type="Edm.String" Nullable="false" MaxLength="3"/>
+                <Property Name="IncotermsTransferLocation" Type="Edm.String" Nullable="false" MaxLength="28"/>
+                <Property Name="IncotermsLocation1" Type="Edm.String" Nullable="false" MaxLength="70"/>
+                <Property Name="IncotermsLocation2" Type="Edm.String" Nullable="false" MaxLength="70"/>
+                <Property Name="OrderPriceUnit" Type="Edm.String" Nullable="false" MaxLength="3"/>
+                <Property Name="OrderPriceUnitToOrderUnitNmrtr" Type="Edm.Decimal" Nullable="false" Precision="5"/>
+                <Property Name="OrdPriceUnitToOrderUnitDnmntr" Type="Edm.Decimal" Nullable="false" Precision="5"/>
+                <Property Name="OrderQuantityUnit" Type="Edm.String" Nullable="false" MaxLength="3"/>
+                <Property Name="OrderItemQtyToBaseQtyNmrtr" Type="Edm.Decimal" Nullable="false" Precision="5"/>
+                <Property Name="OrderItemQtyToBaseQtyDnmntr" Type="Edm.Decimal" Nullable="false" Precision="5"/>
+                <Property Name="ScheduleLineOrderQuantity" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="3"/>
+                <Property Name="PurgDocPriceDate" Type="Edm.Date"/>
+                <Property Name="BaseUnit" Type="Edm.String" Nullable="false" MaxLength="3"/>
+                <Property Name="NetAmount" Type="Edm.Decimal" Nullable="false" Precision="13" Scale="variable"/>
+                <Property Name="NetOrderPrice" Type="Edm.Decimal" Nullable="false" Precision="11" Scale="variable"/>
+                <Property Name="NetPriceQuantity" Type="Edm.Decimal" Nullable="false" Precision="5"/>
+                <Property Name="DocumentCurrency" Type="Edm.String" Nullable="false" MaxLength="5"/>
+                <Property Name="PurchaseRequisition" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="PurchaseRequisitionItem" Type="Edm.String" Nullable="false" MaxLength="5"/>
+                <Property Name="RequestForQuotation" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="RequestForQuotationItem" Type="Edm.String" Nullable="false" MaxLength="5"/>
+                <Property Name="YY1_Specifications_PDI" Type="Edm.String" Nullable="false" MaxLength="200"/>
+                <Property Name="YY1_MaterialMake_PDI" Type="Edm.String" Nullable="false" MaxLength="70"/>
+                <Property Name="AccountingAssignment" Type="Edm.String" Nullable="false" MaxLength="1"/>
+                <NavigationProperty Name="_Header" Type="com.sap.gateway.srvd.zsd_quot_comp_hdr.v0001.SupplierQuotationType" Nullable="false" Partner="_SupplierQuotationItem">
+                    <ReferentialConstraint Property="SupplierQuotation" ReferencedProperty="SupplierQuotation"/>
+                </NavigationProperty>
+            </EntityType>
+            <EntityType Name="QuotationComparisonType">
+                <Key>
+                    <PropertyRef Name="QuotationComparison"/>
+                </Key>
+                <Property Name="QuotationComparison" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="RequestForQuotation" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="CompanyCode" Type="Edm.String" Nullable="false" MaxLength="4"/>
+                <Property Name="CompanyName" Type="Edm.String" Nullable="false" MaxLength="40"/>
+                <Property Name="CompativeStatementTitle" Type="Edm.String" Nullable="false" MaxLength="100"/>
+                <Property Name="NameOfRequester" Type="Edm.String" Nullable="false" MaxLength="40"/>
+                <Property Name="AccountAssignment" Type="Edm.String" Nullable="false" MaxLength="30"/>
+                <Property Name="RequisitionNumber" Type="Edm.String" Nullable="false" MaxLength="10"/>
+                <Property Name="RequisitionDate" Type="Edm.Date"/>
+                <Property Name="Purpose" Type="Edm.String" Nullable="false" MaxLength="250"/>
+                <Property Name="ComparisonDate" Type="Edm.Date"/>
+                <Property Name="CreatedBy" Type="Edm.String" Nullable="false" MaxLength="12"/>
+                <Property Name="CreatedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="LastChangedBy" Type="Edm.String" Nullable="false" MaxLength="12"/>
+                <Property Name="LastChangedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+                <Property Name="__CreateByAssociationControl" Type="com.sap.gateway.srvd.zsd_quot_comp_hdr.v0001.QuotationComparisonCbAControl"/>
+                <Property Name="__EntityControl" Type="com.sap.gateway.srvd.zsd_quot_comp_hdr.v0001.EntityControl"/>
+                <Property Name="SAP__Messages" Type="Collection(com.sap.gateway.srvd.zsd_quot_comp_hdr.v0001.SAP__Message)" Nullable="false"/>
+                <NavigationProperty Name="_CompareQuotationItem" Type="Collection(com.sap.gateway.srvd.zsd_quot_comp_hdr.v0001.QuotationComparisonItemType)" Partner="_Header">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+                <NavigationProperty Name="_TermsAndConditions" Type="Collection(com.sap.gateway.srvd.zsd_quot_comp_hdr.v0001.TermsAndConditionsType)" Partner="_Header">
+                    <OnDelete Action="Cascade"/>
+                </NavigationProperty>
+            </EntityType>
+            <ComplexType Name="QuotationComparisonCbAControl">
+                <Property Name="_CompareQuotationItem" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="_TermsAndConditions" Type="Edm.Boolean" Nullable="false"/>
+            </ComplexType>
+            <ComplexType Name="EntityControl">
+                <Property Name="Deletable" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="Updatable" Type="Edm.Boolean" Nullable="false"/>
+            </ComplexType>
+            <ComplexType Name="SAP__Message">
+                <Property Name="code" Type="Edm.String" Nullable="false"/>
+                <Property Name="message" Type="Edm.String" Nullable="false"/>
+                <Property Name="target" Type="Edm.String"/>
+                <Property Name="additionalTargets" Type="Collection(Edm.String)" Nullable="false"/>
+                <Property Name="transition" Type="Edm.Boolean" Nullable="false"/>
+                <Property Name="numericSeverity" Type="Edm.Byte" Nullable="false"/>
+                <Property Name="longtextUrl" Type="Edm.String"/>
+            </ComplexType>
+            <EntityContainer Name="Container">
+                <EntitySet Name="QuotationComparison" EntityType="com.sap.gateway.srvd.zsd_quot_comp_hdr.v0001.QuotationComparisonType">
+                    <NavigationPropertyBinding Path="_CompareQuotationItem" Target="QuotationComparisonItem"/>
+                    <NavigationPropertyBinding Path="_TermsAndConditions" Target="TermsAndConditions"/>
+                </EntitySet>
+                <EntitySet Name="QuotationComparisonItem" EntityType="com.sap.gateway.srvd.zsd_quot_comp_hdr.v0001.QuotationComparisonItemType">
+                    <NavigationPropertyBinding Path="_Header" Target="QuotationComparison"/>
+                </EntitySet>
+                <EntitySet Name="RequestForQuatation" EntityType="com.sap.gateway.srvd.zsd_quot_comp_hdr.v0001.RequestForQuatationType"/>
+                <EntitySet Name="SupplierQuotation" EntityType="com.sap.gateway.srvd.zsd_quot_comp_hdr.v0001.SupplierQuotationType">
+                    <NavigationPropertyBinding Path="_SupplierQuotationItem" Target="SupplierQuotationItem"/>
+                </EntitySet>
+                <EntitySet Name="SupplierQuotationItem" EntityType="com.sap.gateway.srvd.zsd_quot_comp_hdr.v0001.SupplierQuotationItemType">
+                    <NavigationPropertyBinding Path="_Header" Target="SupplierQuotation"/>
+                </EntitySet>
+                <EntitySet Name="TermsAndConditions" EntityType="com.sap.gateway.srvd.zsd_quot_comp_hdr.v0001.TermsAndConditionsType">
+                    <NavigationPropertyBinding Path="_Header" Target="QuotationComparison"/>
+                </EntitySet>
+            </EntityContainer>
+            <Annotations Target="SAP__self.QuotationComparisonItemType/QuotationComparison">
+                <Annotation Term="SAP__core.ComputedDefaultValue"/>
+            </Annotations>
+            <Annotations Target="SAP__self.QuotationComparisonItemType/SNo">
+                <Annotation Term="SAP__core.ComputedDefaultValue"/>
+                <Annotation Term="SAP__common.IsDigitSequence"/>
+            </Annotations>
+            <Annotations Target="SAP__self.QuotationComparisonItemType/Quantity">
+                <Annotation Term="SAP__measures.Unit" Path="Units"/>
+            </Annotations>
+            <Annotations Target="SAP__self.QuotationComparisonItemType/Units">
+                <Annotation Term="SAP__common.IsUnit"/>
+            </Annotations>
+            <Annotations Target="SAP__self.QuotationComparisonItemType/UnitRate">
+                <Annotation Term="SAP__measures.ISOCurrency" Path="Currency"/>
+            </Annotations>
+            <Annotations Target="SAP__self.QuotationComparisonItemType/TotalAmount">
+                <Annotation Term="SAP__measures.ISOCurrency" Path="Currency"/>
+            </Annotations>
+            <Annotations Target="SAP__self.QuotationComparisonItemType/Currency">
+                <Annotation Term="SAP__common.IsCurrency"/>
+            </Annotations>
+            <Annotations Target="SAP__self.QuotationComparisonItemType/__EntityControl">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__UI.HiddenFilter"/>
+                <Annotation Term="SAP__UI.Hidden"/>
+            </Annotations>
+            <Annotations Target="SAP__self.Container/QuotationComparisonItem">
+                <Annotation Term="SAP__capabilities.NavigationRestrictions">
+                    <Record>
+                        <PropertyValue Property="RestrictedProperties">
+                            <Collection>
+                                <Record>
+                                    <PropertyValue Property="NavigationProperty" NavigationPropertyPath="_Header"/>
+                                    <PropertyValue Property="InsertRestrictions">
+                                        <Record>
+                                            <PropertyValue Property="Insertable" Bool="false"/>
+                                        </Record>
+                                    </PropertyValue>
+                                    <PropertyValue Property="DeepUpdateSupport">
+                                        <Record>
+                                            <PropertyValue Property="Supported" Bool="false"/>
+                                        </Record>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.SearchRestrictions">
+                    <Record>
+                        <PropertyValue Property="Searchable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.FilterRestrictions">
+                    <Record>
+                        <PropertyValue Property="NonFilterableProperties">
+                            <Collection>
+                                <PropertyPath>__EntityControl</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.SortRestrictions">
+                    <Record>
+                        <PropertyValue Property="NonSortableProperties">
+                            <Collection>
+                                <PropertyPath>__EntityControl</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.UpdateRestrictions">
+                    <Record>
+                        <PropertyValue Property="DeltaUpdateSupported" Bool="true"/>
+                        <PropertyValue Property="Updatable" Path="__EntityControl/Updatable"/>
+                        <PropertyValue Property="NonUpdatableNavigationProperties">
+                            <Collection>
+                                <PropertyPath>_Header</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="QueryOptions">
+                            <Record>
+                                <PropertyValue Property="SelectSupported" Bool="true"/>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.DeepUpdateSupport">
+                    <Record>
+                        <PropertyValue Property="ContentIDSupported" Bool="true"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.InsertRestrictions">
+                    <Record>
+                        <PropertyValue Property="Insertable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.DeleteRestrictions">
+                    <Record>
+                        <PropertyValue Property="Deletable" Path="__EntityControl/Deletable"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SAP__self.QuotationComparisonItemType">
+                <Annotation Term="SAP__common.Label" String="Quotation Comparison Item"/>
+                <Annotation Term="SAP__common.Messages" Path="SAP__Messages"/>
+            </Annotations>
+            <Annotations Target="SAP__self.Container">
+                <Annotation Term="SAP__CodeList.CurrencyCodes">
+                    <Record>
+                        <PropertyValue Property="Url" String="../../../../default/iwbep/common/0001/$metadata"/>
+                        <PropertyValue Property="CollectionPath" String="Currencies"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__CodeList.UnitsOfMeasure">
+                    <Record>
+                        <PropertyValue Property="Url" String="../../../../default/iwbep/common/0001/$metadata"/>
+                        <PropertyValue Property="CollectionPath" String="UnitsOfMeasure"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__common.ApplyMultiUnitBehaviorForSortingAndFiltering" Bool="true"/>
+                <Annotation Term="SAP__capabilities.FilterFunctions">
+                    <Collection>
+                        <String>eq</String>
+                        <String>ne</String>
+                        <String>gt</String>
+                        <String>ge</String>
+                        <String>lt</String>
+                        <String>le</String>
+                        <String>and</String>
+                        <String>or</String>
+                        <String>contains</String>
+                        <String>startswith</String>
+                        <String>endswith</String>
+                        <String>any</String>
+                        <String>all</String>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__support.TechnicalInfoLinks">
+                    <Record>
+                        <PropertyValue Property="Url" String="../../../../default/iwbep/common/0001/$metadata"/>
+                        <PropertyValue Property="FunctionImport" String="GetTechnicalInfoLinks"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.SupportedFormats">
+                    <Collection>
+                        <String>application/json</String>
+                        <String>application/pdf</String>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__PDF.Features">
+                    <Record>
+                        <PropertyValue Property="DocumentDescriptionReference" String="../../../../default/iwbep/common/0001/$metadata"/>
+                        <PropertyValue Property="DocumentDescriptionCollection" String="MyDocumentDescriptions"/>
+                        <PropertyValue Property="ArchiveFormat" Bool="true"/>
+                        <PropertyValue Property="Border" Bool="true"/>
+                        <PropertyValue Property="CoverPage" Bool="true"/>
+                        <PropertyValue Property="FitToPage" Bool="true"/>
+                        <PropertyValue Property="FontName" Bool="true"/>
+                        <PropertyValue Property="FontSize" Bool="true"/>
+                        <PropertyValue Property="HeaderFooter" Bool="true"/>
+                        <PropertyValue Property="IANATimezoneFormat" Bool="true"/>
+                        <PropertyValue Property="Margin" Bool="true"/>
+                        <PropertyValue Property="Padding" Bool="true"/>
+                        <PropertyValue Property="ResultSizeDefault" Int="20000"/>
+                        <PropertyValue Property="ResultSizeMaximum" Int="20000"/>
+                        <PropertyValue Property="Signature" Bool="true"/>
+                        <PropertyValue Property="TextDirectionLayout" Bool="true"/>
+                        <PropertyValue Property="Treeview" Bool="true"/>
+                        <PropertyValue Property="UploadToFileShare" Bool="true"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.KeyAsSegmentSupported"/>
+                <Annotation Term="SAP__capabilities.AsynchronousRequestsSupported"/>
+            </Annotations>
+            <Annotations Target="SAP__self.RequestForQuatationType/RequestForQuotation">
+                <Annotation Term="SAP__common.Label" String="RequestFor Quotation"/>
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.ValueListReferences">
+                    <Collection>
+                        <String>../../../../srvd_f4/sap/zi_rfq_header/0001;ps='srvd-zsd_quot_comp_hdr-0001';va='com.sap.gateway.srvd.zsd_quot_comp_hdr.v0001.et-zc_rfq_header.requestforquotation'/$metadata</String>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__common.Heading" String="RFQ"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Request for Quotation"/>
+            </Annotations>
+            <Annotations Target="SAP__self.RequestForQuatationType/CreationDate">
+                <Annotation Term="SAP__common.Label" String="Date"/>
+                <Annotation Term="SAP__common.Heading" String="Created"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Creation Date of Purchasing Document"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=MMPUR_ERDAT"/>
+            </Annotations>
+            <Annotations Target="SAP__self.RequestForQuatationType/RequestForQuotationName">
+                <Annotation Term="SAP__common.Label" String="Name"/>
+                <Annotation Term="SAP__common.Heading" String="RFQ Description"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Short description or the title of the RFQ"/>
+            </Annotations>
+            <Annotations Target="SAP__self.RequestForQuatationType/PurchasingDocumentType">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="RFQ Type"/>
+                <Annotation Term="SAP__common.Heading" String="RFQ Document Type"/>
+                <Annotation Term="SAP__common.QuickInfo" String="RFQ Document Type"/>
+            </Annotations>
+            <Annotations Target="SAP__self.RequestForQuatationType/PurchasingOrganization">
+                <Annotation Term="SAP__common.Label" String="Purchasing Organization"/>
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Purchasing Organization"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=EKORG_LL"/>
+            </Annotations>
+            <Annotations Target="SAP__self.RequestForQuatationType/PurchasingGroup">
+                <Annotation Term="SAP__common.Label" String="Purchasing Group"/>
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Heading" String="PGr"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Purchasing Group"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=BKGRP"/>
+            </Annotations>
+            <Annotations Target="SAP__self.RequestForQuatationType/CompanyCode">
+                <Annotation Term="SAP__common.Label" String="CompanyCode"/>
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Heading" String="CoCd"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Company Code"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=BUKRS"/>
+            </Annotations>
+            <Annotations Target="SAP__self.RequestForQuatationType/DocumentCurrency">
+                <Annotation Term="SAP__common.IsCurrency"/>
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Currency"/>
+                <Annotation Term="SAP__common.Heading" String="Crcy"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Currency Key"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=WAERS"/>
+            </Annotations>
+            <Annotations Target="SAP__self.RequestForQuatationType/IncotermsClassification">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Incoterms"/>
+                <Annotation Term="SAP__common.Heading" String="IncoT"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Incoterms (Part 1)"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=INCO1"/>
+            </Annotations>
+            <Annotations Target="SAP__self.RequestForQuatationType/CreatedByUser">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Created By"/>
+                <Annotation Term="SAP__common.QuickInfo" String="User of person who created a purchasing document"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=MMPUR_ERNAM"/>
+            </Annotations>
+            <Annotations Target="SAP__self.RequestForQuatationType">
+                <Annotation Term="SAP__common.Label" String="RFQ Header Details"/>
+                <Annotation Term="SAP__UI.HeaderInfo">
+                    <Record>
+                        <PropertyValue Property="TypeName" String="Quotation Comparison"/>
+                        <PropertyValue Property="TypeNamePlural" String="Quotation Comparisons"/>
+                        <PropertyValue Property="Title">
+                            <Record Type="SAP__UI.DataField">
+                                <PropertyValue Property="Value" Path="RequestForQuotation"/>
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue Property="Description">
+                            <Record Type="SAP__UI.DataField">
+                                <PropertyValue Property="Value" Path="RequestForQuotationName"/>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__UI.LineItem">
+                    <Collection>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Value" Path="RequestForQuotation"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Value" Path="CreationDate"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Value" Path="RequestForQuotationName"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Value" Path="PurchasingOrganization"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Value" Path="PurchasingGroup"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Value" Path="CompanyCode"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__UI.SelectionFields">
+                    <Collection>
+                        <PropertyPath>RequestForQuotation</PropertyPath>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SAP__self.Container/RequestForQuatation">
+                <Annotation Term="SAP__capabilities.SearchRestrictions">
+                    <Record>
+                        <PropertyValue Property="Searchable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.InsertRestrictions">
+                    <Record>
+                        <PropertyValue Property="Insertable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.DeleteRestrictions">
+                    <Record>
+                        <PropertyValue Property="Deletable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.UpdateRestrictions">
+                    <Record>
+                        <PropertyValue Property="Updatable" Bool="false"/>
+                        <PropertyValue Property="QueryOptions">
+                            <Record>
+                                <PropertyValue Property="SelectSupported" Bool="true"/>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SAP__self.SupplierQuotationType/SupplierQuotation">
+                <Annotation Term="SAP__common.Label" String="Supplier Quotation"/>
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Heading" String="Quotation"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Supplier Quotation Number"/>
+            </Annotations>
+            <Annotations Target="SAP__self.SupplierQuotationType/RequestForQuotation">
+                <Annotation Term="SAP__common.Label" String="RequestFor Quotation"/>
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Heading" String="RFQ"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Request for Quotation"/>
+            </Annotations>
+            <Annotations Target="SAP__self.SupplierQuotationType/CompanyCode">
+                <Annotation Term="SAP__common.Label" String="CompanyCode"/>
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Heading" String="CoCd"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Company Code"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=BUKRS"/>
+            </Annotations>
+            <Annotations Target="SAP__self.SupplierQuotationType/CompanyCodeName">
+                <Annotation Term="SAP__common.Label" String="CompanyCodeName"/>
+                <Annotation Term="SAP__common.Heading" String="Company Name"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Name of Company Code or Company"/>
+            </Annotations>
+            <Annotations Target="SAP__self.SupplierQuotationType/SupplierCode">
+                <Annotation Term="SAP__common.Label" String="SupplierCode"/>
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Heading" String="Supplier"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Account Number of Supplier"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=LIFNR"/>
+            </Annotations>
+            <Annotations Target="SAP__self.SupplierQuotationType/SupplierName">
+                <Annotation Term="SAP__common.Label" String="SupplierName"/>
+                <Annotation Term="SAP__common.Heading" String="Supplier"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Name of Supplier"/>
+            </Annotations>
+            <Annotations Target="SAP__self.SupplierQuotationType/Currency">
+                <Annotation Term="SAP__common.IsCurrency"/>
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Currency"/>
+                <Annotation Term="SAP__common.Heading" String="Crcy"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Currency Key"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=WAERS"/>
+            </Annotations>
+            <Annotations Target="SAP__self.SupplierQuotationType/_SupplierQuotationItem">
+                <Annotation Term="SAP__common.Composition"/>
+            </Annotations>
+            <Annotations Target="SAP__self.Container/SupplierQuotation">
+                <Annotation Term="SAP__capabilities.NavigationRestrictions">
+                    <Record>
+                        <PropertyValue Property="RestrictedProperties">
+                            <Collection>
+                                <Record>
+                                    <PropertyValue Property="NavigationProperty" NavigationPropertyPath="_SupplierQuotationItem"/>
+                                    <PropertyValue Property="InsertRestrictions">
+                                        <Record>
+                                            <PropertyValue Property="Insertable" Bool="false"/>
+                                        </Record>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.SearchRestrictions">
+                    <Record>
+                        <PropertyValue Property="Searchable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.InsertRestrictions">
+                    <Record>
+                        <PropertyValue Property="Insertable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.DeleteRestrictions">
+                    <Record>
+                        <PropertyValue Property="Deletable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.UpdateRestrictions">
+                    <Record>
+                        <PropertyValue Property="Updatable" Bool="false"/>
+                        <PropertyValue Property="NonUpdatableNavigationProperties">
+                            <Collection>
+                                <PropertyPath>_SupplierQuotationItem</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="QueryOptions">
+                            <Record>
+                                <PropertyValue Property="SelectSupported" Bool="true"/>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SAP__self.SupplierQuotationType">
+                <Annotation Term="SAP__common.Label" String="Supplier Quotation Header"/>
+                <Annotation Term="SAP__UI.HeaderInfo">
+                    <Record>
+                        <PropertyValue Property="TypeName" String="Supplier Quotation"/>
+                        <PropertyValue Property="TypeNamePlural" String="Supplier Quotation"/>
+                        <PropertyValue Property="Title">
+                            <Record Type="SAP__UI.DataField">
+                                <PropertyValue Property="Value" Path="SupplierQuotation"/>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__UI.LineItem">
+                    <Collection>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Value" Path="SupplierQuotation"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Value" Path="RequestForQuotation"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Value" Path="CompanyCode"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Value" Path="CompanyCodeName"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Value" Path="SupplierCode"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Value" Path="SupplierName"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__UI.SelectionFields">
+                    <Collection>
+                        <PropertyPath>SupplierQuotation</PropertyPath>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SAP__self.TermsAndConditionsType/QuotationComparison">
+                <Annotation Term="SAP__core.Computed"/>
+            </Annotations>
+            <Annotations Target="SAP__self.TermsAndConditionsType/QuotationComparisonItem">
+                <Annotation Term="SAP__core.ComputedDefaultValue"/>
+                <Annotation Term="SAP__common.IsDigitSequence"/>
+            </Annotations>
+            <Annotations Target="SAP__self.TermsAndConditionsType/ItemNo">
+                <Annotation Term="SAP__core.ComputedDefaultValue"/>
+                <Annotation Term="SAP__common.IsDigitSequence"/>
+            </Annotations>
+            <Annotations Target="SAP__self.TermsAndConditionsType/__EntityControl">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__UI.HiddenFilter"/>
+                <Annotation Term="SAP__UI.Hidden"/>
+            </Annotations>
+            <Annotations Target="SAP__self.Container/TermsAndConditions">
+                <Annotation Term="SAP__capabilities.NavigationRestrictions">
+                    <Record>
+                        <PropertyValue Property="RestrictedProperties">
+                            <Collection>
+                                <Record>
+                                    <PropertyValue Property="NavigationProperty" NavigationPropertyPath="_Header"/>
+                                    <PropertyValue Property="InsertRestrictions">
+                                        <Record>
+                                            <PropertyValue Property="Insertable" Bool="false"/>
+                                        </Record>
+                                    </PropertyValue>
+                                    <PropertyValue Property="DeepUpdateSupport">
+                                        <Record>
+                                            <PropertyValue Property="Supported" Bool="false"/>
+                                        </Record>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.SearchRestrictions">
+                    <Record>
+                        <PropertyValue Property="Searchable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.FilterRestrictions">
+                    <Record>
+                        <PropertyValue Property="NonFilterableProperties">
+                            <Collection>
+                                <PropertyPath>__EntityControl</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.SortRestrictions">
+                    <Record>
+                        <PropertyValue Property="NonSortableProperties">
+                            <Collection>
+                                <PropertyPath>__EntityControl</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.UpdateRestrictions">
+                    <Record>
+                        <PropertyValue Property="DeltaUpdateSupported" Bool="true"/>
+                        <PropertyValue Property="Updatable" Path="__EntityControl/Updatable"/>
+                        <PropertyValue Property="NonUpdatableNavigationProperties">
+                            <Collection>
+                                <PropertyPath>_Header</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="QueryOptions">
+                            <Record>
+                                <PropertyValue Property="SelectSupported" Bool="true"/>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.DeepUpdateSupport">
+                    <Record>
+                        <PropertyValue Property="ContentIDSupported" Bool="true"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.InsertRestrictions">
+                    <Record>
+                        <PropertyValue Property="Insertable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.DeleteRestrictions">
+                    <Record>
+                        <PropertyValue Property="Deletable" Path="__EntityControl/Deletable"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SAP__self.TermsAndConditionsType">
+                <Annotation Term="SAP__common.Label" String="Quotation Terms"/>
+                <Annotation Term="SAP__common.Messages" Path="SAP__Messages"/>
+            </Annotations>
+            <Annotations Target="SAP__self.SupplierQuotationItemType/SupplierQuotation">
+                <Annotation Term="SAP__common.Label" String="Supplier Quotation"/>
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Heading" String="Pur. Doc."/>
+                <Annotation Term="SAP__common.QuickInfo" String="Purchasing Document Number"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=EBELN"/>
+            </Annotations>
+            <Annotations Target="SAP__self.SupplierQuotationItemType/ItemNumber">
+                <Annotation Term="SAP__common.Label" String="Supplier QuotationItem"/>
+                <Annotation Term="SAP__common.IsDigitSequence"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Item Number of Supplier Quotation"/>
+            </Annotations>
+            <Annotations Target="SAP__self.SupplierQuotationItemType/PurchasingDocumentCategory">
+                <Annotation Term="SAP__common.Label" String="PurchasingDocumentCategory"/>
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Heading" String="Cat"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Purchasing Document Category"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=BSTYP"/>
+            </Annotations>
+            <Annotations Target="SAP__self.SupplierQuotationItemType/PurchasingDocumentItemText">
+                <Annotation Term="SAP__common.Label" String="PurchasingDocument ItemText"/>
+                <Annotation Term="SAP__common.Heading" String="Short Text"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Short Text"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=TXZ01"/>
+            </Annotations>
+            <Annotations Target="SAP__self.SupplierQuotationItemType/Material">
+                <Annotation Term="SAP__common.Label" String="Material"/>
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Heading" String="Material"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Material Number"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=MATNR"/>
+            </Annotations>
+            <Annotations Target="SAP__self.SupplierQuotationItemType/ManufacturerMaterial">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Material"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Material number"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=EMATNR"/>
+            </Annotations>
+            <Annotations Target="SAP__self.SupplierQuotationItemType/SupplierMaterialNumber">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Supplier Mat. No."/>
+                <Annotation Term="SAP__common.Heading" String="Supplier Material Number"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Material Number Used by Supplier"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=IDNLF"/>
+            </Annotations>
+            <Annotations Target="SAP__self.SupplierQuotationItemType/ManufacturerPartNmbr">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Mfr. Part Number"/>
+                <Annotation Term="SAP__common.Heading" String="MPN"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Manufacturer Part Number"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=MFRPN"/>
+            </Annotations>
+            <Annotations Target="SAP__self.SupplierQuotationItemType/Manufacturer">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Manufacturer"/>
+                <Annotation Term="SAP__common.Heading" String="Manufact."/>
+                <Annotation Term="SAP__common.QuickInfo" String="Number of a Manufacturer"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=MFRNR"/>
+            </Annotations>
+            <Annotations Target="SAP__self.SupplierQuotationItemType/MaterialGroup">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Material Group"/>
+                <Annotation Term="SAP__common.Heading" String="Matl Group"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=MATKL"/>
+            </Annotations>
+            <Annotations Target="SAP__self.SupplierQuotationItemType/Plant">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Plant"/>
+                <Annotation Term="SAP__common.Heading" String="Plnt"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=EWERK"/>
+            </Annotations>
+            <Annotations Target="SAP__self.SupplierQuotationItemType/IncotermsClassification">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Incoterms"/>
+                <Annotation Term="SAP__common.Heading" String="IncoT"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Incoterms (Part 1)"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=INCO1"/>
+            </Annotations>
+            <Annotations Target="SAP__self.SupplierQuotationItemType/OrderPriceUnit">
+                <Annotation Term="SAP__common.IsUnit"/>
+                <Annotation Term="SAP__common.Label" String="Order Price Unit"/>
+                <Annotation Term="SAP__common.Heading" String="OPU"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Order Price Unit (Purchasing)"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=BBPRM"/>
+            </Annotations>
+            <Annotations Target="SAP__self.SupplierQuotationItemType/OrderQuantityUnit">
+                <Annotation Term="SAP__common.IsUnit"/>
+                <Annotation Term="SAP__common.Label" String="Order Unit"/>
+                <Annotation Term="SAP__common.Heading" String="OUn"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Purchase Order Unit of Measure"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=BSTME"/>
+            </Annotations>
+            <Annotations Target="SAP__self.SupplierQuotationItemType/ScheduleLineOrderQuantity">
+                <Annotation Term="SAP__measures.Unit" Path="OrderQuantityUnit"/>
+                <Annotation Term="SAP__common.Label" String="Order Quantity"/>
+                <Annotation Term="SAP__common.Heading" String="PO Quantity"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Purchase Order Quantity"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=BSTMG"/>
+            </Annotations>
+            <Annotations Target="SAP__self.SupplierQuotationItemType/BaseUnit">
+                <Annotation Term="SAP__common.IsUnit"/>
+                <Annotation Term="SAP__common.Label" String="Base Unit of Measure"/>
+                <Annotation Term="SAP__common.Heading" String="BUn"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=LAGME"/>
+            </Annotations>
+            <Annotations Target="SAP__self.SupplierQuotationItemType/NetAmount">
+                <Annotation Term="SAP__measures.ISOCurrency" Path="DocumentCurrency"/>
+                <Annotation Term="SAP__common.Label" String="Quotation Net Value"/>
+            </Annotations>
+            <Annotations Target="SAP__self.SupplierQuotationItemType/NetOrderPrice">
+                <Annotation Term="SAP__measures.ISOCurrency" Path="DocumentCurrency"/>
+                <Annotation Term="SAP__common.Label" String="Net Order Price"/>
+                <Annotation Term="SAP__common.Heading" String="Net Price"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Net Price in Purchasing Document (in Document Currency)"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=BPREI"/>
+            </Annotations>
+            <Annotations Target="SAP__self.SupplierQuotationItemType/DocumentCurrency">
+                <Annotation Term="SAP__common.IsCurrency"/>
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Currency"/>
+                <Annotation Term="SAP__common.Heading" String="Crcy"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Currency Key"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=WAERS"/>
+            </Annotations>
+            <Annotations Target="SAP__self.SupplierQuotationItemType/PurchaseRequisition">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Purchase Requisition"/>
+                <Annotation Term="SAP__common.Heading" String="Purch.Req."/>
+                <Annotation Term="SAP__common.QuickInfo" String="Purchase Requisition Number"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=BANFN"/>
+            </Annotations>
+            <Annotations Target="SAP__self.SupplierQuotationItemType/PurchaseRequisitionItem">
+                <Annotation Term="SAP__common.IsDigitSequence"/>
+                <Annotation Term="SAP__common.Label" String="Item of requisition"/>
+                <Annotation Term="SAP__common.Heading" String="Item"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Item Number of Purchase Requisition"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=BNFPO"/>
+            </Annotations>
+            <Annotations Target="SAP__self.SupplierQuotationItemType/RequestForQuotation">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Req. for Quotation"/>
+                <Annotation Term="SAP__common.Heading" String="RFQ"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Identifier for Request for Quotation"/>
+            </Annotations>
+            <Annotations Target="SAP__self.SupplierQuotationItemType/RequestForQuotationItem">
+                <Annotation Term="SAP__common.IsDigitSequence"/>
+                <Annotation Term="SAP__common.Label" String="Item Number for RFQ"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Item Number for Request for Quotation"/>
+            </Annotations>
+            <Annotations Target="SAP__self.SupplierQuotationItemType/AccountingAssignment">
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Label" String="Acct Assignment Cat."/>
+                <Annotation Term="SAP__common.Heading" String="A"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Account Assignment Category"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=KNTTP"/>
+            </Annotations>
+            <Annotations Target="SAP__self.Container/SupplierQuotationItem">
+                <Annotation Term="SAP__capabilities.NavigationRestrictions">
+                    <Record>
+                        <PropertyValue Property="RestrictedProperties">
+                            <Collection>
+                                <Record>
+                                    <PropertyValue Property="NavigationProperty" NavigationPropertyPath="_Header"/>
+                                    <PropertyValue Property="InsertRestrictions">
+                                        <Record>
+                                            <PropertyValue Property="Insertable" Bool="false"/>
+                                        </Record>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.SearchRestrictions">
+                    <Record>
+                        <PropertyValue Property="Searchable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.InsertRestrictions">
+                    <Record>
+                        <PropertyValue Property="Insertable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.DeleteRestrictions">
+                    <Record>
+                        <PropertyValue Property="Deletable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.UpdateRestrictions">
+                    <Record>
+                        <PropertyValue Property="Updatable" Bool="false"/>
+                        <PropertyValue Property="NonUpdatableNavigationProperties">
+                            <Collection>
+                                <PropertyPath>_Header</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="QueryOptions">
+                            <Record>
+                                <PropertyValue Property="SelectSupported" Bool="true"/>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.FilterRestrictions">
+                    <Record>
+                        <PropertyValue Property="FilterExpressionRestrictions">
+                            <Collection>
+                                <Record>
+                                    <PropertyValue Property="Property" PropertyPath="ScheduleLineOrderQuantity"/>
+                                    <PropertyValue Property="AllowedExpressions" String="MultiValue"/>
+                                </Record>
+                                <Record>
+                                    <PropertyValue Property="Property" PropertyPath="NetAmount"/>
+                                    <PropertyValue Property="AllowedExpressions" String="MultiValue"/>
+                                </Record>
+                                <Record>
+                                    <PropertyValue Property="Property" PropertyPath="NetOrderPrice"/>
+                                    <PropertyValue Property="AllowedExpressions" String="MultiValue"/>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SAP__self.SupplierQuotationItemType">
+                <Annotation Term="SAP__common.Label" String="Supplier Quotation Item"/>
+                <Annotation Term="SAP__UI.HeaderInfo">
+                    <Record>
+                        <PropertyValue Property="TypeName" String="Supplier Quotation"/>
+                        <PropertyValue Property="TypeNamePlural" String="Supplier Quotation"/>
+                        <PropertyValue Property="Title">
+                            <Record Type="SAP__UI.DataField">
+                                <PropertyValue Property="Value" Path="SupplierQuotation"/>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__UI.LineItem">
+                    <Collection>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Value" Path="SupplierQuotation"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Value" Path="ItemNumber"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Value" Path="PurchasingDocumentCategory"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Value" Path="PurchasingDocumentItemText"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Value" Path="Material"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__UI.SelectionFields">
+                    <Collection>
+                        <PropertyPath>SupplierQuotation</PropertyPath>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SAP__self.QuotationComparisonType/QuotationComparison">
+                <Annotation Term="SAP__common.Label" String="Quotation Comparison"/>
+                <Annotation Term="SAP__core.ComputedDefaultValue"/>
+                <Annotation Term="SAP__common.ValueListReferences">
+                    <Collection>
+                        <String>../../../../srvd_f4/sap/zi_quot_comp_hdr/0001;ps='srvd-zsd_quot_comp_hdr-0001';va='com.sap.gateway.srvd.zsd_quot_comp_hdr.v0001.et-zc_quot_comp_hdr.quotationcomparison'/$metadata</String>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SAP__self.QuotationComparisonType/RequestForQuotation">
+                <Annotation Term="SAP__common.Label" String="RequestFor Quotation"/>
+                <Annotation Term="SAP__common.ValueListReferences">
+                    <Collection>
+                        <String>../../../../srvd_f4/sap/zi_rfq_header/0001;ps='srvd-zsd_quot_comp_hdr-0001';va='com.sap.gateway.srvd.zsd_quot_comp_hdr.v0001.et-zc_quot_comp_hdr.requestforquotation'/$metadata</String>
+                    </Collection>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SAP__self.QuotationComparisonType/CompanyCode">
+                <Annotation Term="SAP__common.Label" String="Company Code"/>
+            </Annotations>
+            <Annotations Target="SAP__self.QuotationComparisonType/CompanyName">
+                <Annotation Term="SAP__common.Label" String="Company Name"/>
+            </Annotations>
+            <Annotations Target="SAP__self.QuotationComparisonType/CompativeStatementTitle">
+                <Annotation Term="SAP__common.Label" String="CompativeStatement Title"/>
+            </Annotations>
+            <Annotations Target="SAP__self.QuotationComparisonType/NameOfRequester">
+                <Annotation Term="SAP__common.Label" String="NameOf Requester"/>
+            </Annotations>
+            <Annotations Target="SAP__self.QuotationComparisonType/AccountAssignment">
+                <Annotation Term="SAP__common.Label" String="Account Assignment"/>
+            </Annotations>
+            <Annotations Target="SAP__self.QuotationComparisonType/RequisitionNumber">
+                <Annotation Term="SAP__common.Label" String="Requisition Number"/>
+            </Annotations>
+            <Annotations Target="SAP__self.QuotationComparisonType/RequisitionDate">
+                <Annotation Term="SAP__common.Label" String="Requisition Date"/>
+            </Annotations>
+            <Annotations Target="SAP__self.QuotationComparisonType/Purpose">
+                <Annotation Term="SAP__common.Label" String="Purpose"/>
+            </Annotations>
+            <Annotations Target="SAP__self.QuotationComparisonType/ComparisonDate">
+                <Annotation Term="SAP__common.Label" String="Comparison Date"/>
+            </Annotations>
+            <Annotations Target="SAP__self.QuotationComparisonType/CreatedBy">
+                <Annotation Term="SAP__common.Label" String="CreatedBy"/>
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Heading" String="Created By"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Created By User"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=ABP_CREATION_USER"/>
+            </Annotations>
+            <Annotations Target="SAP__self.QuotationComparisonType/CreatedAt">
+                <Annotation Term="SAP__common.Label" String="CreatedAt"/>
+                <Annotation Term="SAP__common.Heading" String="Created On"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Creation Date Time"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=ABP_CREATION_TSTMPL"/>
+            </Annotations>
+            <Annotations Target="SAP__self.QuotationComparisonType/LastChangedBy">
+                <Annotation Term="SAP__common.Label" String="LastChangedBy"/>
+                <Annotation Term="SAP__common.IsUpperCase"/>
+                <Annotation Term="SAP__common.Heading" String="Changed By"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Last Changed By User"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=ABP_LASTCHANGE_USER"/>
+            </Annotations>
+            <Annotations Target="SAP__self.QuotationComparisonType/LastChangedAt">
+                <Annotation Term="SAP__common.Label" String="LastChangedAt"/>
+                <Annotation Term="SAP__common.Heading" String="Changed On"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Last Change Date Time"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=ABP_LASTCHANGE_TSTMPL"/>
+            </Annotations>
+            <Annotations Target="SAP__self.QuotationComparisonType/__CreateByAssociationControl">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__UI.HiddenFilter"/>
+                <Annotation Term="SAP__UI.Hidden"/>
+            </Annotations>
+            <Annotations Target="SAP__self.QuotationComparisonType/__EntityControl">
+                <Annotation Term="SAP__core.Computed"/>
+                <Annotation Term="SAP__UI.HiddenFilter"/>
+                <Annotation Term="SAP__UI.Hidden"/>
+            </Annotations>
+            <Annotations Target="SAP__self.QuotationComparisonType/_CompareQuotationItem">
+                <Annotation Term="SAP__common.Composition"/>
+            </Annotations>
+            <Annotations Target="SAP__self.Container/QuotationComparison">
+                <Annotation Term="SAP__capabilities.NavigationRestrictions">
+                    <Record>
+                        <PropertyValue Property="RestrictedProperties">
+                            <Collection>
+                                <Record>
+                                    <PropertyValue Property="NavigationProperty" NavigationPropertyPath="_CompareQuotationItem"/>
+                                    <PropertyValue Property="InsertRestrictions">
+                                        <Record>
+                                            <PropertyValue Property="Insertable" Path="__CreateByAssociationControl/_CompareQuotationItem"/>
+                                        </Record>
+                                    </PropertyValue>
+                                </Record>
+                                <Record>
+                                    <PropertyValue Property="NavigationProperty" NavigationPropertyPath="_TermsAndConditions"/>
+                                    <PropertyValue Property="InsertRestrictions">
+                                        <Record>
+                                            <PropertyValue Property="Insertable" Path="__CreateByAssociationControl/_TermsAndConditions"/>
+                                        </Record>
+                                    </PropertyValue>
+                                </Record>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.SearchRestrictions">
+                    <Record>
+                        <PropertyValue Property="Searchable" Bool="false"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.FilterRestrictions">
+                    <Record>
+                        <PropertyValue Property="NonFilterableProperties">
+                            <Collection>
+                                <PropertyPath>__CreateByAssociationControl</PropertyPath>
+                                <PropertyPath>__EntityControl</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.SortRestrictions">
+                    <Record>
+                        <PropertyValue Property="NonSortableProperties">
+                            <Collection>
+                                <PropertyPath>__CreateByAssociationControl</PropertyPath>
+                                <PropertyPath>__EntityControl</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.UpdateRestrictions">
+                    <Record>
+                        <PropertyValue Property="DeltaUpdateSupported" Bool="true"/>
+                        <PropertyValue Property="Updatable" Path="__EntityControl/Updatable"/>
+                        <PropertyValue Property="NonUpdatableNavigationProperties">
+                            <Collection>
+                                <PropertyPath>_CompareQuotationItem</PropertyPath>
+                                <PropertyPath>_TermsAndConditions</PropertyPath>
+                            </Collection>
+                        </PropertyValue>
+                        <PropertyValue Property="QueryOptions">
+                            <Record>
+                                <PropertyValue Property="SelectSupported" Bool="true"/>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.DeepUpdateSupport">
+                    <Record>
+                        <PropertyValue Property="ContentIDSupported" Bool="true"/>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__capabilities.DeleteRestrictions">
+                    <Record>
+                        <PropertyValue Property="Deletable" Path="__EntityControl/Deletable"/>
+                    </Record>
+                </Annotation>
+            </Annotations>
+            <Annotations Target="SAP__self.QuotationComparisonType/_TermsAndConditions">
+                <Annotation Term="SAP__common.Composition"/>
+            </Annotations>
+            <Annotations Target="SAP__self.QuotationComparisonType">
+                <Annotation Term="SAP__common.Label" String="Quotation Comparison Header"/>
+                <Annotation Term="SAP__UI.HeaderInfo">
+                    <Record>
+                        <PropertyValue Property="TypeName" String="Quotation Comparison"/>
+                        <PropertyValue Property="TypeNamePlural" String="Quotation Comparisons"/>
+                        <PropertyValue Property="Title">
+                            <Record Type="SAP__UI.DataField">
+                                <PropertyValue Property="Value" Path="QuotationComparison"/>
+                            </Record>
+                        </PropertyValue>
+                        <PropertyValue Property="Description">
+                            <Record Type="SAP__UI.DataField">
+                                <PropertyValue Property="Value" Path="CompativeStatementTitle"/>
+                            </Record>
+                        </PropertyValue>
+                    </Record>
+                </Annotation>
+                <Annotation Term="SAP__UI.LineItem">
+                    <Collection>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Value" Path="QuotationComparison"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Value" Path="RequestForQuotation"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Value" Path="CompativeStatementTitle"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Value" Path="NameOfRequester"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Value" Path="Purpose"/>
+                        </Record>
+                        <Record Type="SAP__UI.DataField">
+                            <PropertyValue Property="Value" Path="ComparisonDate"/>
+                        </Record>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__UI.SelectionFields">
+                    <Collection>
+                        <PropertyPath>QuotationComparison</PropertyPath>
+                        <PropertyPath>RequestForQuotation</PropertyPath>
+                    </Collection>
+                </Annotation>
+                <Annotation Term="SAP__common.Messages" Path="SAP__Messages"/>
+            </Annotations>
+            <Annotations Target="SAP__self.RequestForQuatationType/CorrespncInternalReference">
+                <Annotation Term="SAP__common.Label" String="Our Reference"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=UNSEZ"/>
+            </Annotations>
+            <Annotations Target="SAP__self.RequestForQuatationType/QuotationLatestSubmissionDate">
+                <Annotation Term="SAP__common.Label" String="Quotation Deadline"/>
+                <Annotation Term="SAP__common.Heading" String="QuotDdln"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Deadline for Submission of Bid/Quotation"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=ANGAB"/>
+            </Annotations>
+            <Annotations Target="SAP__self.RequestForQuatationType/IncotermsLocation1">
+                <Annotation Term="SAP__common.Label" String="Incoterms Location 1"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=INCO2_L"/>
+            </Annotations>
+            <Annotations Target="SAP__self.RequestForQuatationType/IncotermsLocation2">
+                <Annotation Term="SAP__common.Label" String="Incoterms Location 2"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=INCO3_L"/>
+            </Annotations>
+            <Annotations Target="SAP__self.SupplierQuotationType/QuotationDate">
+                <Annotation Term="SAP__common.Label" String="Quotation Date"/>
+                <Annotation Term="SAP__common.Heading" String="Quot. Date"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Quotation Submission Date"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=IHRAN"/>
+            </Annotations>
+            <Annotations Target="SAP__self.SupplierQuotationType/ExchangeRate">
+                <Annotation Term="SAP__common.Label" String="Exchange Rate"/>
+            </Annotations>
+            <Annotations Target="SAP__self.SupplierQuotationType/ValidityDate">
+                <Annotation Term="SAP__common.Label" String="Binding Period"/>
+                <Annotation Term="SAP__common.Heading" String="Bindg Per."/>
+                <Annotation Term="SAP__common.QuickInfo" String="Binding Period for Quotation"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=EBNDT"/>
+            </Annotations>
+            <Annotations Target="SAP__self.SupplierQuotationItemType/IncotermsTransferLocation">
+                <Annotation Term="SAP__common.Label" String="Incoterms (Part 2)"/>
+                <Annotation Term="SAP__common.Heading" String="Inco. 2"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=INCO2"/>
+            </Annotations>
+            <Annotations Target="SAP__self.SupplierQuotationItemType/IncotermsLocation1">
+                <Annotation Term="SAP__common.Label" String="Incoterms Location 1"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=INCO2_L"/>
+            </Annotations>
+            <Annotations Target="SAP__self.SupplierQuotationItemType/IncotermsLocation2">
+                <Annotation Term="SAP__common.Label" String="Incoterms Location 2"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=INCO3_L"/>
+            </Annotations>
+            <Annotations Target="SAP__self.SupplierQuotationItemType/OrderPriceUnitToOrderUnitNmrtr">
+                <Annotation Term="SAP__common.Label" String="Quantity Conversion"/>
+                <Annotation Term="SAP__common.Heading" String="Conv."/>
+                <Annotation Term="SAP__common.QuickInfo" String="Numerator for Conversion of Order Price Unit into Order Unit"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=BPUMZ"/>
+            </Annotations>
+            <Annotations Target="SAP__self.SupplierQuotationItemType/OrdPriceUnitToOrderUnitDnmntr">
+                <Annotation Term="SAP__common.Label" String="Quantity Conversion"/>
+                <Annotation Term="SAP__common.Heading" String="Conv."/>
+                <Annotation Term="SAP__common.QuickInfo" String="Denominator for Conv. of Order Price Unit into Order Unit"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=BPUMN"/>
+            </Annotations>
+            <Annotations Target="SAP__self.SupplierQuotationItemType/OrderItemQtyToBaseQtyNmrtr">
+                <Annotation Term="SAP__common.Label" String="Equal To"/>
+                <Annotation Term="SAP__common.Heading" String="Eq. To"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Numerator for Conversion of Order Unit to Base Unit"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=UMBSZ"/>
+            </Annotations>
+            <Annotations Target="SAP__self.SupplierQuotationItemType/OrderItemQtyToBaseQtyDnmntr">
+                <Annotation Term="SAP__common.Label" String="Denominator"/>
+                <Annotation Term="SAP__common.Heading" String="Denom."/>
+                <Annotation Term="SAP__common.QuickInfo" String="Denominator for Conversion of Order Unit to Base Unit"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=UMBSN"/>
+            </Annotations>
+            <Annotations Target="SAP__self.SupplierQuotationItemType/PurgDocPriceDate">
+                <Annotation Term="SAP__common.Label" String="Price Date"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Date of Price Determination"/>
+                <Annotation Term="SAP__common.DocumentationRef" String="urn:sap-com:documentation:key?=type=DE&amp;id=PREDT"/>
+            </Annotations>
+            <Annotations Target="SAP__self.SupplierQuotationItemType/NetPriceQuantity">
+                <Annotation Term="SAP__common.Label" String="Price Unit"/>
+                <Annotation Term="SAP__common.Heading" String="Per"/>
+            </Annotations>
+            <Annotations Target="SAP__self.SupplierQuotationItemType/YY1_Specifications_PDI">
+                <Annotation Term="SAP__common.Label" String="Specifications"/>
+            </Annotations>
+            <Annotations Target="SAP__self.SupplierQuotationItemType/YY1_MaterialMake_PDI">
+                <Annotation Term="SAP__common.Label" String="Material Make"/>
+            </Annotations>
+            <Annotations Target="SAP__self.QuotationComparisonCbAControl/_CompareQuotationItem">
+                <Annotation Term="SAP__common.Label" String="Dynamic CbA-Control"/>
+                <Annotation Term="SAP__common.Heading" String="Dynamic Create by Association Control"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Dynamic Create via Association Control Property"/>
+            </Annotations>
+            <Annotations Target="SAP__self.QuotationComparisonCbAControl/_TermsAndConditions">
+                <Annotation Term="SAP__common.Label" String="Dynamic CbA-Control"/>
+                <Annotation Term="SAP__common.Heading" String="Dynamic Create by Association Control"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Dynamic Create via Association Control Property"/>
+            </Annotations>
+            <Annotations Target="SAP__self.EntityControl/Deletable">
+                <Annotation Term="SAP__common.Label" String="Dyn. Method Control"/>
+                <Annotation Term="SAP__common.Heading" String="Dynamic Method Control"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Dynamic Method Property"/>
+            </Annotations>
+            <Annotations Target="SAP__self.EntityControl/Updatable">
+                <Annotation Term="SAP__common.Label" String="Dyn. Method Control"/>
+                <Annotation Term="SAP__common.Heading" String="Dynamic Method Control"/>
+                <Annotation Term="SAP__common.QuickInfo" String="Dynamic Method Property"/>
+            </Annotations>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>
