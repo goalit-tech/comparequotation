@@ -168,9 +168,7 @@ sap.ui.define(['sap/ui/model/json/JSONModel'], function (JSONModel) {
     generateCOlumnsForComparisonTable: function (oView, aRows) {
       const oTable = oView?.byId('_IDGenQCFormFragmentDynamicUITable');
       oTable.removeAllColumns();
-      const aPredefinedTermsList = oView
-        .getModel('LocalModel')
-        .getProperty('/TermsAndConditionDialog/PreDefinedTermsAndCondition');
+      const aPredefinedTermsList = oView.getModel('LocalModel').getProperty('/TermsAndConditionDialog/PreDefinedTermsAndCondition');
       const headerRows = [
         // "AddDuties",
         'Description',
@@ -226,8 +224,7 @@ sap.ui.define(['sap/ui/model/json/JSONModel'], function (JSONModel) {
                   formatter: function (sProperty) {
                     const oBundle = oView.getModel('i18n').getResourceBundle();
                     const sPropertyName = sProperty?.split('_')[0];
-                    const sKeyFieldDesc =
-                      aPredefinedTermsList.find((oItem) => oItem.KeyField === sPropertyName)?.KeyFieldDesc || '';
+                    const sKeyFieldDesc = aPredefinedTermsList.find((oItem) => oItem.KeyField === sPropertyName)?.KeyFieldDesc || '';
                     let textToDisplay = '';
                     if (sKeyFieldDesc) {
                       textToDisplay = sKeyFieldDesc;
@@ -349,6 +346,9 @@ sap.ui.define(['sap/ui/model/json/JSONModel'], function (JSONModel) {
       }
     },
     reverseTransformCompareQuotationItemData: function (oCompareQuotation, aRows) {
+      if (!aRows || aRows.length === 0) {
+        return [];
+      }
       const aSupplierNames = Object.keys(aRows[0]).filter((sKey) => sKey !== 'property');
 
       const aResult = [];

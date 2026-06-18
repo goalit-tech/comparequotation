@@ -16,28 +16,7 @@ sap.ui.define(['sap/m/MessageBox'], function (MessageBox) {
         // CREATE
         // ==================================================
         if (mode === 'CREATE') {
-          this.createQuotationComparison(oHeader, aItems, aTerms);
-          /**
-          const oHeaderBinding = oModel.bindList('/QuotationComparison', null, null, null, {
-            $$updateGroupId: sGroupId,
-          });
-
-          const oContext = oHeaderBinding.create({
-            ...oHeader,
-            _CompareQuotationItem: aItems,
-            _TermsAndConditions: aTerms,
-          });
-
-          // await oContext.created();
-          await oModel.submitBatch(sGroupId);
-          await oContext.created();
-
-          return {
-            status: 'Success',
-            mode: 'CREATE',
-            quotationComparison: oContext.getProperty('QuotationComparison'),
-          };
-           */
+          return await this.createQuotationComparison(oHeader, aItems, aTerms);
         }
 
         // ==================================================
@@ -209,7 +188,9 @@ sap.ui.define(['sap/m/MessageBox'], function (MessageBox) {
         // =====================================
         // Submit child records
         // =====================================
-        await oModel.submitBatch(sGroupId);
+        if (aItems?.length || aTerms?.length) {
+          await oModel.submitBatch(sGroupId);
+        }
 
         return {
           status: 'Success',
