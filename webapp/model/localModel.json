@@ -1,177 +1,260 @@
 {
-    "SelectedRFQForComparison": null,
-    "SupplierQuotation": [],
-    "SupplierQuotationItem": [],
-    "ActualSupplierQuotationItem": [],
-    "supplierQuotationItemSelected": [],
-    "IsEditCompareQuotation": false,
-    "compareQuotationIsEditable": false,
-    "Mode": "DISPLAY",
-    "CompareQuotationHeader": {
-        "QuotationComparison": "",
-        "RequestForQuotation": "",
-        "CompanyCode": "",
-        "CompanyName": "",
-        "CompativeStatementTitle": "",
-        "NameOfRequester": "",
-        "AccountAssignment": "",
-        "RequisitionNumber": "",
-        "RequisitionDate": null,
-        "Purpose": "",
-        "ComparisonDate": null
-    },
-    "CompareQuotationItemData": [],
-    "CompareQuotationRowsData": [],
-    "CompareQuotationTermsConditionData": [],
-    "CompareQuotationActualRowsData": [],
-    "TermsAndConditionDialog": {
-        "IsAddNewTC": false,
-        "KeyFieldState": "None",
-        "KeyField": "",
-        "KeyFieldValueState": "None",
-        "KeyFieldValue": "",
-        "TermsAndConditionSelectedkey": [],
-        "TermsCondPreviousSelectedkey": [
-            "Warranty",
-            "BCDPercent"
-        ],
-        "PreDefinedTermsAndCondition": [
-            {
-                "KeyField": "Warranty",
-                "KeyFieldDesc": "Warranty",
-                "Selectable": true
-            },
-            {
-                "KeyField": "TaxAmount",
-                "KeyFieldDesc": "Tax Amount",
-                "Selectable": true
-            },
-            {
-                "KeyField": "FreightCharges",
-                "KeyFieldDesc": "Freight Charges",
-                "Selectable": true
-            },
-            {
-                "KeyField": "Discount",
-                "KeyFieldDesc": "Discount",
-                "Selectable": true
-            },
-            {
-                "KeyField": "TechnicalCompliance",
-                "KeyFieldDesc": "Technical Compliance",
-                "Selectable": true
-            },
-            {
-                "KeyField": "BCDPercent",
-                "KeyFieldDesc": "BCD %",
-                "Selectable": true
-            },
-            {
-                "KeyField": "SWCPercentOnBCD",
-                "KeyFieldDesc": "SWC % on BCD",
-                "Selectable": true
-            },
-            {
-                "KeyField": "HSNCode",
-                "KeyFieldDesc": "HSN Code",
-                "Selectable": true
-            },
-            {
-                "KeyField": "GST",
-                "KeyFieldDesc": "GST",
-                "Selectable": true
-            },
-            {
-                "KeyField": "InsuranceCharges",
-                "KeyFieldDesc": "Insurance Charges",
-                "Selectable": true
-            },
-            {
-                "KeyField": "BankCharges",
-                "KeyFieldDesc": "Bank Charges",
-                "Selectable": true
-            },
-            {
-                "KeyField": "LocalTransportationCharges",
-                "KeyFieldDesc": "Local Transportation Charges",
-                "Selectable": true
-            },
-            {
-                "KeyField": "LandingCost",
-                "KeyFieldDesc": "Landing Cost",
-                "Selectable": true
-            },
-            {
-                "KeyField": "Density",
-                "KeyFieldDesc": "Density",
-                "Selectable": true
-            },
-            {
-                "KeyField": "ContactPerson",
-                "KeyFieldDesc": "Contact Person",
-                "Selectable": true
-            },
-            {
-                "KeyField": "PhoneNumber",
-                "KeyFieldDesc": "Phone Number",
-                "Selectable": true
-            }
-        ]
-    },
-    "RequestForQuotation": {},
-    "RequestForQuotationItem": [],
-    "nodes": [
-        {
-            "id": "1",
-            "lane": "0",
-            "title": "Initiator Purchase",
-            "titleAbbreviation": "SO 1",
-            "state": "Positive",
-            "stateText": "OK status"
-        }
-    ],
-    "lanes": [
-        {
-            "id": "0",
-            "icon": "sap-icon://order-status",
-            "label": "Initiator Purchase",
-            "position": 0
-        },
-        {
-            "id": "1",
-            "icon": "sap-icon://monitor-payments",
-            "label": "Reviewer Purchase",
-            "position": 1
-        },
-        {
-            "id": "2",
-            "icon": "sap-icon://payment-approval",
-            "label": "HOD Purchase",
-            "position": 2
-        },
-        {
-            "id": "3",
-            "icon": "sap-icon://money-bills",
-            "label": "Technical Approval",
-            "position": 3
-        },
-        {
-            "id": "4",
-            "icon": "sap-icon://payment-approval",
-            "label": "Technical and Commercial Approval",
-            "position": 4
-        },
-        {
-            "id": "5",
-            "icon": "sap-icon://nurse",
-            "label": "HOD Purchase",
-            "position": 5
-        },
-        {
-            "id": "6",
-            "icon": "sap-icon://retail-store",
-            "label": "Managing Director",
-            "position": 6
-        }
+  "SelectedRFQForComparison": null,
+  "SupplierQuotation": [],
+  "SupplierQuotationItem": [],
+  "ActualSupplierQuotationItem": [],
+  "supplierQuotationItemSelected": [],
+  "IsEditCompareQuotation": false,
+  "compareQuotationIsEditable": false,
+  "Mode": "DISPLAY",
+  "CompareQuotationHeader": {
+    "QuotationComparison": "",
+    "RequestForQuotation": "",
+    "CompanyCode": "",
+    "CompanyName": "",
+    "CompativeStatementTitle": "",
+    "NameOfRequester": "",
+    "AccountAssignment": "",
+    "RequisitionNumber": "",
+    "RequisitionDate": null,
+    "Purpose": "",
+    "ComparisonDate": null
+  },
+  "CompareQuotationItemData": [],
+  "CompareQuotationRowsData": [],
+  "CompareQuotationTermsConditionData": [],
+  "CompareQuotationActualRowsData": [],
+  "TermsAndConditionDialog": {
+    "IsAddNewTC": false,
+    "KeyFieldState": "None",
+    "KeyField": "",
+    "KeyFieldValueState": "None",
+    "KeyFieldValue": "",
+    "TermsAndConditionSelectedkey": [],
+    "TermsCondPreviousSelectedkey": ["Warranty", "BCDPercent"],
+    "PreDefinedTermsAndCondition": [
+      {
+        "KeyField": "Warranty",
+        "KeyFieldDesc": "Warranty",
+        "Selectable": true
+      },
+      {
+        "KeyField": "TaxAmount",
+        "KeyFieldDesc": "Tax Amount",
+        "Selectable": true
+      },
+      {
+        "KeyField": "FreightCharges",
+        "KeyFieldDesc": "Freight Charges",
+        "Selectable": true
+      },
+      {
+        "KeyField": "Discount",
+        "KeyFieldDesc": "Discount",
+        "Selectable": true
+      },
+      {
+        "KeyField": "TechnicalCompliance",
+        "KeyFieldDesc": "Technical Compliance",
+        "Selectable": true
+      },
+      {
+        "KeyField": "BCDPercent",
+        "KeyFieldDesc": "BCD %",
+        "Selectable": true
+      },
+      {
+        "KeyField": "SWCPercentOnBCD",
+        "KeyFieldDesc": "SWC % on BCD",
+        "Selectable": true
+      },
+      {
+        "KeyField": "HSNCode",
+        "KeyFieldDesc": "HSN Code",
+        "Selectable": true
+      },
+      {
+        "KeyField": "GST",
+        "KeyFieldDesc": "GST",
+        "Selectable": true
+      },
+      {
+        "KeyField": "InsuranceCharges",
+        "KeyFieldDesc": "Insurance Charges",
+        "Selectable": true
+      },
+      {
+        "KeyField": "BankCharges",
+        "KeyFieldDesc": "Bank Charges",
+        "Selectable": true
+      },
+      {
+        "KeyField": "LocalTransportationCharges",
+        "KeyFieldDesc": "Local Transportation Charges",
+        "Selectable": true
+      },
+      {
+        "KeyField": "LandingCost",
+        "KeyFieldDesc": "Landing Cost",
+        "Selectable": true
+      },
+      {
+        "KeyField": "Density",
+        "KeyFieldDesc": "Density",
+        "Selectable": true
+      },
+      {
+        "KeyField": "ContactPerson",
+        "KeyFieldDesc": "Contact Person",
+        "Selectable": true
+      },
+      {
+        "KeyField": "PhoneNumber",
+        "KeyFieldDesc": "Phone Number",
+        "Selectable": true
+      }
     ]
+  },
+  "RequestForQuotation": {},
+  "RequestForQuotationItem": [],
+  "WorkflowDefination": [
+    {
+      "ApprovalId": "QC",
+      "PurchaseOrg": "3001",
+      "Rank": 1,
+      "SeqNo": 1,
+      "StageCode": "INITIATOR_PURCHASE",
+      "StageName": "Initiator Purchase",
+      "ApproverType": "GROUP",
+      "ApproverValue": "PUR_DEPT_GRP",
+      "IsMandatory": "X",
+      "IsActive": "X"
+    },
+    {
+      "ApprovalId": "QC",
+      "PurchaseOrg": "3001",
+      "Rank": 2,
+      "SeqNo": 2,
+      "StageCode": "REVIEWER_PURCHASE",
+      "StageName": "Reviewer Purchase",
+      "ApproverType": "GROUP",
+      "ApproverValue": "PUR_EXC_GRP",
+      "IsMandatory": "X",
+      "IsActive": "X"
+    },
+    {
+      "ApprovalId": "QC",
+      "PurchaseOrg": "3001",
+      "Rank": 3,
+      "SeqNo": 3,
+      "StageCode": "HOD_PURCHASE",
+      "StageName": "HOD Purchase",
+      "ApproverType": "GROUP",
+      "ApproverValue": "HOD_GRP",
+      "IsMandatory": "X",
+      "IsActive": "X"
+    },
+    {
+      "ApprovalId": "QC",
+      "PurchaseOrg": "3001",
+      "Rank": 4,
+      "SeqNo": 4,
+      "StageCode": "TECH_APPROVAL",
+      "StageName": "Technical Approval",
+      "ApproverType": "GROUP",
+      "ApproverValue": "TECH_APPROVAL_GRP",
+      "IsMandatory": "",
+      "IsActive": "X"
+    },
+    {
+      "ApprovalId": "QC",
+      "PurchaseOrg": "3001",
+      "Rank": 5,
+      "SeqNo": 5,
+      "StageCode": "COMM_APPROVAL",
+      "StageName": "Commercial Approval",
+      "ApproverType": "GROUP",
+      "ApproverValue": "COMM_APPROVAL_GRP",
+      "IsMandatory": "X",
+      "IsActive": "X"
+    },
+    {
+      "ApprovalId": "QC",
+      "PurchaseOrg": "3001",
+      "Rank": 6,
+      "SeqNo": 6,
+      "StageCode": "FINAL_HOD",
+      "StageName": "HOD Purchase",
+      "ApproverType": "GROUP",
+      "ApproverValue": "HOD_GRP",
+      "IsMandatory": "X",
+      "IsActive": "X"
+    },
+    {
+      "ApprovalId": "QC",
+      "PurchaseOrg": "3001",
+      "Rank": 7,
+      "SeqNo": 7,
+      "StageCode": "MANAGING_DIRECTOR",
+      "StageName": "Managing Director",
+      "ApproverType": "GROUP",
+      "ApproverValue": "MD",
+      "IsMandatory": "X",
+      "IsActive": "X"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "1",
+      "lane": "0",
+      "title": "Initiator Purchase",
+      "titleAbbreviation": "SO 1",
+      "state": "Positive",
+      "stateText": "OK status"
+    }
+  ],
+  "lanes": [
+    {
+      "id": "0",
+      "icon": "sap-icon://order-status",
+      "label": "Initiator Purchase",
+      "position": 0
+    },
+    {
+      "id": "1",
+      "icon": "sap-icon://monitor-payments",
+      "label": "Reviewer Purchase",
+      "position": 1
+    },
+    {
+      "id": "2",
+      "icon": "sap-icon://payment-approval",
+      "label": "HOD Purchase",
+      "position": 2
+    },
+    {
+      "id": "3",
+      "icon": "sap-icon://money-bills",
+      "label": "Technical Approval",
+      "position": 3
+    },
+    {
+      "id": "4",
+      "icon": "sap-icon://payment-approval",
+      "label": "Commercial Approval",
+      "position": 4
+    },
+    {
+      "id": "5",
+      "icon": "sap-icon://nurse",
+      "label": "HOD Purchase",
+      "position": 5
+    },
+    {
+      "id": "6",
+      "icon": "sap-icon://retail-store",
+      "label": "Managing Director",
+      "position": 6
+    }
+  ]
 }

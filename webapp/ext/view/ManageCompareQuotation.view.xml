@@ -14,22 +14,6 @@
         floatingFooter="true"
         class="sapUiResponsivePadding--header sapUiResponsivePadding--content sapUiResponsivePadding--footer sapUiResponsivePadding--floatingFooter"
     >
-        <!-- <headerContent>
-            <VBox id="_IDGenManageCQVBox">
-                <Title
-                    id="_IDGenManageCQTitle"
-                    text="Request for Quotation"
-                />
-                <Text
-                    id="_IDGenManageCQRFQText"
-                    text="{LocalModel>/CompareQuotationHeader/RequestForQuotation}"
-                    class="sapMObjectNumberLarge"
-                />
-            </VBox>
-        </headerContent> -->
-
-        <!-- Main content -->
-        <!-- <macros:items> -->
         <IconTabBar
             id="_IDGenManageCQIconTabstickySubheaderBar"
             class="sapUiResponsiveContentPadding"
@@ -75,45 +59,15 @@
                     id="_IDGenManageCQIconTabFilter3"
                     text="Workflow"
                 >
-                    <common:ProcessFlow
-                        id="processflow1"
-                        scrollable="false"
-                        foldedCorners="true"
-                        nodePress=".onNodePress"
-                        lanes="{LocalModel>/lanes}"
-                        nodes="{LocalModel>/nodes}"
-                    >
-                        <!-- nodes="{/nodes}" -->
-                        <common:nodes>
-                            <common:ProcessFlowNode
-                                id="_IDGenProcessFlowNode"
-                                laneId="{LocalModel>lane}"
-                                nodeId="{LocalModel>id}"
-                                title="{LocalModel>title}"
-                                state="{LocalModel>state}"
-                                stateText="{LocalModel>stateText}"
-                                texts="{LocalModel>texts}"
-                            />
-                        </common:nodes>
-                        <common:lanes>
-                            <common:ProcessFlowLaneHeader
-                                id="_IDGenProcessFlowLaneHeader"
-                                laneId="{LocalModel>id}"
-                                iconSrc="{LocalModel>icon}"
-                                text="{LocalModel>label}"
-                                position="{LocalModel>position}"
-                            />
-                        </common:lanes>
-                    </common:ProcessFlow>
+                    <core:Fragment
+                        id="_IDGenManageCQWorkflowFragment"
+                        fragmentName="nlab.ai.comparequotation.ext.fragment.Workflow"
+                        type="XML"
+                    />
                 </IconTabFilter>
             </items>
         </IconTabBar>
-        <!-- <VBox id="_IDGenManageCQVBox2" visible="{= ${LocalModel>/IsEditCompareQuotation} ? true:false}">
-				<core:Fragment id="_IDGenManageCQCompareFragment" fragmentName="nlab.ai.comparequotation.ext.fragment.QuotationComparisonDisplay" type="XML" />
-			</VBox> -->
-        <!-- </macros:items> -->
 
-        <!-- Footer aggregation -->
         <footer>
             <OverflowToolbar id="_IDGenManageCQOverflowToolbar">
                 <ToolbarSpacer id="_IDGenManageCQToolbarSpacer" />

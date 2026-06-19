@@ -2,10 +2,12 @@ sap.ui.define(
   [
     'sap/fe/core/PageController',
     'sap/ui/core/BusyIndicator',
+    'sap/m/ColumnListItem',
     'nlab/ai/comparequotation/ext/utils/utils',
     'nlab/ai/comparequotation/ext/utils/oDataServiceUtil',
+    'nlab/ai/comparequotation/ext/utils/workflowUtils',
   ],
-  function (PageController, BusyIndicator, Utils, ODataServiceUtil) {
+  function (PageController, BusyIndicator, ColumnListItem, Utils, ODataServiceUtil, WorkflowUtils) {
     'use strict';
 
     return PageController.extend('nlab.ai.comparequotation.ext.controller.ManageCompareQuotation', {
@@ -603,6 +605,50 @@ sap.ui.define(
       },
       onAddTCFragmentCancelPress: function () {
         this.oTermsAndConditionDialog?.close();
+      },
+      //WorkFlow methods
+      onDropSelectedProductsTable: function (oEvent) {
+        const oView = this.getView();
+        var oDraggedItem = oEvent.getParameter('draggedControl');
+        var oDraggedItemContext = oDraggedItem.getBindingContext('LocalModel');
+        if (!oDraggedItemContext) {
+          return;
+        }
+
+        var oRanking = WorkflowUtils.ranking;
+        var iNewRank = oRanking.Default;
+        var oDroppedItem = oEvent.getParameter('droppedControl');
+
+        if (oDroppedItem instanceof ColumnListItem) {
+          // get the dropped row data
+          var sDropPosition = oEvent.getParameter('dropPosition');
+          var oDroppedItemContext = oDroppedItem.getBindingContext('LocalModel');
+          var iDroppedItemRank = oDroppedItemContext.getProperty('Rank');
+          var oDroppedTable = oDroppedItem.getParent();
+          var iDroppedItemIndex = oDroppedTable.indexOfItem(oDroppedItem);
+
+          // find the new index of the dragged row depending on the drop position
+          var iNewItemIndex = iDroppedItemIndex + (sDropPosition === 'After' ? 1 : -1);
+          var oNewItem = oDroppedTable.getItems()[iNewItemIndex];
+          if (!oNewItem) {
+            // dropped before the first row or after the last row
+            iNewRank = oRanking[sDropPosition](iDroppedItemRank);
+          } else {
+            // dropped between first and the last row
+            var oNewItemContext = oNewItem.getBindingContext('LocalModel');
+            iNewRank = oRanking.Between(iDroppedItemRank, oNewItemContext.getProperty('Rank'));
+          }
+        }
+
+        // set the rank property and update the model to refresh the bindings
+        var oSelectedProductsTable = WorkflowUtils.getSelectedProductsTable(oView);
+        var oProductsModel = oSelectedProductsTable.getModel('LocalModel');
+        oProductsModel.setProperty('Rank', iNewRank, oDraggedItemContext);
+      },
+      ResetSequenceWorkflowPress: function () {},
+
+      onBeforeOpenContextMenu: function (oEvent) {
+        oEvent.getParameters().listItem.setSelected(true);
       },
     });
   },
