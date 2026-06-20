@@ -1,4 +1,4 @@
-sap.ui.define(['sap/m/MessageBox'], function (MessageBox) {
+sap.ui.define(['sap/m/MessageBox', 'sap/ui/model/json/JSONModel'], function (MessageBox, JSONModel) {
   'use strict';
   class QuotationHelper {
     constructor(oView) {
@@ -110,7 +110,8 @@ sap.ui.define(['sap/m/MessageBox'], function (MessageBox) {
 
         return {
           status: 'Success',
-          mode: 'UPDATE',
+          // mode: 'UPDATE',
+          message: 'Updated Successfully',
           quotationComparison: sQuotationComparison,
         };
       } catch (oError) {
@@ -118,7 +119,8 @@ sap.ui.define(['sap/m/MessageBox'], function (MessageBox) {
 
         return {
           status: 'Error',
-          message: oError.message || 'Error while saving data',
+          message: oError?.message || 'Error while saving data',
+          quotationComparison: sQuotationComparison,
         };
       }
     }
@@ -194,7 +196,7 @@ sap.ui.define(['sap/m/MessageBox'], function (MessageBox) {
 
         return {
           status: 'Success',
-          mode: 'CREATE',
+          message: 'Created Successfully',
           quotationComparison: sQuotationComparison,
         };
       } catch (oError) {
@@ -203,6 +205,175 @@ sap.ui.define(['sap/m/MessageBox'], function (MessageBox) {
         return {
           status: 'Error',
           message: oError.message || 'Error while creating data',
+        };
+      }
+    }
+    async getRequestForQuotation(rfqId) {
+      const oModel = this._oView.getModel('RFQModel');
+
+      return new Promise((resolve, reject) => {
+        oModel.read('/A_RequestForQuotation', {
+          filters: [new sap.ui.model.Filter('RequestForQuotation', sap.ui.model.FilterOperator.EQ, rfqId)],
+          urlParameters: {
+            $expand: 'to_RequestForQuotationItem',
+          },
+          success: function (oData) {
+            const oRFQ = oData.results?.[0];
+
+            if (!oRFQ) {
+              resolve(null);
+              return;
+            }
+
+            resolve({
+              ...oRFQ,
+              to_RequestForQuotationItem: oRFQ.to_RequestForQuotationItem?.results || [],
+            });
+          },
+          error: function (oError) {
+            console.error('Error loading supplier quotations', oError);
+            reject(oError);
+          },
+        });
+      });
+    }
+    async getSupplierQuotationForRFQ(rfqId) {
+      const oModel = this._oView?.getModel();
+      try {
+        const oListBinding = oModel.bindList('/SupplierQuotation', undefined, undefined, undefined, {
+          $filter: `RequestForQuotation eq '${rfqId}'`,
+          $expand: '_SupplierQuotationItem',
+        });
+        const aContexts = await oListBinding.requestContexts(0, 200);
+        const aSupplierQuotation = aContexts.map((oContext) => oContext.getObject());
+
+        console.log('Supplier Quotations', aSupplierQuotation);
+
+        return aSupplierQuotation;
+      } catch (oError) {
+        console.error('Error loading supplier quotations & Items', oError);
+        return [];
+      }
+    }
+    async getCompareQuotation(keyId) {
+      const oModel = this._oView?.getModel();
+      const oContextBinding = oModel.bindContext(`/QuotationComparison('${keyId}')`, undefined, {
+        $expand: '_CompareQuotationItem,_TermsAndConditions',
+      });
+      try {
+        const oCompareQuotation = await oContextBinding.requestObject();
+        console.log('Compare Quotation', oCompareQuotation);
+        return oCompareQuotation;
+      } catch (oError) {
+        console.error('Error loading Request for CompareQuotation & items', oError);
+        return [];
+      }
+    }
+    async getWorkflowDefination(quotationComparison) {
+      const oModel = this._oView?.getModel();
+      try {
+        // const filters = isDraftActive
+        //   ? `QuotationComparison eq '${quotationComparison}' and IsDraft eq true`
+        //   : `QuotationComparison eq '${quotationComparison}'`;
+        const oListBinding = oModel.bindList('/ApprovalDef', undefined, undefined, undefined, {
+          // $filter: filters,
+          $filter: `QuotationComparison eq '${quotationComparison}'`,
+        });
+        const aContexts = await oListBinding.requestContexts(0, 100);
+        const aApprovalDef = aContexts.map((oContext) => oContext.getObject());
+        aApprovalDef.console.log('Workflow Defination Quotations', aApprovalDef);
+
+        return aApprovalDef;
+      } catch (oError) {
+        console.error('Error loading Workflow Defination', oError);
+        return [];
+      }
+    }
+    async getWorkflowTransaction(quotationComparison) {
+      const oModel = this._oView?.getModel();
+      try {
+        // const filters = isDraftActive
+        // ? `QuotationComparison eq '${quotationComparison}' and IsDraft eq true`
+        // : `QuotationComparison eq '${quotationComparison}'`;
+        const oListBinding = oModel.bindList('/ApprovalTxn', undefined, undefined, undefined, {
+          // $filter: filters,
+          $filter: `QuotationComparison eq '${quotationComparison}'`,
+        });
+        const aContexts = await oListBinding.requestContexts(0, 500);
+        const aApprovalTxn = aContexts.map((oContext) => oContext.getObject());
+
+        console.log('Workflow transaction Quotations', aApprovalTxn);
+
+        return aApprovalTxn;
+      } catch (oError) {
+        console.error('Error loading Workflow transaction quotations & Items', oError);
+        return [];
+      }
+    }
+    // async determineWorkflowVersion(quotationComparison) {}
+    // oWorflowContextToSave, qCId, currentStep, action, nextStep
+    // oResult?.quotationComparison/
+    async saveWorkflowDefination(oWorflowContextToSave, currentStep, action) {
+      const aCreatePromises = [];
+      const oListBinding = this._oView.getModel().bindList('/ApprovalTxn');
+
+      // determine the next steps also here from the defination table assuming next step is determined
+      const nextStep = 0;
+      aRecords.forEach((oRecord) => {
+        if (oRecord.SeqNo === currentStep) {
+          oRecord.Action = action;
+          if (action === 'APPROVE' || action === 'REJECT') {
+            oRecord.IsCompleted = true;
+          }
+        }
+        oRecord.IsCurrentStep = oRecord.SeqNo === nextStep ? 'X' : '';
+        oListBinding.create(oRecord);
+      });
+      try {
+        await this._oView.getModel().submitBatch('workflowGroup');
+
+        await Promise.all(aCreatePromises);
+
+        return {
+          status: 'Success',
+          message: 'Workflow Updated Successfully!',
+        };
+      } catch (oError) {
+        return {
+          status: 'Error',
+          message: oError?.message || 'Error during Workflow Updated!',
+        };
+      }
+    }
+    async saveWorkflowDefination(oWorflowContextToSave) {
+      const aCreatePromises = [];
+      const oListBinding = this._oView.getModel().bindList('/ApprovalTxn');
+
+      // determine the next steps also here from the defination table assuming next step is determined
+      const nextStep = 0;
+      aRecords.forEach((oRecord) => {
+        if (oRecord.SeqNo === currentStep) {
+          oRecord.Action = action;
+          if (action === 'APPROVE' || action === 'REJECT') {
+            oRecord.IsCompleted = true;
+          }
+        }
+        oRecord.IsCurrentStep = oRecord.SeqNo === nextStep ? 'X' : '';
+        oListBinding.create(oRecord);
+      });
+      try {
+        await this._oView.getModel().submitBatch('workflowGroup');
+
+        await Promise.all(aCreatePromises);
+
+        return {
+          status: 'Success',
+          message: 'Workflow Updated Successfully!',
+        };
+      } catch (oError) {
+        return {
+          status: 'Error',
+          message: oError?.message || 'Error during Workflow Updated!',
         };
       }
     }

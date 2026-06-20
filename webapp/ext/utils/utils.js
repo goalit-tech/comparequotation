@@ -392,6 +392,7 @@ sap.ui.define(['sap/ui/model/json/JSONModel'], function (JSONModel) {
 
       return aResult;
     },
+    /**
     getRequestForQuotation: async function (rfqId, oView) {
       const oModel = oView.getModel('RFQModel');
 
@@ -488,5 +489,6 @@ sap.ui.define(['sap/ui/model/json/JSONModel'], function (JSONModel) {
         return [];
       }
     },
+     */
   };
 });

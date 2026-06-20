@@ -42,6 +42,11 @@ sap.ui.define(['sap/m/MessageToast'], function (MessageToast) {
 
       return oSelectedContext;
     },
+
+    _prepareSaveWorkflowDefinationData: function () {
+      const oTable = this.getSelectedProductsTable();
+      debugger;
+    },
   };
 
   return WorkflowUtils;

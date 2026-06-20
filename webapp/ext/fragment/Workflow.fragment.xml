@@ -8,7 +8,7 @@
 >
     <VBox
         id="_IDGenWorkflowVBox1"
-        visible="false"
+        visible="{LocalModel>/IsEditCompareQuotation}"
     >
         <Table
             id="_IDGenWorkflowDefinationTable"
