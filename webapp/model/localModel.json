@@ -6,6 +6,7 @@
   "supplierQuotationItemSelected": [],
   "IsEditCompareQuotation": false,
   "compareQuotationIsEditable": false,
+  "InWorkflowState": false,
   "Mode": "DISPLAY",
   "CompareQuotationHeader": {
     "QuotationComparison": "",
@@ -120,9 +121,10 @@
   "WorkflowDefination": [
     {
       "SeqNo": 1,
+      "versionNo": 1,
       "QuotationComparison": "",
       "StageCode": "INITIATOR_PURCHASE",
-      "StageName": "INITIATOR_PURCHASE",
+      "StageName": "INITIATOR PURCHASE",
       "ApproverType": "User",
       "ApproverValue": "amarjeet.kumar@n-labs.ai",
       "IsMandatory": true,
@@ -130,8 +132,9 @@
     },
     {
       "SeqNo": 2,
+      "versionNo": 1,
       "StageCode": "REVIEWER_PURCHASE",
-      "StageName": "REVIEWER_PURCHASE",
+      "StageName": "REVIEWER PURCHASE",
       "ApproverType": "User",
       "ApproverValue": "amarjeet.kumar@n-labs.ai",
       "IsMandatory": true,
@@ -139,8 +142,9 @@
     },
     {
       "SeqNo": 3,
+      "versionNo": 1,
       "StageCode": "HOD_PURCHASE",
-      "StageName": "HOD_PURCHASE",
+      "StageName": "HOD PURCHASE",
       "ApproverType": "User",
       "ApproverValue": "amarjeet.kumar@n-labs.ai",
       "IsMandatory": true,
@@ -148,8 +152,9 @@
     },
     {
       "SeqNo": 4,
+      "versionNo": 1,
       "StageCode": "TECH_APPROVAL",
-      "StageName": "TECH_APPROVAL",
+      "StageName": "TECH APPROVAL",
       "ApproverType": "User",
       "ApproverValue": "amarjeet.kumar@n-labs.ai",
       "IsMandatory": true,
@@ -157,8 +162,9 @@
     },
     {
       "SeqNo": 5,
+      "versionNo": 1,
       "StageCode": "COMM_APPROVAL",
-      "StageName": "COMM_APPROVAL",
+      "StageName": "COMM APPROVAL",
       "ApproverType": "User",
       "ApproverValue": "amarjeet.kumar@n-labs.ai",
       "IsMandatory": true,
@@ -166,8 +172,9 @@
     },
     {
       "SeqNo": 6,
+      "versionNo": 1,
       "StageCode": "FINAL_HOD",
-      "StageName": "FINAL_HOD",
+      "StageName": "FINAL HOD",
       "ApproverType": "User",
       "ApproverValue": "amarjeet.kumar@n-labs.ai",
       "IsMandatory": true,
@@ -175,8 +182,9 @@
     },
     {
       "SeqNo": 7,
+      "versionNo": 1,
       "StageCode": "MANAGING_DIRECTOR",
-      "StageName": "amarjeet.kumar@n-labs.ai",
+      "StageName": "MANAGING DIRECTOR",
       "ApproverType": "User",
       "ApproverValue": "amarjeet.kumar@n-labs.ai",
       "IsMandatory": true,

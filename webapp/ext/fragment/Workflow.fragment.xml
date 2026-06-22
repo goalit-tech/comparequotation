@@ -8,7 +8,7 @@
 >
     <VBox
         id="_IDGenWorkflowVBox1"
-        visible="{LocalModel>/IsEditCompareQuotation}"
+        visible="{=${LocalModel>/InWorkflowState}?false:true}"
     >
         <Table
             id="_IDGenWorkflowDefinationTable"
@@ -109,15 +109,6 @@
                 />
             </dragDropConfig>
             <items>
-                <!-- "ApprovalId": "QC",
-        "PurchaseOrg": "3001",
-        "SeqNo": 1,
-        "StageCode": "INITIATOR_PURCHASE",
-        "StageName": "Initiator Purchase",
-        "ApproverType": "GROUP",
-        "ApproverValue": "PUR_DEPT_GRP",
-        "IsMandatory": "X",
-        "IsActive": "X" -->
                 <ColumnListItem id="_IDGenWorkflowColumnListItem">
                     <cells>
                         <Text
@@ -156,12 +147,13 @@
         </Table>
     </VBox>
     <VBox id="_IDGenWorkflowVBox2">
+        <!-- visible="{LocalModel>/InWorkflowState}" -->
         <common:ProcessFlow
             id="processflow1"
             scrollable="false"
             foldedCorners="true"
             nodePress=".onNodePress"
-            lanes="{LocalModel>/lanes}"
+            lanes="{LocalModel>/WorkflowDefination}"
             nodes="{LocalModel>/nodes}"
         >
             <common:nodes>
@@ -178,11 +170,11 @@
             <common:lanes>
                 <common:ProcessFlowLaneHeader
                     id="_IDGenProcessFlowLaneHeader"
-                    laneId="{LocalModel>id}"
-                    iconSrc="{LocalModel>icon}"
-                    text="{LocalModel>label}"
-                    position="{LocalModel>position}"
+                    laneId="{=String(${LocalModel>SeqNo}-1)}"
+                    text="{LocalModel>StageName}"
+                    position="{=${LocalModel>SeqNo}-1}"
                 />
+                <!-- iconSrc="{LocalModel>icon}" -->
             </common:lanes>
         </common:ProcessFlow>
     </VBox>

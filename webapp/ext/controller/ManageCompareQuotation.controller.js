@@ -181,8 +181,37 @@ sap.ui.define(
         this.getView().addDependent(this.oTermsAndConditionDialog);
         this.oTermsAndConditionDialog?.open();
       },
-      checkWorkflowAndUpdateSection: function (quotationComparison) {
+      checkWorkflowAndUpdateSection: async function (quotationComparison) {
         const sMode = this.getView().getModel('LocalModel').getProperty('/Mode');
+        const isWorkflowState = this.getView().getModel('LocalModel').getProperty('/InWorkflowState');
+        let oWorflowContext = this.getView().getModel('LocalModel').getProperty('/WorkflowDefination');
+        if (isWorkflowState) {
+          this.getView().getModel('LocalModel').setProperty('/InWorkflowState', true);
+          const aWrokflowTrans = await this._oDataServiceUtil.getWorkflowTransaction(quotationComparison);
+          let bWorkflowStarted = false;
+          // let aLatestVersionWfDef = [];
+          if (aWrokflowDef && aWrokflowDef.length) {
+            const iMaxVersion = Math.max(...aWrokflowDef.map((o) => o.VersionNo));
+            bWorkflowStarted = iMaxVersion > 0;
+            oWorflowContext = aWrokflowDef.filter((o) => Number(o.VersionNo) === iMaxVersion);
+          }
+          // this.getView().getModel('LocalModel').setProperty('/WorkflowDefination', oWorflowContext);
+        } else {
+          this.getView().getModel('LocalModel').setProperty('/InWorkflowState', false);
+          const aWrokflowDef = await this._oDataServiceUtil.getWorkflowDefination(quotationComparison);
+          let bWorkflowStarted = false;
+          if (aWrokflowDef && aWrokflowDef.length) {
+            const iMaxVersion = Math.max(...aWrokflowDef.map((o) => o.versionNo));
+            bWorkflowStarted = iMaxVersion > 0;
+            oWorflowContext = aWrokflowDef.filter((o) => Number(o.versionNo) === iMaxVersion);
+          }
+          oWorflowContext.forEach((eachWf, index) => {
+            eachWf['Rank'] = index + 1;
+          });
+          this.getView().getModel('LocalModel').setProperty('/WorkflowDefination', oWorflowContext);
+        }
+        // this.getView().getModel('LocalModel').refresh(true);
+        /** 
         if (sMode === 'CREATE') {
           const oWorflowContext = this.getView().getModel('LocalModel').getProperty('/WorkflowDefination');
           oWorflowContext.forEach((eachWf, index) => {
@@ -190,33 +219,32 @@ sap.ui.define(
           });
           this.getView().getModel('LocalModel').setProperty('/WorkflowDefination', oWorflowContext);
         } else {
-          const aWrokflowTranaction = await this._oDataServiceUtil.getWorkflowTransaction(quotationComparison);
+          const oWorflowContext = this.getView().getModel('LocalModel').getProperty('/WorkflowDefination');
+          const aWrokflowDef = await this._oDataServiceUtil.getWorkflowDefination(quotationComparison);
           let bWorkflowStarted = false;
-          let aLatestVersionRows = [];
-          if (aWrokflowTranaction && aWrokflowTranaction.length) {
-            const iMaxVersion = Math.max(...aWrokflowTranaction.map(o => o.VersionNo));
+          // let aLatestVersionWfDef = [];
+          if (aWrokflowDef && aWrokflowDef.length) {
+            const iMaxVersion = Math.max(...aWrokflowDef.map((o) => o.versionNo));
             bWorkflowStarted = iMaxVersion > 0;
-            aLatestVersionRows = aWrokflowTranaction.filter(
-              o => Number(o.VersionNo) === iMaxVersion
-            );
+            oWorflowContext = aWrokflowDef.filter((o) => Number(o.versionNo) === iMaxVersion);
           }
-          
-          if (bWorkflowStarted) {
-            this.getView().getModel('LocalModel').setProperty('/IsEditCompareQuotation', false);
-            // this.getView().getModel('LocalModel').setProperty('/currentWorkflowState', oWorflowContext);
-            this.getView().getModel('LocalModel').setProperty('/InWorkflowState', true);
-          } else {
-            this.getView().getModel('LocalModel').setProperty('/IsEditCompareQuotation', false);
-            // this.getView().getModel('LocalModel').setProperty('/currentWorkflowState', oWorflowContext);
-            this.getView().getModel('LocalModel').setProperty('/InWorkflowState', false);
-            const aWrokflowDefination = await this._oDataServiceUtil.getWorkflowDefination(quotationComparison);
-            aWrokflowDefination.forEach((eachWfDef, index) => {
-              eachWfDef["Rank"] = index + 1;
-            });
-            this.getView().getModel('LocalModel').setProperty('/WorkflowDefination', oWorflowContext);
-          }
+          this.getView().getModel('LocalModel').setProperty('/WorkflowDefination', oWorflowContext);
+          // if (bWorkflowStarted) {
+          //   this.getView().getModel('LocalModel').setProperty('/IsEditCompareQuotation', false);
+          //   // this.getView().getModel('LocalModel').setProperty('/currentWorkflowState', oWorflowContext);
+          //   this.getView().getModel('LocalModel').setProperty('/InWorkflowState', true);
+          // } else {
+          //   this.getView().getModel('LocalModel').setProperty('/IsEditCompareQuotation', false);
+          //   // this.getView().getModel('LocalModel').setProperty('/currentWorkflowState', oWorflowContext);
+          //   this.getView().getModel('LocalModel').setProperty('/InWorkflowState', false);
+          //   const aWrokflowDefination = await this._oDataServiceUtil.getWorkflowDefination(quotationComparison);
+          //   aWrokflowDefination.forEach((eachWfDef, index) => {
+          //     eachWfDef['Rank'] = index + 1;
+          //   });
+          //   this.getView().getModel('LocalModel').setProperty('/WorkflowDefination', aWrokflowDefination);
+          // }
         }
-
+         */
       },
       onAddSQFragmentAddPress: function () {
         const aSelectedSupplierQuotationItems = this.getSelectedSupplierQuotationItemData();
@@ -286,7 +314,8 @@ sap.ui.define(
             this.getView().getModel('LocalModel').setProperty('/IsEditCompareQuotation', false);
             this.hideBusyIndicator();
             if (sMode === 'CREATE') {
-              await this._createOrUpdateWorkflowDefination(oResult?.quotationComparison, sMode);
+              await this._deleteAndCreateWorkflowDefination(oResult?.quotationComparison, sMode);
+              sap.m.MessageToast.show('Quotation Created successfully');
               this.getRouter().navTo(
                 'QuotationComparisonObjectPage',
                 {
@@ -296,10 +325,10 @@ sap.ui.define(
               );
             } else {
               // sap.m.MessageToast.show("Quotation Created successfully");
-              sap.m.MessageToast.show('Quotation Created successfully', {
+              sap.m.MessageToast.show('Quotation Updated successfully', {
                 duration: 1000,
-                onClose: () => {
-                  await this._createOrUpdateWorkflowDefination(oResult?.quotationComparison, sMode);
+                onClose: async () => {
+                  await this._deleteAndCreateWorkflowDefination(oResult?.quotationComparison, sMode);
                   this.getView().getModel('LocalModel').setProperty('/IsEditCompareQuotation', false);
                   this.hideBusyIndicator();
                   this.getView()?.getModel('LocalModel')?.refresh();
@@ -314,16 +343,14 @@ sap.ui.define(
           // this.oDialog.close();
         }
       },
-      _createOrUpdateWorkflowDefination: function (quotationComparison, sMode) {
+      _deleteAndCreateWorkflowDefination: async function (quotationComparison, sMode) {
         const oWorflowContextToSave = this.getView().getModel('LocalModel').getProperty('/WorkflowDefination');
-        const qCId = oResult?.quotationComparison;
-        const currentStep = '1';
-        const nextStep = '1';
-        const action = 'In Progress';
-        oWorflowContextToSave.forEach((eachWorkFlow) => {
-          eachWorkFlow.IsDraft = 'X';
-        });
-        await this._oDataServiceUtil.saveWorkflowDefination(oWorflowContextToSave, qCId);
+        try {
+          await this._oDataServiceUtil.deleteWorkflowDefinition(quotationComparison);
+          await this._oDataServiceUtil.saveWorkflowDefination(oWorflowContextToSave, quotationComparison);
+        } catch (error) {
+          console.log('Error during workflow Save', error?.message);
+        }
       },
 
       getSelectedSupplierQuotationItemData: function () {
@@ -670,7 +697,8 @@ sap.ui.define(
         const oView = this.getView();
         var oDraggedItem = oEvent.getParameter('draggedControl');
         var oDraggedItemContext = oDraggedItem.getBindingContext('LocalModel');
-        if (!oDraggedItemContext) {
+        var findContextObject = oDraggedItemContext?.getObject();
+        if (!oDraggedItemContext || findContextObject?.SeqNo === 1) {
           return;
         }
 
@@ -704,7 +732,14 @@ sap.ui.define(
         var oProductsModel = oSelectedProductsTable.getModel('LocalModel');
         oProductsModel.setProperty('Rank', iNewRank, oDraggedItemContext);
       },
-      ResetSequenceWorkflowPress: function () { },
+      ResetSequenceWorkflowPress: function (oEvent) {
+        var aWorkflowDefData = this.getView().getModel('LocalModel').getProperty('/WorkflowDefination');
+        aWorkflowDefData.forEach((eachRecord, index) => {
+          eachRecord.SeqNo = index + 1;
+        });
+        this.getView().getModel('LocalModel').setProperty('/WorkflowDefination', aWorkflowDefData);
+        this.getView().getModel('LocalModel').refresh();
+      },
 
       onBeforeOpenContextMenu: function (oEvent) {
         oEvent.getParameters().listItem.setSelected(true);

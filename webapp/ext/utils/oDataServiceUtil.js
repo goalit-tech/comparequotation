@@ -281,7 +281,7 @@ sap.ui.define(['sap/m/MessageBox', 'sap/ui/model/json/JSONModel'], function (Mes
         });
         const aContexts = await oListBinding.requestContexts(0, 100);
         const aApprovalDef = aContexts.map((oContext) => oContext.getObject());
-        aApprovalDef.console.log('Workflow Defination Quotations', aApprovalDef);
+        console.log('Workflow Defination Quotations', aApprovalDef);
 
         return aApprovalDef;
       } catch (oError) {
@@ -313,27 +313,24 @@ sap.ui.define(['sap/m/MessageBox', 'sap/ui/model/json/JSONModel'], function (Mes
     // async determineWorkflowVersion(quotationComparison) {}
     // oWorflowContextToSave, qCId, currentStep, action, nextStep
     // oResult?.quotationComparison/
-    async saveWorkflowDefination(oWorflowContextToSave, currentStep, action) {
+    async saveWorkflowDefination(aRecords, sQuotationComparison) {
       const aCreatePromises = [];
-      const oListBinding = this._oView.getModel().bindList('/ApprovalTxn');
-
-      // determine the next steps also here from the defination table assuming next step is determined
-      const nextStep = 0;
-      aRecords.forEach((oRecord) => {
-        if (oRecord.SeqNo === currentStep) {
-          oRecord.Action = action;
-          if (action === 'APPROVE' || action === 'REJECT') {
-            oRecord.IsCompleted = true;
-          }
-        }
-        oRecord.IsCurrentStep = oRecord.SeqNo === nextStep ? 'X' : '';
+      const oListBinding = this._oView.getModel().bindList('/ApprovalDef');
+      aRecords.sort((a, b) => a.Rank - b.Rank);
+      aRecords.forEach((oRecord, index) => {
+        oRecord.SeqNo = index + 1;
+        oRecord.QuotationComparison = sQuotationComparison;
+        delete oRecord?.ApprovalId;
+        delete oRecord?.Rank;
         oListBinding.create(oRecord);
+        // const oContext = oListBinding.create(oRecord);
+        // aCreatePromises.push(oContext.created());
       });
       try {
         await this._oView.getModel().submitBatch('workflowGroup');
 
-        await Promise.all(aCreatePromises);
-
+        // const aCreatedContexts = await Promise.all(aCreatePromises);
+        // const data = aCreatedContexts.map((oContext) => oContext.getObject());
         return {
           status: 'Success',
           message: 'Workflow Updated Successfully!',
@@ -345,7 +342,33 @@ sap.ui.define(['sap/m/MessageBox', 'sap/ui/model/json/JSONModel'], function (Mes
         };
       }
     }
-    async saveWorkflowDefination(oWorflowContextToSave) {
+    async deleteWorkflowDefinition(sQuotationComparison) {
+      const oModel = this._oView.getModel();
+      try {
+        const oListBinding = oModel.bindList('/ApprovalDef', undefined, undefined, undefined, {
+          $filter: `QuotationComparison eq '${sQuotationComparison}'`,
+        });
+
+        const aContexts = await oListBinding.requestContexts();
+
+        // await Promise.all(aContexts.map((oContext) => oContext.delete('workflowDeleteGroup')));
+        for (const oContext of aContexts) {
+          oContext.delete('workflowDeleteGroup');
+        }
+
+        await oModel.submitBatch('workflowDeleteGroup');
+        return {
+          status: 'Success',
+          message: 'Workflow Deleted Successfully!',
+        };
+      } catch (oError) {
+        return {
+          status: 'Error',
+          message: oError?.message || 'Error during Workflow Updated!',
+        };
+      }
+    }
+    async saveWorkflowTransaction(oWorflowContextToSave) {
       const aCreatePromises = [];
       const oListBinding = this._oView.getModel().bindList('/ApprovalTxn');
 

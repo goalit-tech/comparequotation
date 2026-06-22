@@ -47,6 +47,22 @@ sap.ui.define(['sap/m/MessageToast'], function (MessageToast) {
       const oTable = this.getSelectedProductsTable();
       debugger;
     },
+    _prepareSaveWorkflowTransactionData: function (aWorkflowDef, sQuotationComparison, iCurrentStep = 1, sAction = 'PENDING') {
+      const aTransactionData = aWorkflowDef.map((oDef, index) => ({
+        QuotationComparison: sQuotationComparison,
+        VersionNo: oDef.VersionNo ?? oDef.versionNo ?? 0,
+        SeqNo: oDef.SeqNo ?? index + 1,
+        StageCode: oDef.StageCode ?? '',
+        AssignedTo: oDef.ApproverValue ?? '',
+        ApprovedBy: '',
+        Action: sAction,
+        IsCurrentStep: (oDef.SeqNo ?? index + 1) === iCurrentStep,
+        IsCompleted: false,
+        Comments: '',
+        ReasonCode: '',
+      }));
+      return aTransactionData;
+    },
   };
 
   return WorkflowUtils;
