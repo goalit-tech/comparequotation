@@ -337,7 +337,7 @@ sap.ui.define(
         // }
         aTransactionData = aWorflowDefination.map((oDef, index) => ({
           QuotationComparison: oDef?.QuotationComparison,
-          // DefVersionNo: oDef.versionNo ?? oDef.versionNo ?? 0,
+          DefVersionNo: oDef.versionNo ?? oDef.versionNo ?? 0,
           VersionNo: currentStep,
           SeqNo: oDef.SeqNo ?? index + 1,
           StageCode: oDef.StageCode ?? '',
