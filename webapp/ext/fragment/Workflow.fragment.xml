@@ -113,7 +113,7 @@
                     <cells>
                         <Text
                             id="_IDGenWorkflowTextSNO"
-                            text="{LocalModel>SeqNo}"
+                            text="L-{LocalModel>SeqNo}"
                             wrapping="false"
                         />
                         <Text
@@ -163,6 +163,7 @@
                     id="_IDGenProcessFlowNode"
                     laneId="{=String(${LocalModel>SeqNo})}"
                     nodeId="{LocalModel>id}"
+                    title="L-{LocalModel>SeqNo}"
                     children="{LocalModel>children}"
                     state="{path:'LocalModel>Action',formatter:'.processFlowStateFormatter'}"
                     stateText="{path:'LocalModel>Action',formatter:'.processFlowStateTextFormatter'}"

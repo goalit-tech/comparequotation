@@ -11,10 +11,16 @@
         id="_IDGenQCFormFragmentOverflowToolbar"
         style="Clear"
     >
+        <!-- <Title
+            id="_IDGenQCFormFragmentTitleMain"
+            text="EENADU TELEVISION PRIVATE LIMITED"
+        /> -->
+        <ToolbarSpacer id="_IDGenQCFormFragmentToolbarSpacerForm" />
         <Title
             id="_IDGenQCFormFragmentTitle2"
             text="EENADU TELEVISION PRIVATE LIMITED"
         />
+        <ToolbarSpacer id="_IDGenQCFormFragmentToolbarSpacerForm1" />
         <ToolbarSeparator id="_IDGenQCFormFragmentToolbarSeparator" />
     </OverflowToolbar>
     <f:SimpleForm
@@ -161,7 +167,7 @@
                 >
                     <Title
                         id="_IDGenQCFormFragmentUITableTitle2"
-                        text="Supplier Quotation and Items"
+                        text="Items For Comparison"
                     />
                     <ToolbarSpacer
                         id="_IDGenQCFormFragmentUITableToolbarSpacer"

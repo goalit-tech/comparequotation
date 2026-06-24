@@ -88,6 +88,20 @@
                     icon=""
                 />
                 <Button
+                    id="_IDGenManageCQButtonApprove"
+                    text="Approve"
+                    press=".onCompareQuotationApprovePress"
+                    type="Success"
+                    visible="{=${LocalModel>/IsEditCompareQuotation}? false:true}"
+                />
+                <Button
+                    id="_IDGenManageCQButtonReject"
+                    text="Reject"
+                    press=".onCompareQuotationRejectPress"
+                    type="Reject"
+                    visible="{=${LocalModel>/IsEditCompareQuotation}? false:true}"
+                />
+                <Button
                     id="_IDGenManageCQButton"
                     text="Edit"
                     press=".onCompareQuotationEditPress"

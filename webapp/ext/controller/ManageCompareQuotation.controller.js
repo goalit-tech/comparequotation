@@ -820,6 +820,16 @@ sap.ui.define(
         }
         return sAction;
       },
+      onCompareQuotationApprovePress: async function () {
+        const aWFTransactionToSave = await this.prepareWorkflowTransaction(1, 'APPROVED');
+        // await this._oDataServiceUtil.deleteWorkflowTransaction(quotationComparison, 1);
+        await this._oDataServiceUtil.saveWorkflowTransaction(aWFTransactionToSave);
+      },
+      onCompareQuotationRejectPress: async function () {
+        const aWFTransactionToSave = await this.prepareWorkflowTransaction(1, 'REJECTED');
+        // await this._oDataServiceUtil.deleteWorkflowTransaction(quotationComparison, 1);
+        await this._oDataServiceUtil.saveWorkflowTransaction(aWFTransactionToSave);
+      },
     });
   },
 );

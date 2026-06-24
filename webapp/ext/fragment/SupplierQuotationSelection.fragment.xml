@@ -14,7 +14,7 @@
         <uiTable:Table
             id="_IDGenSQFragmentTable"
             selectionMode="MultiToggle"
-            enableSelectAll="false"
+            enableSelectAll="true"
             rows="{LocalModel>/SupplierQuotationItem}"
             enableCellFilter="true"
             filter=".filterPrice"
@@ -183,7 +183,7 @@
                 >
                     <Label
                         id="_IDGenSQFragmentLabel17"
-                        text="Total value"
+                        text="Net Price Amount"
                         wrapping="true"
                     />
                     <uiTable:template>
@@ -230,7 +230,7 @@
                 </uiTable:Column>
                 <uiTable:Column
                     id="_IDGenSQFragmentColumn11"
-                    width="6rem"
+                    width="8rem"
                     sortProperty="YY1_MaterialMake_PDI"
                     filterProperty="YY1_MaterialMake_PDI"
                 >

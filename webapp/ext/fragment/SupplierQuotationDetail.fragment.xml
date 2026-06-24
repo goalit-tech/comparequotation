@@ -7,7 +7,7 @@
     xmlns:smartTable="sap.ui.comp.smarttable"
     xmlns:core="sap.ui.core"
 >
-<!-- <f:SimpleForm
+    <!-- <f:SimpleForm
             id="_IDGenSQDetailFragmentSimpleForm"
             editable="false"
             layout="ColumnLayout"
@@ -21,7 +21,7 @@
                    </f:content>
         </f:SimpleForm> -->
 
-<uiTable:Table
+    <uiTable:Table
         id="_IDGenSQDetailFragmentTable"
         selectionMode="None"
         enableSelectAll="false"
@@ -30,9 +30,12 @@
         filter=".filterPrice"
         ariaLabelledBy="title"
     >
-    <uiTable:noData>
-        <Text id="_IDGenSQDetailFragmentTableNoData" text="No supplier quotations Item to Select" />
-    </uiTable:noData>
+        <uiTable:noData>
+            <Text
+                id="_IDGenSQDetailFragmentTableNoData"
+                text="No supplier quotations Item to Select"
+            />
+        </uiTable:noData>
         <uiTable:columns>
             <uiTable:Column
                 id="_IDGenSQDetailFragmentColumn"
@@ -190,7 +193,7 @@
             >
                 <Label
                     id="_IDGenSQDetailFragmentLabel17"
-                    text="Total value"
+                    text="Net Price Amount"
                     wrapping="true"
                 />
                 <uiTable:template>
@@ -237,7 +240,7 @@
             </uiTable:Column>
             <uiTable:Column
                 id="_IDGenSQDetailFragmentColumn11"
-                width="6rem"
+                width="8rem"
                 sortProperty="YY1_MaterialMake_PDI"
                 filterProperty="YY1_MaterialMake_PDI"
             >
@@ -256,7 +259,7 @@
             </uiTable:Column>
             <uiTable:Column
                 id="_IDGenSQDetailFragmentColumn12"
-                width="6rem"
+                width="18rem"
                 sortProperty="YY1_Specifications_PDI"
                 filterProperty="YY1_Specifications_PDI"
             >
@@ -275,5 +278,4 @@
             </uiTable:Column>
         </uiTable:columns>
     </uiTable:Table>
-
 </core:FragmentDefinition>
