@@ -37,17 +37,21 @@ sap.ui.define(
       showBusyIndicator: function () {
         BusyIndicator.show(0);
       },
-      resetLocalModel: function () {
+      resetLocalModel: async function () {
         const oModel = this.getView().getModel('LocalModel');
         const oTable = this.getView().byId('_IDGenQCFormFragmentDynamicUITable');
         oTable?.removeAllColumns();
+        const localModelData = await this._readLocalMOdelJSONFile();
+        oModel.setData(localModelData);
+      },
+      _readLocalMOdelJSONFile: function () {
         const sUrl = sap.ui.require.toUrl('nlab/ai/comparequotation/model/localModel.json');
         return new Promise((resolve, reject) => {
           jQuery
             .getJSON(sUrl)
             .done(function (oData) {
-              oModel.setData(oData);
-              resolve();
+              // oModel.setData(oData);
+              resolve(oData);
             })
             .fail(reject);
         });
@@ -62,92 +66,96 @@ sap.ui.define(
           let sCompareQuotationId = oArgs.key;
           sCompareQuotationId = sCompareQuotationId ? sCompareQuotationId.replace(/^'|'$/g, '') : '';
           const oQuery = oArgs['?query'];
-          if (oQuery && oQuery?.Mode === 'CREATE') {
-            // if (oQuery?.Mode === "CREATE") {
-            // const aSupplierQuotation = await ODataServiceUtil.getSupplierQuotationForRFQ(oQuery?.RequestForQuotation, this.getView());
-            const aSupplierQuotation = await this._oDataServiceUtil.getSupplierQuotationForRFQ(oQuery?.RequestForQuotation);
-
-            const aSupplierQuotationData = Array.isArray(aSupplierQuotation) ? aSupplierQuotation : aSupplierQuotation?.value || [];
-
-            const aSupplierQuotationItems = aSupplierQuotationData.flatMap((quotation) =>
-              (quotation._SupplierQuotationItem || []).map((item) => ({
-                ...item,
-                SupplierCode: quotation.SupplierCode,
-                SupplierName: quotation.SupplierName,
-              })),
-            );
-            this.getView()
-              .getModel('LocalModel')
-              .setProperty('/ActualSupplierQuotationItem', aSupplierQuotationItems || []);
-            // const oSelectedRFQForComparison = await ODataServiceUtil.getRequestForQuotation(oQuery?.RequestForQuotation, this.getView());
-            const oSelectedRFQForComparison = await this._oDataServiceUtil.getRequestForQuotation(oQuery?.RequestForQuotation);
-            const oCompareQuotationHeader = this.getView().getModel('LocalModel').getProperty('/CompareQuotationHeader');
-            oCompareQuotationHeader.QuotationComparison = '';
-            oCompareQuotationHeader.RequestForQuotation = oQuery?.RequestForQuotation || '';
-            oCompareQuotationHeader.RequisitionNumber = oSelectedRFQForComparison?.to_RequestForQuotationItem[0]?.PurchaseRequisition || '';
-            oCompareQuotationHeader.CompativeStatementTitle = 'New Quotation Comparison';
-            oCompareQuotationHeader.CompanyCode = aSupplierQuotation[0]?.CompanyCode || '';
-            oCompareQuotationHeader.CompanyName = aSupplierQuotation[0]?.CompanyCodeName || '';
-            this.getView().getModel('LocalModel').setProperty('/Mode', 'CREATE');
-
-            this.getView().getModel('LocalModel').setProperty('/IsEditCompareQuotation', true);
-            this.getView().getModel('LocalModel').setProperty('/RequestForQuotation', oSelectedRFQForComparison);
-            this.getView().getModel('LocalModel').setProperty('/RequestForQuotationItem', oSelectedRFQForComparison?.to_RequestForQuotationItem);
-            this.getView().getModel('LocalModel').setProperty('/CompareQuotationHeader', oCompareQuotationHeader);
-            this.getView().getModel('LocalModel').setProperty('/SupplierQuotation', aSupplierQuotationData);
-            this.getView().getModel('LocalModel').setProperty('/SupplierQuotationItem', aSupplierQuotationItems);
-            await this.checkWorkflowAndUpdateSection(oCompareQuotationHeader?.QuotationComparison);
-          } else {
-            // const oSelectedCompareQuotation = await ODataServiceUtil.getCompareQuotation(sCompareQuotationId, this.getView());
-            const oSelectedCompareQuotation = await this._oDataServiceUtil.getCompareQuotation(sCompareQuotationId);
-            const { _CompareQuotationItem, _TermsAndConditions, ...oCompareQuotationHeader } = oSelectedCompareQuotation;
-            oCompareQuotationHeader.ComparisonDate = oCompareQuotationHeader.ComparisonDate
-              ? oCompareQuotationHeader.ComparisonDate instanceof Date
-                ? oCompareQuotationHeader.ComparisonDate
-                : new Date(oCompareQuotationHeader.ComparisonDate)
-              : null;
-            oCompareQuotationHeader.RequisitionDate = oCompareQuotationHeader.RequisitionDate
-              ? oCompareQuotationHeader.RequisitionDate instanceof Date
-                ? oCompareQuotationHeader.RequisitionDate
-                : new Date(oCompareQuotationHeader.RequisitionDate)
-              : null;
-            const oSelectedRFQForComparison = await this._oDataServiceUtil.getRequestForQuotation(oCompareQuotationHeader?.RequestForQuotation);
-            this.getView().getModel('LocalModel').setProperty('/IsEditCompareQuotation', false);
-            this.getView().getModel('LocalModel').setProperty('/RequestForQuotation', oSelectedRFQForComparison);
-            this.getView().getModel('LocalModel').setProperty('/RequestForQuotationItem', oSelectedRFQForComparison?.to_RequestForQuotationItem);
-            this.getView().getModel('LocalModel').setProperty('/CompareQuotationHeader', oCompareQuotationHeader);
-            const aMergersItemsAndTerms = Utils.mergeTermsAndConditonTOCompareQuotationITem(_CompareQuotationItem, _TermsAndConditions);
-            this.getView().getModel('LocalModel').setProperty('/CompareQuotationItemData', aMergersItemsAndTerms);
-            this.getView().getModel('LocalModel').setProperty('/CompareQuotationTermsConditionData', _TermsAndConditions);
-            this.getView().getModel('LocalModel').setProperty('/Mode', 'DISPLAY');
-            const aPreDefinedTerms = this.getView().getModel('LocalModel').getProperty('/TermsAndConditionDialog/PreDefinedTermsAndCondition');
-
-            const updatedPredefineTerms = Utils.updatePredefinedTermsSelectable(aPreDefinedTerms, _TermsAndConditions);
-            this.getView().getModel('LocalModel').setProperty('/TermsAndConditionDialog/PreDefinedTermsAndCondition', updatedPredefineTerms);
-            const aExistingKeys = Array.from(new Set(_TermsAndConditions.map((oTerm) => oTerm.KeyField)));
-            const aCompareQuotationRowsData = Utils.transformDataforComparisonTable(aMergersItemsAndTerms, aExistingKeys);
-            this.getView().getModel('LocalModel').setProperty('/CompareQuotationActualRowsData', aCompareQuotationRowsData?.actualRows);
-            this.getView().getModel('LocalModel').setProperty('/CompareQuotationRowsData', aCompareQuotationRowsData?.filterRows);
-            Utils.generateCOlumnsForComparisonTable(this.getView(), aCompareQuotationRowsData?.filterRows);
-            const aSupplierQuotation = await this._oDataServiceUtil.getSupplierQuotationForRFQ(oCompareQuotationHeader?.RequestForQuotation);
-            const aSupplierQuotationData = Array.isArray(aSupplierQuotation) ? aSupplierQuotation : aSupplierQuotation?.value || [];
-
-            const aSupplierQuotationItems = aSupplierQuotationData.flatMap((quotation) =>
-              (quotation._SupplierQuotationItem || []).map((item) => ({
-                ...item,
-                SupplierCode: quotation.SupplierCode,
-                SupplierName: quotation.SupplierName,
-              })),
-            );
-            this.getView()
-              .getModel('LocalModel')
-              .setProperty('/ActualSupplierQuotationItem', aSupplierQuotationItems || []);
-            await this.checkWorkflowAndUpdateSection(oCompareQuotationHeader?.QuotationComparison);
-          }
-          this.hideBusyIndicator();
+          this._loadViewONMode(sCompareQuotationId, oQuery);
         } catch (error) {
           this.hideBusyIndicator();
         }
+      },
+      _loadViewONMode: async function (sCompareQuotationId, oQuery = {}) {
+        const loggedInUser = await this._oDataServiceUtil.getLoggedInUser();
+        if (oQuery && oQuery?.Mode === 'CREATE') {
+          // if (oQuery?.Mode === "CREATE") {
+          // const aSupplierQuotation = await ODataServiceUtil.getSupplierQuotationForRFQ(oQuery?.RequestForQuotation, this.getView());
+          const aSupplierQuotation = await this._oDataServiceUtil.getSupplierQuotationForRFQ(oQuery?.RequestForQuotation);
+
+          const aSupplierQuotationData = Array.isArray(aSupplierQuotation) ? aSupplierQuotation : aSupplierQuotation?.value || [];
+
+          const aSupplierQuotationItems = aSupplierQuotationData.flatMap((quotation) =>
+            (quotation._SupplierQuotationItem || []).map((item) => ({
+              ...item,
+              SupplierCode: quotation.SupplierCode,
+              SupplierName: quotation.SupplierName,
+            })),
+          );
+          this.getView()
+            .getModel('LocalModel')
+            .setProperty('/ActualSupplierQuotationItem', aSupplierQuotationItems || []);
+          // const oSelectedRFQForComparison = await ODataServiceUtil.getRequestForQuotation(oQuery?.RequestForQuotation, this.getView());
+          const oSelectedRFQForComparison = await this._oDataServiceUtil.getRequestForQuotation(oQuery?.RequestForQuotation);
+          const oCompareQuotationHeader = this.getView().getModel('LocalModel').getProperty('/CompareQuotationHeader');
+          oCompareQuotationHeader.QuotationComparison = '';
+          oCompareQuotationHeader.RequestForQuotation = oQuery?.RequestForQuotation || '';
+          oCompareQuotationHeader.RequisitionNumber = oSelectedRFQForComparison?.to_RequestForQuotationItem[0]?.PurchaseRequisition || '';
+          oCompareQuotationHeader.CompativeStatementTitle = 'New Quotation Comparison';
+          oCompareQuotationHeader.CompanyCode = aSupplierQuotation[0]?.CompanyCode || '';
+          oCompareQuotationHeader.CompanyName = aSupplierQuotation[0]?.CompanyCodeName || '';
+          this.getView().getModel('LocalModel').setProperty('/Mode', 'CREATE');
+
+          this.getView().getModel('LocalModel').setProperty('/IsEditCompareQuotation', true);
+          this.getView().getModel('LocalModel').setProperty('/RequestForQuotation', oSelectedRFQForComparison);
+          this.getView().getModel('LocalModel').setProperty('/RequestForQuotationItem', oSelectedRFQForComparison?.to_RequestForQuotationItem);
+          this.getView().getModel('LocalModel').setProperty('/CompareQuotationHeader', oCompareQuotationHeader);
+          this.getView().getModel('LocalModel').setProperty('/SupplierQuotation', aSupplierQuotationData);
+          this.getView().getModel('LocalModel').setProperty('/SupplierQuotationItem', aSupplierQuotationItems);
+          await this.checkWorkflowAndUpdateSection(oCompareQuotationHeader?.QuotationComparison);
+        } else {
+          // const oSelectedCompareQuotation = await ODataServiceUtil.getCompareQuotation(sCompareQuotationId, this.getView());
+          const oSelectedCompareQuotation = await this._oDataServiceUtil.getCompareQuotation(sCompareQuotationId);
+          const { _CompareQuotationItem, _TermsAndConditions, ...oCompareQuotationHeader } = oSelectedCompareQuotation;
+          oCompareQuotationHeader.ComparisonDate = oCompareQuotationHeader.ComparisonDate
+            ? oCompareQuotationHeader.ComparisonDate instanceof Date
+              ? oCompareQuotationHeader.ComparisonDate
+              : new Date(oCompareQuotationHeader.ComparisonDate)
+            : null;
+          oCompareQuotationHeader.RequisitionDate = oCompareQuotationHeader.RequisitionDate
+            ? oCompareQuotationHeader.RequisitionDate instanceof Date
+              ? oCompareQuotationHeader.RequisitionDate
+              : new Date(oCompareQuotationHeader.RequisitionDate)
+            : null;
+          const oSelectedRFQForComparison = await this._oDataServiceUtil.getRequestForQuotation(oCompareQuotationHeader?.RequestForQuotation);
+          this.getView().getModel('LocalModel').setProperty('/IsEditCompareQuotation', false);
+          this.getView().getModel('LocalModel').setProperty('/RequestForQuotation', oSelectedRFQForComparison);
+          this.getView().getModel('LocalModel').setProperty('/RequestForQuotationItem', oSelectedRFQForComparison?.to_RequestForQuotationItem);
+          this.getView().getModel('LocalModel').setProperty('/CompareQuotationHeader', oCompareQuotationHeader);
+          const aMergersItemsAndTerms = Utils.mergeTermsAndConditonTOCompareQuotationITem(_CompareQuotationItem, _TermsAndConditions);
+          this.getView().getModel('LocalModel').setProperty('/CompareQuotationItemData', aMergersItemsAndTerms);
+          this.getView().getModel('LocalModel').setProperty('/CompareQuotationTermsConditionData', _TermsAndConditions);
+          this.getView().getModel('LocalModel').setProperty('/Mode', 'DISPLAY');
+          const aPreDefinedTerms = this.getView().getModel('LocalModel').getProperty('/TermsAndConditionDialog/PreDefinedTermsAndCondition');
+
+          const updatedPredefineTerms = Utils.updatePredefinedTermsSelectable(aPreDefinedTerms, _TermsAndConditions);
+          this.getView().getModel('LocalModel').setProperty('/TermsAndConditionDialog/PreDefinedTermsAndCondition', updatedPredefineTerms);
+          const aExistingKeys = Array.from(new Set(_TermsAndConditions.map((oTerm) => oTerm.KeyField)));
+          const aCompareQuotationRowsData = Utils.transformDataforComparisonTable(aMergersItemsAndTerms, aExistingKeys);
+          this.getView().getModel('LocalModel').setProperty('/CompareQuotationActualRowsData', aCompareQuotationRowsData?.actualRows);
+          this.getView().getModel('LocalModel').setProperty('/CompareQuotationRowsData', aCompareQuotationRowsData?.filterRows);
+          Utils.generateCOlumnsForComparisonTable(this.getView(), aCompareQuotationRowsData?.filterRows);
+          const aSupplierQuotation = await this._oDataServiceUtil.getSupplierQuotationForRFQ(oCompareQuotationHeader?.RequestForQuotation);
+          const aSupplierQuotationData = Array.isArray(aSupplierQuotation) ? aSupplierQuotation : aSupplierQuotation?.value || [];
+
+          const aSupplierQuotationItems = aSupplierQuotationData.flatMap((quotation) =>
+            (quotation._SupplierQuotationItem || []).map((item) => ({
+              ...item,
+              SupplierCode: quotation.SupplierCode,
+              SupplierName: quotation.SupplierName,
+            })),
+          );
+          this.getView()
+            .getModel('LocalModel')
+            .setProperty('/ActualSupplierQuotationItem', aSupplierQuotationItems || []);
+          await this.checkWorkflowAndUpdateSection(oCompareQuotationHeader?.QuotationComparison);
+        }
+        this.hideBusyIndicator();
       },
       onCQDynamicAddItemPress: async function () {
         const oCompareQuotationHeader = this.getView().getModel('LocalModel').getProperty('/CompareQuotationHeader');
@@ -185,66 +193,39 @@ sap.ui.define(
         const sMode = this.getView().getModel('LocalModel').getProperty('/Mode');
         const isWorkflowState = this.getView().getModel('LocalModel').getProperty('/InWorkflowState');
         let oWorflowContext = this.getView().getModel('LocalModel').getProperty('/WorkflowDefination');
-        if (isWorkflowState) {
-          this.getView().getModel('LocalModel').setProperty('/InWorkflowState', true);
-          const aWrokflowTrans = await this._oDataServiceUtil.getWorkflowTransaction(quotationComparison);
-          let bWorkflowStarted = false;
-          // let aLatestVersionWfDef = [];
-          if (aWrokflowDef && aWrokflowDef.length) {
-            const iMaxVersion = Math.max(...aWrokflowDef.map((o) => o.VersionNo));
-            bWorkflowStarted = iMaxVersion > 0;
-            oWorflowContext = aWrokflowDef.filter((o) => Number(o.VersionNo) === iMaxVersion);
+        const aWrokflowDef = await this._oDataServiceUtil.getWorkflowDefination(quotationComparison);
+        const aWrokflowTrans = await this._oDataServiceUtil.getWorkflowTransaction(quotationComparison);
+        const oCompareWorkflow = this._compareWorkflowDefAndTransaction(aWrokflowDef, aWrokflowTrans);
+        // if (oCompareWorkflow.inWorkflowState) {
+        this.getView().getModel('LocalModel').setProperty('/InWorkflowState', oCompareWorkflow.inWorkflowState);
+        this.getView().getModel('LocalModel').setProperty('/WorkflowTransaction', oCompareWorkflow.workFlowTransacationData);
+        // } else {
+        // this.getView().getModel('LocalModel').setProperty('/InWorkflowState', false);
+        // }
+
+        this.getView()
+          .getModel('LocalModel')
+          .setProperty('/WorkflowDefination', aWrokflowDef.length ? aWrokflowDef : oWorflowContext);
+      },
+      _compareWorkflowDefAndTransaction: function (aWrokflowDef, aWrokflowTrans) {
+        // let workflowDefSingleRow = null;
+        const workflowComparison = {
+          inWorkflowState: false,
+          workFlowTransacationData: [],
+        };
+        if (aWrokflowDef && aWrokflowDef.length) {
+          const workflowDefSingleRow = aWrokflowDef[0];
+          if (aWrokflowTrans && aWrokflowTrans.length) {
+            // workflowComparison.workFlowTransacationData = aWrokflowTrans;
+            workflowComparison.inWorkflowState = aWrokflowTrans[0]?.DefVersionNo >= workflowDefSingleRow.versionNo ? true : false;
+            workflowComparison.workFlowTransacationData = aWrokflowTrans.map((oTxn, index, aArray) => ({
+              ...oTxn,
+              id: String(aArray[index].SeqNo),
+              children: index < aArray.length - 1 ? [aArray[index + 1].SeqNo] : null,
+            }));
           }
-          // this.getView().getModel('LocalModel').setProperty('/WorkflowDefination', oWorflowContext);
-        } else {
-          this.getView().getModel('LocalModel').setProperty('/InWorkflowState', false);
-          const aWrokflowDef = await this._oDataServiceUtil.getWorkflowDefination(quotationComparison);
-          let bWorkflowStarted = false;
-          if (aWrokflowDef && aWrokflowDef.length) {
-            const iMaxVersion = Math.max(...aWrokflowDef.map((o) => o.versionNo));
-            bWorkflowStarted = iMaxVersion > 0;
-            oWorflowContext = aWrokflowDef.filter((o) => Number(o.versionNo) === iMaxVersion);
-          }
-          oWorflowContext.forEach((eachWf, index) => {
-            eachWf['Rank'] = index + 1;
-          });
-          this.getView().getModel('LocalModel').setProperty('/WorkflowDefination', oWorflowContext);
         }
-        // this.getView().getModel('LocalModel').refresh(true);
-        /** 
-        if (sMode === 'CREATE') {
-          const oWorflowContext = this.getView().getModel('LocalModel').getProperty('/WorkflowDefination');
-          oWorflowContext.forEach((eachWf, index) => {
-            eachWf['Rank'] = index + 1;
-          });
-          this.getView().getModel('LocalModel').setProperty('/WorkflowDefination', oWorflowContext);
-        } else {
-          const oWorflowContext = this.getView().getModel('LocalModel').getProperty('/WorkflowDefination');
-          const aWrokflowDef = await this._oDataServiceUtil.getWorkflowDefination(quotationComparison);
-          let bWorkflowStarted = false;
-          // let aLatestVersionWfDef = [];
-          if (aWrokflowDef && aWrokflowDef.length) {
-            const iMaxVersion = Math.max(...aWrokflowDef.map((o) => o.versionNo));
-            bWorkflowStarted = iMaxVersion > 0;
-            oWorflowContext = aWrokflowDef.filter((o) => Number(o.versionNo) === iMaxVersion);
-          }
-          this.getView().getModel('LocalModel').setProperty('/WorkflowDefination', oWorflowContext);
-          // if (bWorkflowStarted) {
-          //   this.getView().getModel('LocalModel').setProperty('/IsEditCompareQuotation', false);
-          //   // this.getView().getModel('LocalModel').setProperty('/currentWorkflowState', oWorflowContext);
-          //   this.getView().getModel('LocalModel').setProperty('/InWorkflowState', true);
-          // } else {
-          //   this.getView().getModel('LocalModel').setProperty('/IsEditCompareQuotation', false);
-          //   // this.getView().getModel('LocalModel').setProperty('/currentWorkflowState', oWorflowContext);
-          //   this.getView().getModel('LocalModel').setProperty('/InWorkflowState', false);
-          //   const aWrokflowDefination = await this._oDataServiceUtil.getWorkflowDefination(quotationComparison);
-          //   aWrokflowDefination.forEach((eachWfDef, index) => {
-          //     eachWfDef['Rank'] = index + 1;
-          //   });
-          //   this.getView().getModel('LocalModel').setProperty('/WorkflowDefination', aWrokflowDefination);
-          // }
-        }
-         */
+        return workflowComparison;
       },
       onAddSQFragmentAddPress: function () {
         const aSelectedSupplierQuotationItems = this.getSelectedSupplierQuotationItemData();
@@ -252,25 +233,12 @@ sap.ui.define(
         this.getView().getModel('LocalModel').setProperty('/supplierQuotationItemSelected', aSelectedSupplierQuotationItems);
         const oCompareQuotationHeader = this.getView().getModel('LocalModel').getProperty('/CompareQuotationHeader');
         const sMode = this.getView().getModel('LocalModel').getProperty('/Mode');
-        // const aCompareQuotationItemData = this.getView().getModel("LocalModel").getProperty("/CompareQuotationItemData");
         const aCompareQuotationItemData = this.prepareCompareQuotationItemData();
         this.getView().getModel('LocalModel').setProperty('/CompareQuotationItemData', aCompareQuotationItemData);
-        // var currentIndex = aCompareQuotationItemData.length;
-        // aCompareQuotationItem.forEach(eachItem => {
-        //     if (sMode === 'CREATE') {
-        //         eachItem.SNo = ((currentIndex + 1) * 10).toString();
-        //     } else {
 
-        //         eachItem.QuotationComparison = oCompareQuotationHeader?.QuotationComparison || '';
-        //         eachItem.SNo = ((currentIndex + 1) * 10).toString();
-        //     }
-        //     aCompareQuotationItemData.push(eachItem);
-        // })
         const aCompareQuotationRowsData = Utils.transformDataforComparisonTable(aCompareQuotationItemData);
         this.getView().getModel('LocalModel').setProperty('/CompareQuotationActualRowsData', aCompareQuotationRowsData?.actualRows);
         this.getView().getModel('LocalModel').setProperty('/CompareQuotationRowsData', aCompareQuotationRowsData?.filterRows);
-        //this.generateCOlumnsForComparison(aCompareQuotationItems);
-        // Utils.generateCOlumnsForComparisonTable(this.getView(), aCompareQuotationItemData);
         Utils.generateCOlumnsForComparisonTable(this.getView(), aCompareQuotationRowsData?.filterRows);
 
         this.oSQItemDialog?.close();
@@ -312,10 +280,11 @@ sap.ui.define(
             this.hideBusyIndicator();
           } else {
             this.getView().getModel('LocalModel').setProperty('/IsEditCompareQuotation', false);
-            this.hideBusyIndicator();
+            // this.hideBusyIndicator();
+            await this.updateWorkflowDefAndTransaction(oResult?.quotationComparison, sMode);
             if (sMode === 'CREATE') {
-              await this._deleteAndCreateWorkflowDefination(oResult?.quotationComparison, sMode);
               sap.m.MessageToast.show('Quotation Created successfully');
+              // this.hideBusyIndicator();
               this.getRouter().navTo(
                 'QuotationComparisonObjectPage',
                 {
@@ -324,16 +293,17 @@ sap.ui.define(
                 true, // replace
               );
             } else {
-              // sap.m.MessageToast.show("Quotation Created successfully");
-              sap.m.MessageToast.show('Quotation Updated successfully', {
-                duration: 1000,
-                onClose: async () => {
-                  await this._deleteAndCreateWorkflowDefination(oResult?.quotationComparison, sMode);
-                  this.getView().getModel('LocalModel').setProperty('/IsEditCompareQuotation', false);
-                  this.hideBusyIndicator();
-                  this.getView()?.getModel('LocalModel')?.refresh();
-                },
-              });
+              sap.m.MessageToast.show('Quotation Created successfully');
+              this._loadViewONMode(oResult?.quotationComparison);
+              // sap.m.MessageToast.show('Quotation Updated successfully', {
+              //   duration: 1000,
+              //   onClose: async () => {
+              //     await this.updateWorkflowDefAndTransaction(oResult?.quotationComparison, sMode);
+              //     this.getView().getModel('LocalModel').setProperty('/IsEditCompareQuotation', false);
+              //     this.hideBusyIndicator();
+              //     this.getView()?.getModel('LocalModel')?.refresh();
+              //   },
+              // });
             }
           }
         } catch (error) {
@@ -343,16 +313,43 @@ sap.ui.define(
           // this.oDialog.close();
         }
       },
-      _deleteAndCreateWorkflowDefination: async function (quotationComparison, sMode) {
-        const oWorflowContextToSave = this.getView().getModel('LocalModel').getProperty('/WorkflowDefination');
+      updateWorkflowDefAndTransaction: async function (quotationComparison, sMode) {
         try {
+          const oWorflowContextToSave = this.getView().getModel('LocalModel').getProperty('/WorkflowDefination');
           await this._oDataServiceUtil.deleteWorkflowDefinition(quotationComparison);
           await this._oDataServiceUtil.saveWorkflowDefination(oWorflowContextToSave, quotationComparison);
+          const aWFTransactionToSave = await this.prepareWorkflowTransaction(1, 'INPROGRESS');
+          await this._oDataServiceUtil.deleteWorkflowTransaction(quotationComparison, 1);
+          await this._oDataServiceUtil.saveWorkflowTransaction(aWFTransactionToSave);
         } catch (error) {
           console.log('Error during workflow Save', error?.message);
         }
       },
+      prepareWorkflowTransaction: function (currentStep, action) {
+        let aTransactionData = [];
+        const aWorflowDefination = this.getView().getModel('LocalModel').getProperty('/WorkflowDefination');
+        const aWorkflowTransaction = this.getView().getModel('LocalModel').getProperty('/WorkflowTransaction');
+        const inWorkflowState = this.getView().getModel('LocalModel').getProperty('/InWorkflowState');
+        // if (inWorkflowState) {
+        //   // aWorkflowTransaction
+        // } else {
 
+        // }
+        aTransactionData = aWorflowDefination.map((oDef, index) => ({
+          QuotationComparison: oDef?.QuotationComparison,
+          // DefVersionNo: oDef.versionNo ?? oDef.versionNo ?? 0,
+          VersionNo: currentStep,
+          SeqNo: oDef.SeqNo ?? index + 1,
+          StageCode: oDef.StageCode ?? '',
+          AssignedTo: oDef.ApproverValue ?? '',
+          ApprovedBy: '',
+          Action: oDef.SeqNo <= currentStep ? (action ? action : 'APPROVED') : 'ISPENDING',
+          Comments: '',
+          ReasonCode: '',
+        }));
+        // }
+        return aTransactionData;
+      },
       getSelectedSupplierQuotationItemData: function () {
         // const oTable = this.getView().byId("_IDGenQCManageFragmentTable");
         const oTable = this.getView().byId('_IDGenSQFragmentTable');
@@ -732,17 +729,96 @@ sap.ui.define(
         var oProductsModel = oSelectedProductsTable.getModel('LocalModel');
         oProductsModel.setProperty('Rank', iNewRank, oDraggedItemContext);
       },
-      ResetSequenceWorkflowPress: function (oEvent) {
-        var aWorkflowDefData = this.getView().getModel('LocalModel').getProperty('/WorkflowDefination');
-        aWorkflowDefData.forEach((eachRecord, index) => {
-          eachRecord.SeqNo = index + 1;
-        });
-        this.getView().getModel('LocalModel').setProperty('/WorkflowDefination', aWorkflowDefData);
-        this.getView().getModel('LocalModel').refresh();
+      ResetSequenceWorkflowPress: async function (oEvent) {
+        const oCompareQuotationHeader = this.getView().getModel('LocalModel').getProperty('/CompareQuotationHeader');
+        const oLocalJSONModelData = await this._readLocalMOdelJSONFile();
+        let aWrokflowDef = [];
+        // if (oCompareQuotationHeader && oCompareQuotationHeader?.QuotationComparison) {
+        //   aWrokflowDef = await this._oDataServiceUtil.getWorkflowDefination(oCompareQuotationHeader?.QuotationComparison);
+        // }
+        this.getView().getModel('LocalModel').setProperty('/WorkflowDefination', oLocalJSONModelData?.WorkflowDefination);
+        // this.getView()
+        //   .getModel('LocalModel')
+        //   .setProperty('/WorkflowDefination', aWrokflowDef.length ? aWrokflowDef : oLocalJSONModelData?.WorkflowDefination);
       },
 
       onBeforeOpenContextMenu: function (oEvent) {
         oEvent.getParameters().listItem.setSelected(true);
+      },
+
+      ///Formatter************************************
+      processFlowStateFormatter: function (sAction) {
+        let stateValue = 'Neutral';
+        switch (sAction) {
+          case 'INPROGRESS':
+            stateValue = 'Critical';
+            break;
+          case 'ISPENDING':
+            stateValue = 'Neutral';
+            break;
+          case 'APPROVED':
+            stateValue = 'Positive';
+            break;
+          case 'REJECTED':
+            stateValue = 'Negative';
+            break;
+
+          default:
+            break;
+        }
+        return stateValue;
+      },
+
+      processFlowIconSrcFormatter: function (sStageCode) {
+        let stateValue = 'sap-icon://order-status';
+        switch (sStageCode) {
+          case 'INITIATOR_PURCHASE':
+            stateValue = 'sap-icon://order-status';
+            break;
+          case 'REVIEWER_PURCHASE':
+            stateValue = 'sap-icon://monitor-payments';
+            break;
+          case 'HOD_PURCHASE':
+            stateValue = 'sap-icon://payment-approval';
+            break;
+          case 'TECH_APPROVAL':
+            stateValue = 'sap-icon://money-bills';
+            break;
+          case 'COMM_APPROVAL':
+            stateValue = 'sap-icon://payment-approval';
+            break;
+          case 'FINAL_HOD':
+            stateValue = 'sap-icon://nurse';
+            break;
+          case 'MANAGING_DIRECTOR':
+            stateValue = 'sap-icon://retail-store';
+            break;
+
+          default:
+            break;
+        }
+        return stateValue;
+      },
+      processFlowStateTextFormatter: function (sAction) {
+        let stateValue = 'Neutral';
+        switch (sAction) {
+          case 'INPROGRESS':
+            stateValue = 'Critical';
+            break;
+          case 'ISPENDING':
+            stateValue = 'Planned';
+            break;
+          case 'APPROVED':
+            stateValue = 'Positive';
+            break;
+          case 'REJECTED':
+            stateValue = 'Negative';
+            break;
+
+          default:
+            break;
+        }
+        return sAction;
       },
     });
   },

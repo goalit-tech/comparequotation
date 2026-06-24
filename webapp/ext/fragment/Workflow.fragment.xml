@@ -154,24 +154,27 @@
             foldedCorners="true"
             nodePress=".onNodePress"
             lanes="{LocalModel>/WorkflowDefination}"
-            nodes="{LocalModel>/nodes}"
+            nodes="{LocalModel>/WorkflowTransaction}"
         >
             <common:nodes>
+                <!-- nodeId="{LocalModel>TransactionId}" -->
+                <!-- title="{LocalModel>Action}" -->
                 <common:ProcessFlowNode
                     id="_IDGenProcessFlowNode"
-                    laneId="{LocalModel>lane}"
+                    laneId="{=String(${LocalModel>SeqNo})}"
                     nodeId="{LocalModel>id}"
-                    title="{LocalModel>title}"
-                    state="{LocalModel>state}"
-                    stateText="{LocalModel>stateText}"
-                    texts="{LocalModel>texts}"
+                    children="{LocalModel>children}"
+                    state="{path:'LocalModel>Action',formatter:'.processFlowStateFormatter'}"
+                    stateText="{path:'LocalModel>Action',formatter:'.processFlowStateTextFormatter'}"
+                    texts="{LocalModel>Comments}"
                 />
             </common:nodes>
             <common:lanes>
                 <common:ProcessFlowLaneHeader
                     id="_IDGenProcessFlowLaneHeader"
-                    laneId="{=String(${LocalModel>SeqNo}-1)}"
+                    laneId="{=String(${LocalModel>SeqNo})}"
                     text="{LocalModel>StageName}"
+                    iconSrc="{path:'LocalModel>StageCode',formatter:'.processFlowIconSrcFormatter'}"
                     position="{=${LocalModel>SeqNo}-1}"
                 />
                 <!-- iconSrc="{LocalModel>icon}" -->

@@ -121,6 +121,7 @@
   "WorkflowDefination": [
     {
       "SeqNo": 1,
+      "Rank": 1,
       "versionNo": 1,
       "QuotationComparison": "",
       "StageCode": "INITIATOR_PURCHASE",
@@ -132,6 +133,7 @@
     },
     {
       "SeqNo": 2,
+      "Rank": 2,
       "versionNo": 1,
       "StageCode": "REVIEWER_PURCHASE",
       "StageName": "REVIEWER PURCHASE",
@@ -142,6 +144,7 @@
     },
     {
       "SeqNo": 3,
+      "Rank": 3,
       "versionNo": 1,
       "StageCode": "HOD_PURCHASE",
       "StageName": "HOD PURCHASE",
@@ -152,6 +155,7 @@
     },
     {
       "SeqNo": 4,
+      "Rank": 4,
       "versionNo": 1,
       "StageCode": "TECH_APPROVAL",
       "StageName": "TECH APPROVAL",
@@ -162,6 +166,7 @@
     },
     {
       "SeqNo": 5,
+      "Rank": 5,
       "versionNo": 1,
       "StageCode": "COMM_APPROVAL",
       "StageName": "COMM APPROVAL",
@@ -172,6 +177,7 @@
     },
     {
       "SeqNo": 6,
+      "Rank": 6,
       "versionNo": 1,
       "StageCode": "FINAL_HOD",
       "StageName": "FINAL HOD",
@@ -182,6 +188,7 @@
     },
     {
       "SeqNo": 7,
+      "Rank": 7,
       "versionNo": 1,
       "StageCode": "MANAGING_DIRECTOR",
       "StageName": "MANAGING DIRECTOR",
@@ -208,18 +215,18 @@
       "IsDraft": "X"
     },
     {
+      "QuotationComparison": "",
       "SeqNo": "2",
+      "DefVersion": 1,
+      "VersionNo": 0,
       "StageCode": "REVIEWER_PURCHASE",
       "AssignedTo": "amarjeet.kumar@n-labs.ai",
       "ApprovedBy": "",
       "Action": "Pending",
-      "IsCurrentStep": "",
-      "IsCompleted": "",
-      "QuotationComparison": "",
+      "IsCompleted": false,
       "Comment": "",
       "ReasonCode": "",
-      "ChangedAt": "",
-      "IsDraft": "X"
+      "ChangedAt": ""
     },
     {
       "SeqNo": "3",
