@@ -71,8 +71,13 @@ sap.ui.define(
           this.hideBusyIndicator();
         }
       },
-      _loadViewONMode: async function (sCompareQuotationId, oQuery = {}) {
+      _validateUserForWorkflow: async function () {
         const loggedInUser = await this._oDataServiceUtil.getLoggedInUser();
+        // const aWorkflowApprovers = await this._oDataServiceUtil.getWorkflowApprover(sStageCode);
+        //loggedInUser.email
+      },
+      _loadViewONMode: async function (sCompareQuotationId, oQuery = {}) {
+        this._validateUserForWorkflow();
         if (oQuery && oQuery?.Mode === 'CREATE') {
           // if (oQuery?.Mode === "CREATE") {
           // const aSupplierQuotation = await ODataServiceUtil.getSupplierQuotationForRFQ(oQuery?.RequestForQuotation, this.getView());
@@ -195,38 +200,72 @@ sap.ui.define(
         let oWorflowContext = this.getView().getModel('LocalModel').getProperty('/WorkflowDefination');
         const aWrokflowDef = await this._oDataServiceUtil.getWorkflowDefination(quotationComparison);
         const aWrokflowTrans = await this._oDataServiceUtil.getWorkflowTransaction(quotationComparison);
-        const oCompareWorkflow = this._compareWorkflowDefAndTransaction(aWrokflowDef, aWrokflowTrans);
+        const oWorkflowData = this._arrangeWorkflowData(aWrokflowDef, aWrokflowTrans);
         // if (oCompareWorkflow.inWorkflowState) {
-        this.getView().getModel('LocalModel').setProperty('/InWorkflowState', oCompareWorkflow.inWorkflowState);
-        this.getView().getModel('LocalModel').setProperty('/WorkflowTransaction', oCompareWorkflow.workFlowTransacationData);
-        // } else {
-        // this.getView().getModel('LocalModel').setProperty('/InWorkflowState', false);
-        // }
+
+        this.getView().getModel('LocalModel').setProperty('/InWorkflowState', false);
+        // this.getView().getModel('LocalModel').setProperty('/WorkflowTransaction', oCompareWorkflow.workFlowTransacationData);
+        this.getView().getModel('LocalModel').setProperty('/Workflow', oWorkflowData);
 
         this.getView()
           .getModel('LocalModel')
           .setProperty('/WorkflowDefination', aWrokflowDef.length ? aWrokflowDef : oWorflowContext);
       },
-      _compareWorkflowDefAndTransaction: function (aWrokflowDef, aWrokflowTrans) {
+      _arrangeWorkflowData: function (aWrokflowDef, aWrokflowTrans) {
         // let workflowDefSingleRow = null;
         const workflowComparison = {
-          inWorkflowState: false,
-          workFlowTransacationData: [],
+          // inWorkflowState: false,
+          WorkFlowTransacationData: aWrokflowTrans && aWrokflowTrans.length > 0 ? aWrokflowTrans : [],
+          CurrentDefinationVersion: 0,
+          CurrentTransactionVersion: 0,
+          CurrentWorkflowDefination: aWrokflowDef,
+          CurrentWorkflowTransaction: [],
         };
         if (aWrokflowDef && aWrokflowDef.length) {
           const workflowDefSingleRow = aWrokflowDef[0];
+          //get the quotationNo and current version to get only that version data
+          const versionNo = workflowDefSingleRow?.versionNo;
+          workflowComparison.CurrentDefinationVersion = versionNo;
           if (aWrokflowTrans && aWrokflowTrans.length) {
             // workflowComparison.workFlowTransacationData = aWrokflowTrans;
-            workflowComparison.inWorkflowState = aWrokflowTrans[0]?.DefVersionNo >= workflowDefSingleRow.versionNo ? true : false;
-            workflowComparison.workFlowTransacationData = aWrokflowTrans.map((oTxn, index, aArray) => ({
+            const aCurrentDefTxn = aWrokflowTrans.filter((o) => o.DefVersionNo === versionNo);
+            const iLatestTxnVersion = Math.max(...aCurrentDefTxn.map((o) => o.VersionNo));
+            workflowComparison.CurrentTransactionVersion = iLatestTxnVersion;
+            const aLatestTxn = aCurrentDefTxn.filter((o) => o.VersionNo === iLatestTxnVersion).sort((a, b) => a.SeqNo - b.SeqNo);
+            workflowComparison.CurrentWorkflowTransaction = aLatestTxn.map((oTxn, index, aArray) => ({
               ...oTxn,
-              id: String(aArray[index].SeqNo),
-              children: index < aArray.length - 1 ? [aArray[index + 1].SeqNo] : null,
+              id: String(oTxn.SeqNo),
+              children: index + 1 < aArray.length ? [String(aArray[index + 1].SeqNo)] : null,
             }));
+            // workflowComparison.workFlowTransacationData = aWrokflowTrans.map((oTxn, index, aArray) => ({
+            //   ...oTxn,
+            //   id: String(aArray[index].SeqNo),
+            //   children: index < aArray.length - 1 ? [aArray[index + 1].SeqNo] : null,
+            // }));
           }
         }
         return workflowComparison;
+      } /** 
+      _arrangeWorkflowTransactionData: function () {
+        const aCurrentDefTxn = aWrokflowTrans.filter(
+          o => o.DefVersionNo === versionNo
+        );
+        const iLatestTxnVersion = Math.max(
+          ...aCurrentDefTxn.map(o => o.VersionNo)
+        );
+        const aLatestTxn = aCurrentDefTxn
+          .filter(o => o.VersionNo === iLatestTxnVersion)
+          .sort((a, b) => a.SeqNo - b.SeqNo);
+        workflowComparison.workFlowTransacationData = aLatestTxn.map((oTxn, index, aArray) => ({
+          ...oTxn,
+          id: String(oTxn.SeqNo),
+          children: index + 1 < aArray.length
+            ? [String(aArray[index + 1].SeqNo)]
+            : null
+        }));
+
       },
+      */,
       onAddSQFragmentAddPress: function () {
         const aSelectedSupplierQuotationItems = this.getSelectedSupplierQuotationItemData();
         console.log('Selected Quotation Items:', aSelectedSupplierQuotationItems);

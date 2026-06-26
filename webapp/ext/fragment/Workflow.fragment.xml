@@ -2,184 +2,215 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:plugins="sap.m.plugins"
+    xmlns:macros="sap.fe.macros"
     xmlns:common="sap.suite.ui.commons"
     xmlns:dnd="sap.ui.core.dnd"
     xmlns:core="sap.ui.core"
 >
-    <VBox
-        id="_IDGenWorkflowVBox1"
-        visible="{=${LocalModel>/InWorkflowState}?false:true}"
+    <IconTabBar
+        id="_IDGenWorkflowIconTabBar"
+        class="sapUiResponsiveContentPadding"
     >
-        <Table
-            id="_IDGenWorkflowDefinationTable"
-            mode="SingleSelectMaster"
-            growing="true"
-            growingThreshold="10"
-            beforeOpenContextMenu=".onBeforeOpenContextMenu"
-            items="{
+        <items>
+            <IconTabFilter
+                id="IconTabBarIconTabFilter1"
+                text="Arrange Workflow"
+                visible="{LocalModel>/IsEditCompareQuotation}"
+            >
+                <!-- <VBox
+                    id="_IDGenWorkflowVBox1"
+                    visible="{=${LocalModel>/InWorkflowState}?false:true}"
+                > -->
+                <Table
+                    id="_IDGenWorkflowDefinationTable"
+                    mode="SingleSelectMaster"
+                    growing="true"
+                    growingThreshold="10"
+                    beforeOpenContextMenu=".onBeforeOpenContextMenu"
+                    items="{
 			path: 'LocalModel>/WorkflowDefination',
             filters: {path: 'Rank', operator: 'GT', value1: '0'},
 			sorter: {path: 'Rank', descending: false}
 		}"
-            noDataText="Please arrange in sequence Number."
-        >
-            <!-- filters: {path: 'SeqNo', operator: 'C', value1: 'L1'}, -->
-            <dependents>
-                <plugins:ContextMenuSetting
-                    id="_IDGenWorkflowContextMenuSetting"
-                    scope="Selection"
-                />
-            </dependents>
-            <headerToolbar>
-                <OverflowToolbar id="_IDGenWorkflowOverflowToolbar">
-                    <Title
-                        id="_IDGenWorkflowTitle"
-                        text="Workflow Sequence"
-                    />
-                    <ToolbarSpacer id="_IDGenWorkflowToolbarSpacer" />
-                    <Button
-                        id="_IDGenWorkflowButton"
-                        tooltip="Reset Sequence"
-                        text="Reset Sequence"
-                        visible="{LocalModel>/IsEditCompareQuotation}"
-                        press=".ResetSequenceWorkflowPress"
-                    />
-                </OverflowToolbar>
-            </headerToolbar>
-            <columns>
-                <Column id="_IDGenWorkflowColumnSNO">
-                    <Text
-                        id="_IDGenWorkflowTextCOLSNO"
-                        text="Sequence No"
-                    />
-                </Column>
-                <Column id="_IDGenWorkflowColumn">
-                    <Text
-                        id="_IDGenWorkflowText"
-                        text="Stage Code"
-                    />
-                </Column>
-                <Column id="_IDGenWorkflowColumn1">
-                    <Text
-                        id="_IDGenWorkflowText1"
-                        text="Stage Name"
-                    />
-                </Column>
-                <Column id="_IDGenWorkflowColumn2">
-                    <Text
-                        id="_IDGenWorkflowText2"
-                        text="Approver Type"
-                    />
-                </Column>
-                <Column id="_IDGenWorkflowColumn3">
-                    <Text
-                        id="_IDGenWorkflowTextAV"
-                        text="Approver Value"
-                    />
-                </Column>
-                <Column id="_IDGenWorkflowColumn4">
-                    <Text
-                        id="_IDGenWorkflowTextMADT"
-                        text="Is Mandatory"
-                    />
-                </Column>
-            </columns>
-            <dragDropConfig>
-                <dnd:DragInfo
-                    id="_IDGenWorkflowDragInfo"
-                    groupName="selected2available"
-                    sourceAggregation="items"
-                    enabled="{LocalModel>/IsEditCompareQuotation}"
-                />
-                <dnd:DropInfo
-                    id="_IDGenWorkflowDropInfo"
-                    groupName="available2selected"
-                    targetAggregation="items"
-                    dropPosition="Between"
-                    drop=".onDropSelectedProductsTable"
-                    enabled="{LocalModel>/IsEditCompareQuotation}"
-                />
-                <dnd:DragDropInfo
-                    id="_IDGenWorkflowDragDropInfo"
-                    sourceAggregation="items"
-                    targetAggregation="items"
-                    dropPosition="Between"
-                    drop=".onDropSelectedProductsTable"
-                    enabled="{LocalModel>/IsEditCompareQuotation}"
-                />
-            </dragDropConfig>
-            <items>
-                <ColumnListItem id="_IDGenWorkflowColumnListItem">
-                    <cells>
-                        <Text
-                            id="_IDGenWorkflowTextSNO"
-                            text="L-{LocalModel>SeqNo}"
-                            wrapping="false"
+                    noDataText="Please arrange in sequence Number."
+                >
+                    <!-- filters: {path: 'SeqNo', operator: 'C', value1: 'L1'}, -->
+                    <dependents>
+                        <plugins:ContextMenuSetting
+                            id="_IDGenWorkflowContextMenuSetting"
+                            scope="Selection"
                         />
-                        <Text
-                            id="_IDGenWorkflowText3"
-                            text="{LocalModel>StageCode}"
-                            wrapping="false"
+                    </dependents>
+                    <headerToolbar>
+                        <OverflowToolbar id="_IDGenWorkflowOverflowToolbar">
+                            <Title
+                                id="_IDGenWorkflowTitle"
+                                text="Workflow Sequence"
+                            />
+                            <ToolbarSpacer id="_IDGenWorkflowToolbarSpacer" />
+                            <Button
+                                id="_IDGenWorkflowButton"
+                                tooltip="Reset Sequence"
+                                text="Reset Sequence"
+                                visible="{LocalModel>/IsEditCompareQuotation}"
+                                press=".ResetSequenceWorkflowPress"
+                            />
+                        </OverflowToolbar>
+                    </headerToolbar>
+                    <columns>
+                        <Column id="_IDGenWorkflowColumnSNO">
+                            <Text
+                                id="_IDGenWorkflowTextCOLSNO"
+                                text="Sequence No"
+                            />
+                        </Column>
+                        <Column id="_IDGenWorkflowColumn">
+                            <Text
+                                id="_IDGenWorkflowText"
+                                text="Stage Code"
+                            />
+                        </Column>
+                        <Column id="_IDGenWorkflowColumn1">
+                            <Text
+                                id="_IDGenWorkflowText1"
+                                text="Stage Name"
+                            />
+                        </Column>
+                        <Column id="_IDGenWorkflowColumn2">
+                            <Text
+                                id="_IDGenWorkflowText2"
+                                text="Approver Type"
+                            />
+                        </Column>
+                        <Column id="_IDGenWorkflowColumn3">
+                            <Text
+                                id="_IDGenWorkflowTextAV"
+                                text="Approver Value"
+                            />
+                        </Column>
+                        <Column id="_IDGenWorkflowColumn4">
+                            <Text
+                                id="_IDGenWorkflowTextMADT"
+                                text="Is Mandatory"
+                            />
+                        </Column>
+                    </columns>
+                    <dragDropConfig>
+                        <dnd:DragInfo
+                            id="_IDGenWorkflowDragInfo"
+                            groupName="selected2available"
+                            sourceAggregation="items"
+                            enabled="{LocalModel>/IsEditCompareQuotation}"
                         />
-                        <Text
-                            id="_IDGenWorkflowText4"
+                        <dnd:DropInfo
+                            id="_IDGenWorkflowDropInfo"
+                            groupName="available2selected"
+                            targetAggregation="items"
+                            dropPosition="Between"
+                            drop=".onDropSelectedProductsTable"
+                            enabled="{LocalModel>/IsEditCompareQuotation}"
+                        />
+                        <dnd:DragDropInfo
+                            id="_IDGenWorkflowDragDropInfo"
+                            sourceAggregation="items"
+                            targetAggregation="items"
+                            dropPosition="Between"
+                            drop=".onDropSelectedProductsTable"
+                            enabled="{LocalModel>/IsEditCompareQuotation}"
+                        />
+                    </dragDropConfig>
+                    <items>
+                        <ColumnListItem id="_IDGenWorkflowColumnListItem">
+                            <cells>
+                                <Text
+                                    id="_IDGenWorkflowTextSNO"
+                                    text="L-{LocalModel>SeqNo}"
+                                    wrapping="false"
+                                />
+                                <Text
+                                    id="_IDGenWorkflowText3"
+                                    text="{LocalModel>StageCode}"
+                                    wrapping="false"
+                                />
+                                <Text
+                                    id="_IDGenWorkflowText4"
+                                    text="{LocalModel>StageName}"
+                                    wrapping="false"
+                                />
+                                <Text
+                                    id="_IDGenWorkflowText5"
+                                    text="{LocalModel>ApproverType}"
+                                    wrapping="false"
+                                />
+                                <Text
+                                    id="_IDGenWorkflowText6"
+                                    text="{LocalModel>ApproverValue}"
+                                    wrapping="false"
+                                />
+                                <CheckBox
+                                    id="_IDGenWorkflowText7"
+                                    editable="{LocalModel>/IsEditCompareQuotation}"
+                                    selected="{=${LocalModel>IsMandatory} === 'X'?true:false}"
+                                />
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+                <!-- </VBox> -->
+            </IconTabFilter>
+            <IconTabFilter
+                id="IconTabBarIconTabFilter2"
+                text="Process Flow"
+                visible="{=!${LocalModel>/IsEditCompareQuotation}}"
+            >
+                <common:ProcessFlow
+                    id="processflow1"
+                    scrollable="false"
+                    foldedCorners="true"
+                    nodePress=".onNodePress"
+                    lanes="{LocalModel>/WorkflowDefination}"
+                    nodes="{LocalModel>/Workflow/CurrentWorkflowTransaction}"
+                >
+                    <common:nodes>
+                        <!-- nodeId="{LocalModel>TransactionId}" -->
+                        <!-- title="{LocalModel>Action}" -->
+                        <common:ProcessFlowNode
+                            id="_IDGenProcessFlowNode"
+                            laneId="{=String(${LocalModel>SeqNo})}"
+                            nodeId="{LocalModel>id}"
+                            title="L-{LocalModel>SeqNo}"
+                            children="{LocalModel>children}"
+                            state="{path:'LocalModel>Action',formatter:'.processFlowStateFormatter'}"
+                            stateText="{path:'LocalModel>Action',formatter:'.processFlowStateTextFormatter'}"
+                            texts="{LocalModel>Comments}"
+                        />
+                    </common:nodes>
+                    <common:lanes>
+                        <common:ProcessFlowLaneHeader
+                            id="_IDGenProcessFlowLaneHeader"
+                            laneId="{=String(${LocalModel>SeqNo})}"
                             text="{LocalModel>StageName}"
-                            wrapping="false"
+                            iconSrc="{path:'LocalModel>StageCode',formatter:'.processFlowIconSrcFormatter'}"
+                            position="{=${LocalModel>SeqNo}-1}"
                         />
-                        <Text
-                            id="_IDGenWorkflowText5"
-                            text="{LocalModel>ApproverType}"
-                            wrapping="false"
-                        />
-                        <Text
-                            id="_IDGenWorkflowText6"
-                            text="{LocalModel>ApproverValue}"
-                            wrapping="false"
-                        />
-                        <CheckBox
-                            id="_IDGenWorkflowText7"
-                            editable="{LocalModel>/IsEditCompareQuotation}"
-                            selected="{=${LocalModel>IsMandatory} === 'X'?true:false}"
-                        />
-                    </cells>
-                </ColumnListItem>
-            </items>
-        </Table>
-    </VBox>
-    <VBox id="_IDGenWorkflowVBox2">
-        <!-- visible="{LocalModel>/InWorkflowState}" -->
-        <common:ProcessFlow
-            id="processflow1"
-            scrollable="false"
-            foldedCorners="true"
-            nodePress=".onNodePress"
-            lanes="{LocalModel>/WorkflowDefination}"
-            nodes="{LocalModel>/WorkflowTransaction}"
-        >
-            <common:nodes>
-                <!-- nodeId="{LocalModel>TransactionId}" -->
-                <!-- title="{LocalModel>Action}" -->
-                <common:ProcessFlowNode
-                    id="_IDGenProcessFlowNode"
-                    laneId="{=String(${LocalModel>SeqNo})}"
-                    nodeId="{LocalModel>id}"
-                    title="L-{LocalModel>SeqNo}"
-                    children="{LocalModel>children}"
-                    state="{path:'LocalModel>Action',formatter:'.processFlowStateFormatter'}"
-                    stateText="{path:'LocalModel>Action',formatter:'.processFlowStateTextFormatter'}"
-                    texts="{LocalModel>Comments}"
+                        <!-- iconSrc="{LocalModel>icon}" -->
+                    </common:lanes>
+                </common:ProcessFlow>
+            </IconTabFilter>
+            <IconTabFilter
+                id="IconTabBarIconTabFilter3"
+                text="History"
+                visible="{=!${LocalModel>/IsEditCompareQuotation}}"
+            >
+                <macros:Table
+                    id="_IDGenWorkflowHistoryTable"
+                    metaPath="/ApprovalTxn/@com.sap.vocabularies.UI.v1.LineItem"
+                    selectionMode="None"
+                    isSearchable="true"
                 />
-            </common:nodes>
-            <common:lanes>
-                <common:ProcessFlowLaneHeader
-                    id="_IDGenProcessFlowLaneHeader"
-                    laneId="{=String(${LocalModel>SeqNo})}"
-                    text="{LocalModel>StageName}"
-                    iconSrc="{path:'LocalModel>StageCode',formatter:'.processFlowIconSrcFormatter'}"
-                    position="{=${LocalModel>SeqNo}-1}"
-                />
-                <!-- iconSrc="{LocalModel>icon}" -->
-            </common:lanes>
-        </common:ProcessFlow>
-    </VBox>
+            </IconTabFilter>
+        </items>
+    </IconTabBar>
+
+    <!-- selectionChange=".onRFQDialogTableRowSelectionChange" -->
 </core:FragmentDefinition>

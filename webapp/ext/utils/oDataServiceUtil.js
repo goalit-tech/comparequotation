@@ -21,6 +21,24 @@ sap.ui.define(['sap/m/MessageBox', 'sap/ui/model/json/JSONModel'], function (Mes
         fullName: oUserInfo.getFullName(),
       };
     }
+
+    async getWorkflowApprover(sStageCode) {
+      const oModel = this._oView?.getModel();
+      try {
+        const oListBinding = oModel.bindList('/WorkflowApprover', undefined, undefined, undefined, {
+          $filter: `StageCode eq '${sStageCode}' and IsActive eq true`,
+        });
+        const aContexts = await oListBinding.requestContexts(0, 100);
+        const aWorkflowApprover = aContexts.map((oContext) => oContext.getObject());
+
+        console.log('Workflow Approvers', aWorkflowApprover);
+
+        return aWorkflowApprover;
+      } catch (oError) {
+        console.error('Error loading Workflow Approvers', oError);
+        return [];
+      }
+    }
     async saveQuotationComparison(oHeader, aItems = [], aTerms = [], mode) {
       const oModel = this.getView().getModel();
       const sGroupId = 'quotationUpdateGroup';

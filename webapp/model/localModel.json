@@ -60,26 +60,6 @@
         "Selectable": true
       },
       {
-        "KeyField": "BCDPercent",
-        "KeyFieldDesc": "BCD %",
-        "Selectable": true
-      },
-      {
-        "KeyField": "SWCPercentOnBCD",
-        "KeyFieldDesc": "SWC % on BCD",
-        "Selectable": true
-      },
-      {
-        "KeyField": "HSNCode",
-        "KeyFieldDesc": "HSN Code",
-        "Selectable": true
-      },
-      {
-        "KeyField": "GST",
-        "KeyFieldDesc": "GST",
-        "Selectable": true
-      },
-      {
         "KeyField": "InsuranceCharges",
         "KeyFieldDesc": "Insurance Charges",
         "Selectable": true
@@ -118,6 +98,13 @@
   },
   "RequestForQuotation": {},
   "RequestForQuotationItem": [],
+  "Workflow": {
+    "WorkFlowTransacationData": [],
+    "CurrentDefinationVersion": 0,
+    "CurrentTransactionVersion": 0,
+    "CurrentWorkflowDefination": [],
+    "CurrentWorkflowTransaction": []
+  },
   "WorkflowDefination": [
     {
       "SeqNo": 1,
@@ -199,158 +186,70 @@
     }
   ],
   "WorkflowTransaction": [],
-  "WorkflowTransaction1": [
+  "WorkflowApprovers": [
     {
-      "SeqNo": "1",
+      "WfApproverId": "11111111-1111-1111-1111-111111111111",
       "StageCode": "INITIATOR_PURCHASE",
-      "AssignedTo": "amarjeet.kumar@n-labs.ai",
-      "ApprovedBy": "",
-      "Action": "In Progress",
-      "IsCurrentStep": "X",
-      "IsCompleted": "",
-      "QuotationComparison": "",
-      "Comment": "",
-      "ReasonCode": "",
-      "ChangedAt": "",
-      "IsDraft": "X"
+      "StageName": "Initiator Purchase",
+      "Email": "Subhashini.Kancherla@n-labs.ai",
+      "IsActive": true
     },
     {
-      "QuotationComparison": "",
-      "SeqNo": "2",
-      "DefVersion": 1,
-      "VersionNo": 0,
+      "WfApproverId": "22222222-2222-2222-2222-222222222222",
       "StageCode": "REVIEWER_PURCHASE",
-      "AssignedTo": "amarjeet.kumar@n-labs.ai",
-      "ApprovedBy": "",
-      "Action": "Pending",
-      "IsCompleted": false,
-      "Comment": "",
-      "ReasonCode": "",
-      "ChangedAt": ""
+      "StageName": "Reviewer Purchase",
+      "Email": "Anudeep.Chittimalla@n-labs.ai",
+      "IsActive": true
     },
     {
-      "SeqNo": "3",
+      "WfApproverId": "33333333-3333-3333-3333-333333333333",
       "StageCode": "HOD_PURCHASE",
-      "AssignedTo": "amarjeet.kumar@n-labs.ai",
-      "ApprovedBy": "",
-      "Action": "Pending",
-      "IsCurrentStep": "",
-      "IsCompleted": "",
-      "QuotationComparison": "",
-      "Comment": "",
-      "ReasonCode": "",
-      "ChangedAt": "",
-      "IsDraft": "X"
+      "StageName": "HOD Purchase",
+      "Email": "Sohail.Basha@n-labs.ai",
+      "IsActive": true
     },
     {
-      "SeqNo": "4",
+      "WfApproverId": "44444444-4444-4444-4444-444444444444",
       "StageCode": "TECH_APPROVAL",
-      "AssignedTo": "amarjeet.kumar@n-labs.ai",
-      "ApprovedBy": "",
-      "Action": "Pending",
-      "IsCurrentStep": "",
-      "IsCompleted": "",
-      "QuotationComparison": "",
-      "Comment": "",
-      "ReasonCode": "",
-      "ChangedAt": "",
-      "IsDraft": "X"
+      "StageName": "Technical Approval",
+      "Email": "Venkatesh.Erla@n-labs.ai",
+      "IsActive": true
     },
     {
-      "SeqNo": "5",
+      "WfApproverId": "55555555-5555-5555-5555-555555555555",
       "StageCode": "COMM_APPROVAL",
-      "AssignedTo": "amarjeet.kumar@n-labs.ai",
-      "ApprovedBy": "",
-      "Action": "Pending",
-      "IsCurrentStep": "",
-      "IsCompleted": "",
-      "QuotationComparison": "",
-      "Comment": "",
-      "ReasonCode": "",
-      "ChangedAt": "",
-      "IsDraft": "X"
+      "StageName": "Commercial Approval",
+      "Email": "Santhosh.Kanaka@n-labs.ai",
+      "IsActive": true
     },
     {
-      "SeqNo": "6",
+      "WfApproverId": "66666666-6666-6666-6666-666666666666",
       "StageCode": "FINAL_HOD",
-      "AssignedTo": "amarjeet.kumar@n-labs.ai",
-      "ApprovedBy": "",
-      "Action": "Pending",
-      "IsCurrentStep": "",
-      "IsCompleted": "",
-      "QuotationComparison": "",
-      "Comment": "",
-      "ReasonCode": "",
-      "ChangedAt": "",
-      "IsDraft": "X"
+      "StageName": "Final HOD Approval",
+      "Email": "Vijender.Bajjuri@n-labs.ai",
+      "IsActive": true
     },
     {
-      "SeqNo": "7",
+      "WfApproverId": "77777777-7777-7777-7777-777777777777",
       "StageCode": "MANAGING_DIRECTOR",
-      "AssignedTo": "amarjeet.kumar@n-labs.ai",
-      "ApprovedBy": "",
-      "Action": "Pending",
-      "IsCurrentStep": "",
-      "IsCompleted": "",
-      "QuotationComparison": "",
-      "Comment": "",
-      "ReasonCode": "",
-      "ChangedAt": "",
-      "IsDraft": "X"
-    }
-  ],
-  "nodes": [
-    {
-      "id": "1",
-      "lane": "0",
-      "title": "Initiator Purchase",
-      "titleAbbreviation": "SO 1",
-      "state": "Positive",
-      "stateText": "OK status"
-    }
-  ],
-  "lanes": [
-    {
-      "id": "0",
-      "icon": "sap-icon://order-status",
-      "label": "Initiator Purchase",
-      "position": 0
+      "StageName": "Managing Director Approval",
+      "Email": "Amarjeet.Kumar@n-labs.ai",
+      "IsActive": true
     },
     {
-      "id": "1",
-      "icon": "sap-icon://monitor-payments",
-      "label": "Reviewer Purchase",
-      "position": 1
+      "WfApproverId": "88888888-8888-8888-8888-888888888888",
+      "StageCode": "TECH_APPROVAL",
+      "StageName": "Technical Approval",
+      "Email": "techlead@n-labs.ai",
+      "IsActive": true
     },
     {
-      "id": "2",
-      "icon": "sap-icon://payment-approval",
-      "label": "HOD Purchase",
-      "position": 2
-    },
-    {
-      "id": "3",
-      "icon": "sap-icon://money-bills",
-      "label": "Technical Approval",
-      "position": 3
-    },
-    {
-      "id": "4",
-      "icon": "sap-icon://payment-approval",
-      "label": "Commercial Approval",
-      "position": 4
-    },
-    {
-      "id": "5",
-      "icon": "sap-icon://nurse",
-      "label": "HOD Purchase",
-      "position": 5
-    },
-    {
-      "id": "6",
-      "icon": "sap-icon://retail-store",
-      "label": "Managing Director",
-      "position": 6
+      "WfApproverId": "99999999-9999-9999-9999-999999999999",
+      "StageCode": "COMM_APPROVAL",
+      "StageName": "Commercial Approval",
+      "Email": "commercialhead@n-labs.ai",
+      "IsActive": true,
+      "SequenceNo": 2
     }
   ]
 }

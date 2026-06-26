@@ -26,6 +26,7 @@ sap.ui.define(['sap/ui/model/json/JSONModel'], function (JSONModel) {
         'SNo',
         'Description',
         'Supplierquotationitem',
+        // 'DeliveryDate',
         'Material',
         'MaterialMake',
         'ModelNumber',
@@ -35,10 +36,15 @@ sap.ui.define(['sap/ui/model/json/JSONModel'], function (JSONModel) {
         'Specifications3',
         'Quantity',
         'Units',
+        'NetPriceAmount',
         'Currency',
         'TotalAmount',
         'ConversionRs',
         'ConvertedAmount',
+        'HSNCODE',
+        'GST',
+        'BCD',
+        'SWC',
       ];
       aSingleRowsAtBottom.push(...(aNewProperties?.filter((prop) => !aSingleRowsAtBottom.includes(prop)) || []));
       const aRows = [];
@@ -181,6 +187,7 @@ sap.ui.define(['sap/ui/model/json/JSONModel'], function (JSONModel) {
         'SNo',
         'SupplierCode',
         'SupplierName',
+        // 'DeliveryDate',
         'Material',
         'Description',
         'MaterialMake',
@@ -193,7 +200,17 @@ sap.ui.define(['sap/ui/model/json/JSONModel'], function (JSONModel) {
         'ConvertedAmount',
         'TermsAndConditions',
       ];
-      const editableHeaderRows = ['Specifications1', 'Specifications2', 'Specifications3', 'ConversionRs'];
+      const editableHeaderRows = [
+        'Specifications1',
+        'Specifications2',
+        'Specifications3',
+        'ConversionRs',
+        'NetPriceAmount',
+        'HSNCODE',
+        'GST',
+        'BCD',
+        'SWC',
+      ];
       // Property column
       oTable.addColumn(
         new sap.ui.table.Column({
