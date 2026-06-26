@@ -99,6 +99,9 @@
   "RequestForQuotation": {},
   "RequestForQuotationItem": [],
   "Workflow": {
+    "Comment": "",
+    "Action": "INPROGRESS",
+    "CommentState": "None",
     "WorkFlowTransacationData": [],
     "CurrentDefinationVersion": 0,
     "CurrentTransactionVersion": 0,

@@ -334,15 +334,6 @@ sap.ui.define(
             } else {
               sap.m.MessageToast.show('Quotation Created successfully');
               this._loadViewONMode(oResult?.quotationComparison);
-              // sap.m.MessageToast.show('Quotation Updated successfully', {
-              //   duration: 1000,
-              //   onClose: async () => {
-              //     await this.updateWorkflowDefAndTransaction(oResult?.quotationComparison, sMode);
-              //     this.getView().getModel('LocalModel').setProperty('/IsEditCompareQuotation', false);
-              //     this.hideBusyIndicator();
-              //     this.getView()?.getModel('LocalModel')?.refresh();
-              //   },
-              // });
             }
           }
         } catch (error) {
@@ -358,22 +349,21 @@ sap.ui.define(
           await this._oDataServiceUtil.deleteWorkflowDefinition(quotationComparison);
           await this._oDataServiceUtil.saveWorkflowDefination(oWorflowContextToSave, quotationComparison);
           const aWFTransactionToSave = await this.prepareWorkflowTransaction(1, 'INPROGRESS');
-          await this._oDataServiceUtil.deleteWorkflowTransaction(quotationComparison, 1);
+          //Make sure only for defVersion one we are calling this delete
+          const iCurrentDefinationVersion = this.getView().getModel('LocalModel').getProperty('/Workflow/CurrentDefinationVersion');
+          if (iCurrentDefinationVersion === 1) {
+            await this._oDataServiceUtil.deleteWorkflowTransaction(quotationComparison, 1, 1);
+          }
           await this._oDataServiceUtil.saveWorkflowTransaction(aWFTransactionToSave);
         } catch (error) {
           console.log('Error during workflow Save', error?.message);
         }
       },
-      prepareWorkflowTransaction: function (currentStep, action) {
+      prepareWorkflowTransaction: function (currentStep, action,comment='') {
         let aTransactionData = [];
         const aWorflowDefination = this.getView().getModel('LocalModel').getProperty('/WorkflowDefination');
         const aWorkflowTransaction = this.getView().getModel('LocalModel').getProperty('/WorkflowTransaction');
         const inWorkflowState = this.getView().getModel('LocalModel').getProperty('/InWorkflowState');
-        // if (inWorkflowState) {
-        //   // aWorkflowTransaction
-        // } else {
-
-        // }
         aTransactionData = aWorflowDefination.map((oDef, index) => ({
           QuotationComparison: oDef?.QuotationComparison,
           DefVersionNo: oDef.versionNo ?? oDef.versionNo ?? 0,
@@ -383,7 +373,7 @@ sap.ui.define(
           AssignedTo: oDef.ApproverValue ?? '',
           ApprovedBy: '',
           Action: oDef.SeqNo <= currentStep ? (action ? action : 'APPROVED') : 'ISPENDING',
-          Comments: '',
+          Comments: oDef.SeqNo === currentStep ? comment:'',
           ReasonCode: '',
         }));
         // }
@@ -860,14 +850,45 @@ sap.ui.define(
         return sAction;
       },
       onCompareQuotationApprovePress: async function () {
-        const aWFTransactionToSave = await this.prepareWorkflowTransaction(1, 'APPROVED');
-        // await this._oDataServiceUtil.deleteWorkflowTransaction(quotationComparison, 1);
-        await this._oDataServiceUtil.saveWorkflowTransaction(aWFTransactionToSave);
+        this.getView().getModel('LocalModel').setProperty('/Workflow/Action','APPROVED');
+        this.oApproveRejectDialog ??= await this.loadFragment({
+          name: 'nlab.ai.comparequotation.ext.fragment.ApproveOrReject',
+        });
+        this.getView().addDependent(this.oApproveRejectDialog);
+        this.oApproveRejectDialog?.open();
+
+       
       },
       onCompareQuotationRejectPress: async function () {
-        const aWFTransactionToSave = await this.prepareWorkflowTransaction(1, 'REJECTED');
-        // await this._oDataServiceUtil.deleteWorkflowTransaction(quotationComparison, 1);
+        this.getView().getModel('LocalModel').setProperty('/Workflow/Action','REJECTED');
+        this.oApproveRejectDialog ??= await this.loadFragment({
+          name: 'nlab.ai.comparequotation.ext.fragment.ApproveOrReject',
+        });
+        this.getView().addDependent(this.oApproveRejectDialog);
+        this.oApproveRejectDialog?.open();
+      },
+      onAORFragmentApproveOrRejectPress: function () {
+         const oWorkflow = this.getView().getModel('LocalModel').getProperty('/Workflow');
+         if(!oWorkflow.Comment){
+            this.getView().getModel('LocalModel').setProperty('/Workflow/CommentState','Error');
+         }
+        this.getView().getModel('LocalModel').setProperty('/Workflow/CommentState','None');
+        const sCompareQuoationId = this.getView().getModel('LocalModel').getProperty('/CompareQuotationHeader/QuotationComparison');
+        const oWorflowContextToSave = this.getView().getModel('LocalModel').getProperty('/WorkflowDefination');
+        const aWFTransactionToSave = await this.prepareWorkflowTransaction(1, ACTION,oWorkflow.Action.Comment);//REJECTED
         await this._oDataServiceUtil.saveWorkflowTransaction(aWFTransactionToSave);
+        if(oWorkflow.Action === 'REJECTED'){
+          oWorflowContextToSave.forEach(eachDef=>{
+            eachDef.versionNo=eachDef.versionNo+1;
+          });
+           this.getView().getModel('LocalModel').setProperty('/WorkflowDefination',oWorflowContextToSave);
+          await this._oDataServiceUtil.saveWorkflowDefination(oWorflowContextToSave, sCompareQuoationId);
+        }
+        this.oApproveRejectDialog?.close();
+        // await this._oDataServiceUtil.deleteWorkflowTransaction(quotationComparison, 1);
+      },
+      onAORFragmentCancelPress: function () {
+        this.oApproveRejectDialog?.close();
       },
     });
   },

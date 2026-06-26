@@ -20,7 +20,6 @@
                 id="SimpleFormChange354"
                 editable="true"
                 layout="ResponsiveGridLayout"
-                title="Address"
                 labelSpanXL="3"
                 labelSpanL="3"
                 labelSpanM="3"
@@ -37,10 +36,10 @@
             >
                 <f:toolbar>
                     <Toolbar id="_IDGenTCFragmentDialogSFToolbar">
-                        <Title
+                        <!-- <Title
                             id="_IDGenTCFragmentDialogSFTitle1"
                             text="Address"
-                        />
+                        /> -->
                         <ToolbarSpacer
                             id="_IDGenTCFragmentDialogSFToolbarSpacer"
                         />
@@ -92,7 +91,7 @@
                     />
                     <Input
                         valueState="{LocalModel>/TermsAndConditionDialog/KeyFieldState}"
-                        id="name"
+                        id="_IDGenTCFragmentDialogKeyField"
                         value="{LocalModel>/TermsAndConditionDialog/KeyField}"
                         visible="{= ${LocalModel>/TermsAndConditionDialog/IsAddNewTC} ? true:false}"
                     />

@@ -394,11 +394,11 @@ sap.ui.define(['sap/m/MessageBox', 'sap/ui/model/json/JSONModel'], function (Mes
         };
       }
     }
-    async deleteWorkflowTransaction(sQuotationComparison, versionNo) {
+    async deleteWorkflowTransaction(sQuotationComparison, defVersionNo, versionNo) {
       const oModel = this._oView.getModel();
       try {
         const oListBinding = oModel.bindList('/ApprovalTxn', undefined, undefined, undefined, {
-          $filter: `QuotationComparison eq '${sQuotationComparison}' and VersionNo eq ${versionNo}`,
+          $filter: `QuotationComparison eq '${sQuotationComparison}' and DefVersionNo eq ${defVersionNo} and VersionNo eq ${versionNo}`,
         });
 
         const aContexts = await oListBinding.requestContexts();
