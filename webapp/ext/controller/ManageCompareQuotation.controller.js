@@ -71,13 +71,22 @@ sap.ui.define(
           this.hideBusyIndicator();
         }
       },
-      _validateUserForWorkflow: async function () {
+      _checkLoggedInUserIsValidApprover: async function (oWorkFlowCotext) {
         const loggedInUser = await this._oDataServiceUtil.getLoggedInUser();
-        // const aWorkflowApprovers = await this._oDataServiceUtil.getWorkflowApprover(sStageCode);
-        //loggedInUser.email
+        const currentTxnVersion = oWorkFlowCotext?.CurrentTransactionVersion;
+
+        const currentTxn = oWorkFlowCotext?.CurrentTransactionApproverStep;
+
+        if (!oWorkFlowCotext?.CurrentTransactionApproverStep) {
+          return false;
+        }
+        const aApprovers = await this._oDataServiceUtil.getWorkflowApprover(currentTxn.StageCode);
+
+        const sLoggedInEmail = loggedInUser?.email?.trim().toLowerCase();
+
+        return aApprovers?.some((approver) => approver?.Email?.trim().toLowerCase() === sLoggedInEmail);
       },
       _loadViewONMode: async function (sCompareQuotationId, oQuery = {}) {
-        this._validateUserForWorkflow();
         if (oQuery && oQuery?.Mode === 'CREATE') {
           // if (oQuery?.Mode === "CREATE") {
           // const aSupplierQuotation = await ODataServiceUtil.getSupplierQuotationForRFQ(oQuery?.RequestForQuotation, this.getView());
@@ -196,15 +205,19 @@ sap.ui.define(
       },
       checkWorkflowAndUpdateSection: async function (quotationComparison) {
         const sMode = this.getView().getModel('LocalModel').getProperty('/Mode');
-        const isWorkflowState = this.getView().getModel('LocalModel').getProperty('/InWorkflowState');
         let oWorflowContext = this.getView().getModel('LocalModel').getProperty('/WorkflowDefination');
         const aWrokflowDef = await this._oDataServiceUtil.getWorkflowDefination(quotationComparison);
         const aWrokflowTrans = await this._oDataServiceUtil.getWorkflowTransaction(quotationComparison);
         const oWorkflowData = this._arrangeWorkflowData(aWrokflowDef, aWrokflowTrans);
-        // if (oCompareWorkflow.inWorkflowState) {
-
-        this.getView().getModel('LocalModel').setProperty('/InWorkflowState', false);
-        // this.getView().getModel('LocalModel').setProperty('/WorkflowTransaction', oCompareWorkflow.workFlowTransacationData);
+        const isUserValidApprover = await this._checkLoggedInUserIsValidApprover(oWorkflowData);
+        this.getView().getModel('LocalModel').setProperty('/hasWorkflowApprovalEditAccess', false);
+        this.getView().getModel('LocalModel').setProperty('/hasWorkflowApprovalAccess', true);
+        if (isUserValidApprover) {
+          this.getView().getModel('LocalModel').setProperty('/hasWorkflowApprovalAccess', false);
+        }
+        if (oWorkflowData?.CurrentTransactionVersion === 1) {
+          this.getView().getModel('LocalModel').setProperty('/hasWorkflowApprovalEditAccess', true);
+        }
         this.getView().getModel('LocalModel').setProperty('/Workflow', oWorkflowData);
 
         this.getView()
@@ -213,14 +226,9 @@ sap.ui.define(
       },
       _arrangeWorkflowData: function (aWrokflowDef, aWrokflowTrans) {
         // let workflowDefSingleRow = null;
-        const workflowComparison = {
-          // inWorkflowState: false,
-          WorkFlowTransacationData: aWrokflowTrans && aWrokflowTrans.length > 0 ? aWrokflowTrans : [],
-          CurrentDefinationVersion: 0,
-          CurrentTransactionVersion: 0,
-          CurrentWorkflowDefination: aWrokflowDef,
-          CurrentWorkflowTransaction: [],
-        };
+        const workflowComparison = this.getView().getModel('LocalModel').getProperty('/Workflow');
+        workflowComparison.WorkFlowTransacationData = aWrokflowTrans && aWrokflowTrans.length > 0 ? aWrokflowTrans : [];
+        workflowComparison.CurrentWorkflowDefination = aWrokflowDef;
         if (aWrokflowDef && aWrokflowDef.length) {
           const workflowDefSingleRow = aWrokflowDef[0];
           //get the quotationNo and current version to get only that version data
@@ -228,44 +236,24 @@ sap.ui.define(
           workflowComparison.CurrentDefinationVersion = versionNo;
           if (aWrokflowTrans && aWrokflowTrans.length) {
             // workflowComparison.workFlowTransacationData = aWrokflowTrans;
-            const aCurrentDefTxn = aWrokflowTrans.filter((o) => o.DefVersionNo === versionNo);
+            const aCurrentDefTxn = aWrokflowTrans.filter((o) => o.Defversion === versionNo);
             const iLatestTxnVersion = Math.max(...aCurrentDefTxn.map((o) => o.VersionNo));
             workflowComparison.CurrentTransactionVersion = iLatestTxnVersion;
             const aLatestTxn = aCurrentDefTxn.filter((o) => o.VersionNo === iLatestTxnVersion).sort((a, b) => a.SeqNo - b.SeqNo);
+            //Current WorkflowTransaction version
             workflowComparison.CurrentWorkflowTransaction = aLatestTxn.map((oTxn, index, aArray) => ({
               ...oTxn,
               id: String(oTxn.SeqNo),
               children: index + 1 < aArray.length ? [String(aArray[index + 1].SeqNo)] : null,
             }));
-            // workflowComparison.workFlowTransacationData = aWrokflowTrans.map((oTxn, index, aArray) => ({
-            //   ...oTxn,
-            //   id: String(aArray[index].SeqNo),
-            //   children: index < aArray.length - 1 ? [aArray[index + 1].SeqNo] : null,
-            // }));
+            //Current Transaction Steps
+            workflowComparison.CurrentTransactionApproverStep = workflowComparison?.CurrentWorkflowTransaction?.find(
+              (txn) => txn.VersionNo === iLatestTxnVersion && txn.Action === 'INPROGRESS',
+            );
           }
         }
         return workflowComparison;
-      } /** 
-      _arrangeWorkflowTransactionData: function () {
-        const aCurrentDefTxn = aWrokflowTrans.filter(
-          o => o.DefVersionNo === versionNo
-        );
-        const iLatestTxnVersion = Math.max(
-          ...aCurrentDefTxn.map(o => o.VersionNo)
-        );
-        const aLatestTxn = aCurrentDefTxn
-          .filter(o => o.VersionNo === iLatestTxnVersion)
-          .sort((a, b) => a.SeqNo - b.SeqNo);
-        workflowComparison.workFlowTransacationData = aLatestTxn.map((oTxn, index, aArray) => ({
-          ...oTxn,
-          id: String(oTxn.SeqNo),
-          children: index + 1 < aArray.length
-            ? [String(aArray[index + 1].SeqNo)]
-            : null
-        }));
-
       },
-      */,
       onAddSQFragmentAddPress: function () {
         const aSelectedSupplierQuotationItems = this.getSelectedSupplierQuotationItemData();
         console.log('Selected Quotation Items:', aSelectedSupplierQuotationItems);
@@ -359,23 +347,33 @@ sap.ui.define(
           console.log('Error during workflow Save', error?.message);
         }
       },
-      prepareWorkflowTransaction: function (currentStep, action,comment='') {
+      prepareWorkflowTransaction: async function (currentStep, action, comment = '', reasonCode = '') {
         let aTransactionData = [];
         const aWorflowDefination = this.getView().getModel('LocalModel').getProperty('/WorkflowDefination');
         const aWorkflowTransaction = this.getView().getModel('LocalModel').getProperty('/WorkflowTransaction');
-        const inWorkflowState = this.getView().getModel('LocalModel').getProperty('/InWorkflowState');
-        aTransactionData = aWorflowDefination.map((oDef, index) => ({
-          QuotationComparison: oDef?.QuotationComparison,
-          DefVersionNo: oDef.versionNo ?? oDef.versionNo ?? 0,
-          VersionNo: currentStep,
-          SeqNo: oDef.SeqNo ?? index + 1,
-          StageCode: oDef.StageCode ?? '',
-          AssignedTo: oDef.ApproverValue ?? '',
-          ApprovedBy: '',
-          Action: oDef.SeqNo <= currentStep ? (action ? action : 'APPROVED') : 'ISPENDING',
-          Comments: oDef.SeqNo === currentStep ? comment:'',
-          ReasonCode: '',
-        }));
+        const loggedInUser = await this._oDataServiceUtil.getLoggedInUser();
+        aWorflowDefination.forEach((oDef, index) => {
+          let currentAction = 'ISPENDING';
+          if (oDef.SeqNo <= currentStep) {
+            currentAction = action;
+          }
+          if (currentStep + 1 === oDef.SeqNo) {
+            currentAction = 'INPORGRESS';
+          }
+          const eachTransaction = {
+            QuotationComparison: oDef?.QuotationComparison,
+            Defversion: oDef.versionNo ?? oDef.versionNo ?? 0,
+            VersionNo: action === 'INPROGRESS' ? currentStep : currentStep + 1,
+            SeqNo: oDef.SeqNo ?? index + 1,
+            StageCode: oDef.StageCode ?? '',
+            AssignedTo: oDef.ApproverValue ?? '',
+            ApprovedBy: loggedInUser?.email || '',
+            Action: currentAction,
+            Comments: oDef.SeqNo === currentStep ? comment : '',
+            ReasonCode: reasonCode,
+          };
+          aTransactionData.push(eachTransaction);
+        });
         // }
         return aTransactionData;
       },
@@ -503,13 +501,18 @@ sap.ui.define(
             SupplierName: item?.SupplierName || '',
             UnitRate: Number(item?.UnitRate || 0).toFixed(2),
             TotalAmount: Number(item?.TotalAmount || 0).toFixed(2),
-            // UnitRate: item?.UnitRate != null ? String(item.UnitRate) : '0.00',
+            BcdPercent: Number(item?.BcdPercent || 0).toFixed(2),
+            SwcPercentOnBcd: Number(item?.SwcPercentOnBcd || 0).toFixed(2),
+            Gst: Number(item?.Gst || 0).toFixed(2),
+            HsnCode: item?.HsnCode || '',
+            // BcdPercent: item?.UnitRate != null ? String(item.UnitRate) : '0.00',
             // TotalAmount: item?.TotalAmount != null ? String(item.TotalAmount) : '0.00',
             Currency: item?.Currency || '',
             MaterialMake: item?.MaterialMake || '',
             Specifications: item?.Specifications || '',
-            ContactPerson: item?.ContactPerson || '',
-            PhoneNumber: item?.PhoneNumber || '',
+            // ContactPerson: item?.ContactPerson || '',
+            // PhoneNumber: item?.PhoneNumber || '',
+            //ConversionRate: Number(item?.ConversionRate || 0).toFixed(2),
             ConvertedAmount: item?.ConvertedAmount || '',
             Specifications1: item?.Specifications1 || '',
             Specifications2: item?.Specifications2 || '',
@@ -850,38 +853,55 @@ sap.ui.define(
         return sAction;
       },
       onCompareQuotationApprovePress: async function () {
-        this.getView().getModel('LocalModel').setProperty('/Workflow/Action','APPROVED');
+        this.getView().getModel('LocalModel').setProperty('/Workflow/Action', 'APPROVED');
+        this.getView().getModel('LocalModel').setProperty('/Workflow/Comment', '');
+        this.getView().getModel('LocalModel').setProperty('/Workflow/CommentState', 'None');
+        this.getView().getModel('LocalModel').setProperty('/Workflow/ReasonCode', '');
+        this.getView().getModel('LocalModel').setProperty('/Workflow/ReasonCodeState', 'None');
         this.oApproveRejectDialog ??= await this.loadFragment({
           name: 'nlab.ai.comparequotation.ext.fragment.ApproveOrReject',
         });
         this.getView().addDependent(this.oApproveRejectDialog);
         this.oApproveRejectDialog?.open();
-
-       
       },
       onCompareQuotationRejectPress: async function () {
-        this.getView().getModel('LocalModel').setProperty('/Workflow/Action','REJECTED');
+        this.getView().getModel('LocalModel').setProperty('/Workflow/Action', 'REJECTED');
+        this.getView().getModel('LocalModel').setProperty('/Workflow/Comment', '');
+        this.getView().getModel('LocalModel').setProperty('/Workflow/CommentState', 'None');
+        this.getView().getModel('LocalModel').setProperty('/Workflow/ReasonCode', '');
+        this.getView().getModel('LocalModel').setProperty('/Workflow/ReasonCodeState', 'None');
         this.oApproveRejectDialog ??= await this.loadFragment({
           name: 'nlab.ai.comparequotation.ext.fragment.ApproveOrReject',
         });
         this.getView().addDependent(this.oApproveRejectDialog);
         this.oApproveRejectDialog?.open();
       },
-      onAORFragmentApproveOrRejectPress: function () {
-         const oWorkflow = this.getView().getModel('LocalModel').getProperty('/Workflow');
-         if(!oWorkflow.Comment){
-            this.getView().getModel('LocalModel').setProperty('/Workflow/CommentState','Error');
-         }
-        this.getView().getModel('LocalModel').setProperty('/Workflow/CommentState','None');
+      onAORFragmentApproveOrRejectPress: async function () {
+        const oWorkflow = this.getView().getModel('LocalModel').getProperty('/Workflow');
+        if (!oWorkflow.Comment) {
+          this.getView().getModel('LocalModel').setProperty('/Workflow/CommentState', 'Error');
+          return;
+        }
+        if (oWorkflow.Action === 'REJECTED' && !oWorkflow.ReasonCode) {
+          this.getView().getModel('LocalModel').setProperty('/Workflow/ReasonCodeState', 'Error');
+          return;
+        }
+        this.getView().getModel('LocalModel').setProperty('/Workflow/CommentState', 'None');
+        this.getView().getModel('LocalModel').setProperty('/Workflow/ReasonCodeState', 'Error');
         const sCompareQuoationId = this.getView().getModel('LocalModel').getProperty('/CompareQuotationHeader/QuotationComparison');
         const oWorflowContextToSave = this.getView().getModel('LocalModel').getProperty('/WorkflowDefination');
-        const aWFTransactionToSave = await this.prepareWorkflowTransaction(1, ACTION,oWorkflow.Action.Comment);//REJECTED
+        const aWFTransactionToSave = await this.prepareWorkflowTransaction(
+          oWorkflow?.CurrentTransactionVersion,
+          oWorkflow?.Action,
+          oWorkflow?.Comment,
+          oWorkflow?.ReasonCode,
+        ); //REJECTED
         await this._oDataServiceUtil.saveWorkflowTransaction(aWFTransactionToSave);
-        if(oWorkflow.Action === 'REJECTED'){
-          oWorflowContextToSave.forEach(eachDef=>{
-            eachDef.versionNo=eachDef.versionNo+1;
+        if (oWorkflow.Action === 'REJECTED') {
+          oWorflowContextToSave.forEach((eachDef) => {
+            eachDef.versionNo = eachDef.versionNo + 1;
           });
-           this.getView().getModel('LocalModel').setProperty('/WorkflowDefination',oWorflowContextToSave);
+          this.getView().getModel('LocalModel').setProperty('/WorkflowDefination', oWorflowContextToSave);
           await this._oDataServiceUtil.saveWorkflowDefination(oWorflowContextToSave, sCompareQuoationId);
         }
         this.oApproveRejectDialog?.close();

@@ -92,22 +92,25 @@
                     text="Approve"
                     press=".onCompareQuotationApprovePress"
                     type="Success"
-                    visible="{=${LocalModel>/IsEditCompareQuotation}? false:true}"
+                    visible="{=${LocalModel>/hasWorkflowApprovalAccess}? !${LocalModel>/IsEditCompareQuotation} :false}"
                 />
+                <!-- visible="{=${LocalModel>/IsEditCompareQuotation}? false:true}" -->
                 <Button
                     id="_IDGenManageCQButtonReject"
                     text="Reject"
                     press=".onCompareQuotationRejectPress"
                     type="Reject"
-                    visible="{=${LocalModel>/IsEditCompareQuotation}? false:true}"
+                    visible="{=${LocalModel>/hasWorkflowApprovalAccess}? !${LocalModel>/IsEditCompareQuotation} :false}"
                 />
+                <!-- visible="{=${LocalModel>/IsEditCompareQuotation}? false:true}" -->
                 <Button
                     id="_IDGenManageCQButton"
                     text="Edit"
                     press=".onCompareQuotationEditPress"
                     type="Emphasized"
-                    visible="{=${LocalModel>/IsEditCompareQuotation}? false:true}"
+                    visible="{=${LocalModel>/hasWorkflowApprovalEditAccess}? !${LocalModel>/IsEditCompareQuotation} :false}"
                 />
+                <!-- visible="{=${LocalModel>/IsEditCompareQuotation}? false:true}" -->
             </OverflowToolbar>
         </footer>
     </Page>

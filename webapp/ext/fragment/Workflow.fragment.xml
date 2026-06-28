@@ -17,10 +17,6 @@
                 text="Arrange Workflow"
                 visible="{LocalModel>/IsEditCompareQuotation}"
             >
-                <!-- <VBox
-                    id="_IDGenWorkflowVBox1"
-                    visible="{=${LocalModel>/InWorkflowState}?false:true}"
-                > -->
                 <Table
                     id="_IDGenWorkflowDefinationTable"
                     mode="SingleSelectMaster"
@@ -150,7 +146,7 @@
                                 <CheckBox
                                     id="_IDGenWorkflowText7"
                                     editable="{LocalModel>/IsEditCompareQuotation}"
-                                    selected="{=${LocalModel>IsMandatory} === 'X'?true:false}"
+                                    selected="{LocalModel>IsMandatory}"
                                 />
                             </cells>
                         </ColumnListItem>

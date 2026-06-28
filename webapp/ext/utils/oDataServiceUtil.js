@@ -12,10 +12,9 @@ sap.ui.define(['sap/m/MessageBox', 'sap/ui/model/json/JSONModel'], function (Mes
         return {};
       }
       const oUserInfo = await sap.ushell.Container.getServiceAsync('UserInfo');
-      debugger;
       return {
         id: oUserInfo.getId(),
-        email: oUserInfo.getEmail(),
+        email: oUserInfo.getEmail() || 'Amarjeet.Kumar@n-labs.ai',
         firstName: oUserInfo.getFirstName(),
         lastName: oUserInfo.getLastName(),
         fullName: oUserInfo.getFullName(),
@@ -25,8 +24,8 @@ sap.ui.define(['sap/m/MessageBox', 'sap/ui/model/json/JSONModel'], function (Mes
     async getWorkflowApprover(sStageCode) {
       const oModel = this._oView?.getModel();
       try {
-        const oListBinding = oModel.bindList('/WorkflowApprover', undefined, undefined, undefined, {
-          $filter: `StageCode eq '${sStageCode}' and IsActive eq true`,
+        const oListBinding = oModel.bindList('/WorkflowApprove', undefined, undefined, undefined, {
+          $filter: `StageCode eq '${sStageCode}' and IsActive eq true and MarkAsDeleted eq false`,
         });
         const aContexts = await oListBinding.requestContexts(0, 100);
         const aWorkflowApprover = aContexts.map((oContext) => oContext.getObject());
@@ -398,7 +397,7 @@ sap.ui.define(['sap/m/MessageBox', 'sap/ui/model/json/JSONModel'], function (Mes
       const oModel = this._oView.getModel();
       try {
         const oListBinding = oModel.bindList('/ApprovalTxn', undefined, undefined, undefined, {
-          $filter: `QuotationComparison eq '${sQuotationComparison}' and DefVersionNo eq ${defVersionNo} and VersionNo eq ${versionNo}`,
+          $filter: `QuotationComparison eq '${sQuotationComparison}' and Defversion eq ${defVersionNo} and VersionNo eq ${versionNo}`,
         });
 
         const aContexts = await oListBinding.requestContexts();
@@ -437,6 +436,30 @@ sap.ui.define(['sap/m/MessageBox', 'sap/ui/model/json/JSONModel'], function (Mes
         return {
           status: 'Error',
           message: oError?.message || 'Error during Workflow Transaction Updated!',
+        };
+      }
+    }
+    async saveWorkflowApprover() {
+      const oLocalModel = this._oView?.getModel('LocalModel');
+      const aRecords = oLocalModel.getProperty('/WorkflowApprovers');
+      const aCreatePromises = [];
+      const oListBinding = this._oView.getModel().bindList('/WorkflowApprove');
+      aRecords.forEach((oRecord) => {
+        oListBinding.create(oRecord);
+      });
+      try {
+        await this._oView.getModel().submitBatch('workflowApproveGroup');
+
+        // await Promise.all(aCreatePromises);
+
+        return {
+          status: 'Success',
+          message: 'Workflow Approve Created or Updated Successfully!',
+        };
+      } catch (oError) {
+        return {
+          status: 'Error',
+          message: oError?.message || 'Error during Workflow Approve Updated!',
         };
       }
     }

@@ -9,7 +9,7 @@
 >
     <Dialog
         id="_IDGenAORFragmentDialog"
-        title="{=${LocalModel>/Workflow/WorkflowMode}=== 'APPROVE'? 'Do you want to Approve?' :'Do you want to Reject?'}"
+        title="{=${LocalModel>/Workflow/Action}=== 'APPROVED'? 'Do you want to Approve?' :'Do you want to Reject?'}"
         contentWidth='30%'
     >
         <f:SimpleForm
@@ -33,6 +33,27 @@
             <f:content>
                 <Label
                     id="_IDGenAORFragmentDialogLabel3"
+                    text="Select Reason Code"
+                    required="true"
+                    visible="{= ${LocalModel>/Workflow/Action} ==='REJECTED' ? true:false}"
+                />
+                <ComboBox
+                    selectedKey="{LocalModel>/Workflow/ReasonCode}"
+                    id="_IDGenAORFragmentDialogComboBox"
+                    items="{LocalModel>/Workflow/RejectionReasonData}"
+                    visible="{= ${LocalModel>/Workflow/Action} ==='REJECTED' ? true:false}"
+                    valueState="{LocalModel>/Workflow/ReasonCodeState}"
+                >
+                    <items>
+                        <core:Item
+                            id="_IDGenAORFragmentDialogItem"
+                            text="{LocalModel>Desc}"
+                            key="{LocalModel>Code}"
+                        />
+                    </items>
+                </ComboBox>
+                <Label
+                    id="_IDGenAORFragmentDialogLabelComment"
                     text="Comment"
                     required="true"
                 />
@@ -40,14 +61,16 @@
                     id="_IDGenAORFragmentDialogTextArea"
                     maxLength="1000"
                     value="{LocalModel>/Workflow/Comment}"
+                    valueState="{LocalModel>/Workflow/CommentState}"
                 />
             </f:content>
         </f:SimpleForm>
         <buttons>
             <Button
                 id="_IDGenAORFragmentAddButton"
-                text="{=${LocalModel>/Workflow/WorkflowMode}=== 'APPROVE'? 'Approve' :'Reject'}"
+                text="{=${LocalModel>/Workflow/Action}=== 'APPROVED'? 'Approve' :'Reject'}"
                 visible="{= ${LocalModel>/TermsAndConditionDialog/IsAddNewTC} ? false:true}"
+                type="{=${LocalModel>/Workflow/Action}=== 'APPROVED'? 'Success' :'Reject'}"
                 press=".onAORFragmentApproveOrRejectPress"
             />
             <Button
