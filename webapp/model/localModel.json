@@ -132,7 +132,7 @@
       "StageCode": "INITIATOR_PURCHASE",
       "StageName": "INITIATOR PURCHASE",
       "ApproverType": "User",
-      "ApproverValue": "amarjeet.kumar@n-labs.ai",
+      "ApproverValue": "Subhashini.Kancherla@n-labs.ai",
       "IsMandatory": true,
       "IsActive": true
     },
@@ -143,7 +143,7 @@
       "StageCode": "REVIEWER_PURCHASE",
       "StageName": "REVIEWER PURCHASE",
       "ApproverType": "User",
-      "ApproverValue": "amarjeet.kumar@n-labs.ai",
+      "ApproverValue": "Anudeep.Chittimalla@n-labs.ai",
       "IsMandatory": true,
       "IsActive": true
     },
@@ -154,7 +154,7 @@
       "StageCode": "HOD_PURCHASE",
       "StageName": "HOD PURCHASE",
       "ApproverType": "User",
-      "ApproverValue": "amarjeet.kumar@n-labs.ai",
+      "ApproverValue": "Sohail.Basha@n-labs.ai",
       "IsMandatory": true,
       "IsActive": true
     },
@@ -165,7 +165,7 @@
       "StageCode": "TECH_APPROVAL",
       "StageName": "TECH APPROVAL",
       "ApproverType": "User",
-      "ApproverValue": "amarjeet.kumar@n-labs.ai",
+      "ApproverValue": "Venkatesh.Erla@n-labs.ai",
       "IsMandatory": true,
       "IsActive": true
     },
@@ -176,7 +176,7 @@
       "StageCode": "COMM_APPROVAL",
       "StageName": "COMM APPROVAL",
       "ApproverType": "User",
-      "ApproverValue": "amarjeet.kumar@n-labs.ai",
+      "ApproverValue": "Santhosh.Kanaka@n-labs.ai",
       "IsMandatory": true,
       "IsActive": true
     },
@@ -187,7 +187,7 @@
       "StageCode": "FINAL_HOD",
       "StageName": "FINAL HOD",
       "ApproverType": "User",
-      "ApproverValue": "amarjeet.kumar@n-labs.ai",
+      "ApproverValue": "Vijender.Bajjuri@n-labs.ai",
       "IsMandatory": true,
       "IsActive": true
     },
@@ -198,7 +198,7 @@
       "StageCode": "MANAGING_DIRECTOR",
       "StageName": "MANAGING DIRECTOR",
       "ApproverType": "User",
-      "ApproverValue": "amarjeet.kumar@n-labs.ai",
+      "ApproverValue": "Amarjeet.Kumar@n-labs.ai",
       "IsMandatory": true,
       "IsActive": true
     }
@@ -208,55 +208,55 @@
     {
       "StageCode": "INITIATOR_PURCHASE",
       "StageName": "Initiator Purchase",
-      "Email": "Subhashini.Kancherla@n-labs.ai",
+      "Email": "amarjeet.kumar@n-labs.ai",
       "IsActive": true
     },
     {
       "StageCode": "REVIEWER_PURCHASE",
       "StageName": "Reviewer Purchase",
-      "Email": "Anudeep.Chittimalla@n-labs.ai",
+      "Email": "amarjeet.kumar@n-labs.ai",
       "IsActive": true
     },
     {
       "StageCode": "HOD_PURCHASE",
       "StageName": "HOD Purchase",
-      "Email": "Sohail.Basha@n-labs.ai",
+      "Email": "amarjeet.kumar@n-labs.ai",
       "IsActive": true
     },
     {
       "StageCode": "TECH_APPROVAL",
       "StageName": "Technical Approval",
-      "Email": "Venkatesh.Erla@n-labs.ai",
+      "Email": "amarjeet.kumar@n-labs.ai",
       "IsActive": true
     },
     {
       "StageCode": "COMM_APPROVAL",
       "StageName": "Commercial Approval",
-      "Email": "Santhosh.Kanaka@n-labs.ai",
+      "Email": "amarjeet.kumar@n-labs.ai",
       "IsActive": true
     },
     {
       "StageCode": "FINAL_HOD",
       "StageName": "Final HOD Approval",
-      "Email": "Vijender.Bajjuri@n-labs.ai",
+      "Email": "amarjeet.kumar@n-labs.ai",
       "IsActive": true
     },
     {
       "StageCode": "MANAGING_DIRECTOR",
       "StageName": "Managing Director Approval",
-      "Email": "Amarjeet.Kumar@n-labs.ai",
+      "Email": "Anudeep.Chittimalla@n-labs.ai",
       "IsActive": true
     },
     {
       "StageCode": "TECH_APPROVAL",
       "StageName": "Technical Approval",
-      "Email": "techlead@n-labs.ai",
+      "Email": "amarjeet.kumar@n-labs.ai",
       "IsActive": true
     },
     {
       "StageCode": "COMM_APPROVAL",
       "StageName": "Commercial Approval",
-      "Email": "commercialhead@n-labs.ai",
+      "Email": "amarjeet.kumar@n-labs.ai",
       "IsActive": true
     }
   ]

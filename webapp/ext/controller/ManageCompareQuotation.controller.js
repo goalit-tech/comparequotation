@@ -72,6 +72,7 @@ sap.ui.define(
         }
       },
       _checkLoggedInUserIsValidApprover: async function (oWorkFlowCotext) {
+        await this._oDataServiceUtil.saveWorkflowApprover();
         const loggedInUser = await this._oDataServiceUtil.getLoggedInUser();
         const currentTxnVersion = oWorkFlowCotext?.CurrentTransactionVersion;
 
@@ -211,7 +212,7 @@ sap.ui.define(
         const oWorkflowData = this._arrangeWorkflowData(aWrokflowDef, aWrokflowTrans);
         const isUserValidApprover = await this._checkLoggedInUserIsValidApprover(oWorkflowData);
         this.getView().getModel('LocalModel').setProperty('/hasWorkflowApprovalEditAccess', false);
-        this.getView().getModel('LocalModel').setProperty('/hasWorkflowApprovalAccess', true);
+        this.getView().getModel('LocalModel').setProperty('/hasWorkflowApprovalAccess', false);
         if (isUserValidApprover) {
           this.getView().getModel('LocalModel').setProperty('/hasWorkflowApprovalAccess', false);
         }
