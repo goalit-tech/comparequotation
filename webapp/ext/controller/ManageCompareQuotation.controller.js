@@ -72,7 +72,7 @@ sap.ui.define(
         }
       },
       _checkLoggedInUserIsValidApprover: async function (oWorkFlowCotext) {
-        await this._oDataServiceUtil.saveWorkflowApprover();
+        //await this._oDataServiceUtil.saveWorkflowApprover();
         const loggedInUser = await this._oDataServiceUtil.getLoggedInUser();
         const currentTxnVersion = oWorkFlowCotext?.CurrentTransactionVersion;
 
@@ -209,12 +209,12 @@ sap.ui.define(
         let oWorflowContext = this.getView().getModel('LocalModel').getProperty('/WorkflowDefination');
         const aWrokflowDef = await this._oDataServiceUtil.getWorkflowDefination(quotationComparison);
         const aWrokflowTrans = await this._oDataServiceUtil.getWorkflowTransaction(quotationComparison);
-        const oWorkflowData = this._arrangeWorkflowData(aWrokflowDef, aWrokflowTrans);
+        const oWorkflowData = await this._arrangeWorkflowData(aWrokflowDef, aWrokflowTrans);
         const isUserValidApprover = await this._checkLoggedInUserIsValidApprover(oWorkflowData);
         this.getView().getModel('LocalModel').setProperty('/hasWorkflowApprovalEditAccess', false);
         this.getView().getModel('LocalModel').setProperty('/hasWorkflowApprovalAccess', false);
         if (isUserValidApprover) {
-          this.getView().getModel('LocalModel').setProperty('/hasWorkflowApprovalAccess', false);
+          this.getView().getModel('LocalModel').setProperty('/hasWorkflowApprovalAccess', true);
         }
         if (oWorkflowData?.CurrentTransactionVersion === 1) {
           this.getView().getModel('LocalModel').setProperty('/hasWorkflowApprovalEditAccess', true);
@@ -348,27 +348,28 @@ sap.ui.define(
           console.log('Error during workflow Save', error?.message);
         }
       },
-      prepareWorkflowTransaction: async function (currentStep, action, comment = '', reasonCode = '') {
+      prepareWorkflowTransaction: async function (currentStep, action, comment = '', reasonCode = '', approvedBy = '') {
         let aTransactionData = [];
         const aWorflowDefination = this.getView().getModel('LocalModel').getProperty('/WorkflowDefination');
         const aWorkflowTransaction = this.getView().getModel('LocalModel').getProperty('/WorkflowTransaction');
-        const loggedInUser = await this._oDataServiceUtil.getLoggedInUser();
+        // const loggedInUser = await this._oDataServiceUtil.getLoggedInUser();
         aWorflowDefination.forEach((oDef, index) => {
           let currentAction = 'ISPENDING';
           if (oDef.SeqNo <= currentStep) {
             currentAction = action;
           }
-          if (currentStep + 1 === oDef.SeqNo) {
-            currentAction = 'INPORGRESS';
+          if ((action === 'APPROVED' || action === 'REJECTED') && currentStep + 1 === oDef.SeqNo) {
+            currentAction = 'INPROGRESS';
           }
           const eachTransaction = {
             QuotationComparison: oDef?.QuotationComparison,
             Defversion: oDef.versionNo ?? oDef.versionNo ?? 0,
-            VersionNo: action === 'INPROGRESS' ? currentStep : currentStep + 1,
+            VersionNo: action === 'APPROVED' || action === 'REJECTED' ? currentStep + 1 : currentStep,
             SeqNo: oDef.SeqNo ?? index + 1,
             StageCode: oDef.StageCode ?? '',
             AssignedTo: oDef.ApproverValue ?? '',
-            ApprovedBy: loggedInUser?.email || '',
+            ApprovedBy: oDef.SeqNo === currentStep ? approvedBy : '',
+            // ApprovedBy: loggedInUser?.email || '',
             Action: currentAction,
             Comments: oDef.SeqNo === currentStep ? comment : '',
             ReasonCode: reasonCode,
@@ -513,7 +514,7 @@ sap.ui.define(
             Specifications: item?.Specifications || '',
             // ContactPerson: item?.ContactPerson || '',
             // PhoneNumber: item?.PhoneNumber || '',
-            //ConversionRate: Number(item?.ConversionRate || 0).toFixed(2),
+            //ConversionRs: Number(item?.ConversionRs || 0).toFixed(2),
             ConvertedAmount: item?.ConvertedAmount || '',
             Specifications1: item?.Specifications1 || '',
             Specifications2: item?.Specifications2 || '',
@@ -853,6 +854,11 @@ sap.ui.define(
         }
         return sAction;
       },
+      processFlowTextsFormatter: function (currentObject) {
+        const text1 = currentObject?.ApprovedBy ? `Approved By: ${currentObject?.ApprovedBy}` : '';
+        const text2 = currentObject?.Comments ? `Comment: ${currentObject?.Comments}` : '';
+        return [text1, text2];
+      },
       onCompareQuotationApprovePress: async function () {
         this.getView().getModel('LocalModel').setProperty('/Workflow/Action', 'APPROVED');
         this.getView().getModel('LocalModel').setProperty('/Workflow/Comment', '');
@@ -891,11 +897,13 @@ sap.ui.define(
         this.getView().getModel('LocalModel').setProperty('/Workflow/ReasonCodeState', 'Error');
         const sCompareQuoationId = this.getView().getModel('LocalModel').getProperty('/CompareQuotationHeader/QuotationComparison');
         const oWorflowContextToSave = this.getView().getModel('LocalModel').getProperty('/WorkflowDefination');
+        const loggedInUser = await this._oDataServiceUtil.getLoggedInUser();
         const aWFTransactionToSave = await this.prepareWorkflowTransaction(
           oWorkflow?.CurrentTransactionVersion,
           oWorkflow?.Action,
           oWorkflow?.Comment,
           oWorkflow?.ReasonCode,
+          loggedInUser?.email,
         ); //REJECTED
         await this._oDataServiceUtil.saveWorkflowTransaction(aWFTransactionToSave);
         if (oWorkflow.Action === 'REJECTED') {

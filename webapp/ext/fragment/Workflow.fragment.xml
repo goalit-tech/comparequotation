@@ -178,7 +178,7 @@
                             children="{LocalModel>children}"
                             state="{path:'LocalModel>Action',formatter:'.processFlowStateFormatter'}"
                             stateText="{path:'LocalModel>Action',formatter:'.processFlowStateTextFormatter'}"
-                            texts="{LocalModel>Comments}"
+                            texts="{path:'LocalModel>',formatter:'.processFlowTextsFormatter'}"
                         />
                     </common:nodes>
                     <common:lanes>

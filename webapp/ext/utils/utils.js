@@ -39,7 +39,7 @@ sap.ui.define(['sap/ui/model/json/JSONModel'], function (JSONModel) {
         'NetPriceAmount',
         'Currency',
         'TotalAmount',
-        'ConversionRate',
+        'ConversionRs',
         'ConvertedAmount',
         'HSNCODE',
         'GST',
@@ -204,7 +204,7 @@ sap.ui.define(['sap/ui/model/json/JSONModel'], function (JSONModel) {
         'Specifications1',
         'Specifications2',
         'Specifications3',
-        'ConversionRate',
+        'ConversionRs',
         'NetPriceAmount',
         'HSNCODE',
         'GST',
@@ -277,7 +277,7 @@ sap.ui.define(['sap/ui/model/json/JSONModel'], function (JSONModel) {
                 const oInput = oEvent.getSource();
                 const oRowData = oInput.getBindingContext('LocalModel').getObject();
                 const sProperty = oRowData.property;
-                if (!sProperty.includes('_') || !sProperty.startsWith('ConversionRate')) {
+                if (!sProperty.includes('_') || !sProperty.startsWith('ConversionRs')) {
                   return;
                 }
                 const sSuffix = sProperty.split('_').pop();
