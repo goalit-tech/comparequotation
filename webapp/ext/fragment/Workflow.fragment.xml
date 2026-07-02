@@ -198,12 +198,142 @@
                 text="History"
                 visible="{=!${LocalModel>/IsEditCompareQuotation}}"
             >
-                <macros:Table
-                    id="_IDGenWorkflowHistoryTable"
-                    metaPath="/ApprovalTxn/@com.sap.vocabularies.UI.v1.LineItem"
-                    selectionMode="None"
-                    isSearchable="true"
-                />
+                <Table
+                    id="_IDGenWorkflowDefinationHistoryTable"
+                    growing="true"
+                    growingThreshold="10"
+                    items="{
+                        path: 'LocalModel>/Workflow/WorkFlowTransacationData/',
+                        filters: {path: 'VersionNo', operator: 'GT', value1: '0'},
+                        sorter: {path: 'VersionNo', descending: true}
+                    }"
+                    noDataText="No History"
+                >
+                    <columns>
+                        <Column
+                            id="_IDGenWorkflowHistoryDefversion"
+                            width="6rem"
+                        >
+                            <Text
+                                id="_IDGenWorkflowHistoryColumnTextDefversion"
+                                text="Def Version"
+                                wrapping="true"
+                            />
+                        </Column>
+                        <Column
+                            id="_IDGenWorkflowHistoryVersionNo"
+                            width="6rem"
+                        >
+                            <Text
+                                id="_IDGenWorkflowHistoryColumnTextVersionNo"
+                                text="Version No"
+                                wrapping="true"
+                            />
+                        </Column>
+                        <Column
+                            id="_IDGenWorkflowHistorySeqNo"
+                            width="6rem"
+                        >
+                            <Text
+                                id="_IDGenWorkflowHistoryColumnTextSeqNo"
+                                text="Seq No"
+                                wrapping="true"
+                            />
+                        </Column>
+                        <Column id="_IDGenWorkflowHistoryAssignedTo">
+                            <Text
+                                id="_IDGenWorkflowHistoryColumnTextAssignedTo"
+                                text="Assigned To"
+                                wrapping="true"
+                            />
+                        </Column>
+                        <Column id="_IDGenWorkflowHistoryApprovedBy">
+                            <Text
+                                id="_IDGenWorkflowHistoryColumnTextApprovedBy"
+                                text="Approved By"
+                                wrapping="true"
+                            />
+                        </Column>
+                        <Column id="_IDGenWorkflowHistoryAction">
+                            <Text
+                                id="_IDGenWorkflowHistoryColumnTextAction"
+                                text="Action"
+                            />
+                        </Column>
+                        <Column id="_IDGenWorkflowHistoryComments">
+                            <Text
+                                id="_IDGenWorkflowHistoryColumnTextComments"
+                                text="Comments"
+                                wrapping="true"
+                            />
+                        </Column>
+                        <Column id="_IDGenWorkflowHistoryReasonCode">
+                            <Text
+                                id="_IDGenWorkflowHistoryColumnTextReasonCode"
+                                text="ReasonCode"
+                                wrapping="true"
+                            />
+                        </Column>
+                        <Column id="_IDGenWorkflowHistorychangedAt">
+                            <Text
+                                id="_IDGenWorkflowHistoryColumnTextchangedAt"
+                                text="changed At"
+                                wrapping="true"
+                            />
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem
+                            id="_IDGenWorkflowHistoryColumnListItem"
+                        >
+                            <cells>
+                                <Text
+                                    id="_IDGenWorkflowHistoryTextDefversion"
+                                    text="{LocalModel>Defversion}"
+                                    wrapping="false"
+                                />
+                                <Text
+                                    id="_IDGenWorkflowHistoryTextVersionNo"
+                                    text="{LocalModel>VersionNo}"
+                                    wrapping="false"
+                                />
+                                <Text
+                                    id="_IDGenWorkflowHistoryTextSNO"
+                                    text="L-{LocalModel>SeqNo}"
+                                    wrapping="false"
+                                />
+                                <Text
+                                    id="_IDGenWorkflowHistoryText3"
+                                    text="{LocalModel>AssignedTo}"
+                                    wrapping="false"
+                                />
+                                <Text
+                                    id="_IDGenWorkflowHistoryText4"
+                                    text="{LocalModel>ApprovedBy}"
+                                    wrapping="false"
+                                />
+                                <Text
+                                    id="_IDGenWorkflowHistoryText5"
+                                    text="{LocalModel>Action}"
+                                    wrapping="false"
+                                />
+                                <Text
+                                    id="_IDGenWorkflowHistoryText6"
+                                    text="{LocalModel>Comments}"
+                                    wrapping="false"
+                                />
+                                <Text
+                                    id="_IDGenWorkflowHistoryText7"
+                                    text="{LocalModel>/ReasonCode}"
+                                />
+                                <Text
+                                    id="_IDGenWorkflowHistoryText8"
+                                    text="{LocalModel>/changedAt}"
+                                />
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
             </IconTabFilter>
         </items>
     </IconTabBar>
